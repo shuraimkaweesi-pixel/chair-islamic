@@ -1,2 +1,2 @@
 # Shuraimkaweesi
-To empower the Islamic society 
+To empower the Islamic society .
