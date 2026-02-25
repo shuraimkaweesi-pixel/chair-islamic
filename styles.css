@@ -157,3 +157,8 @@ footer {
 .whatsapp-btn:hover {
   background: #128c5e;
 }
+/* SECOND WHATSAPP BUTTON */
+.whatsapp-btn.btn2 {
+  bottom: 80px; /* positions second button above the first */
+  right: 20px;
+}
