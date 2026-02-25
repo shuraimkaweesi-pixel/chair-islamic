@@ -1,44 +1,98 @@
+/* ===== PREMIUM ISLAMIC THEME ===== */
+
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
-  background: #f4f4f4;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f8f8f8;
+  color: #333;
 }
 
+/* HEADER */
 header {
-  background: #0b3d2e;
+  background: linear-gradient(135deg, #0b3d2e, #145c42);
   color: white;
   text-align: center;
-  padding: 40px 20px;
+  padding: 60px 20px;
 }
 
+header h1 {
+  font-size: 40px;
+  margin-bottom: 10px;
+  color: #d4af37; /* Gold */
+}
+
+header p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+/* SECTIONS */
 section {
-  padding: 40px 20px;
-  margin: 20px;
   background: white;
-  border-radius: 10px;
+  margin: 40px auto;
+  padding: 40px;
+  width: 90%;
+  max-width: 1100px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
+/* SECTION TITLES */
 h2 {
+  color: #145c42;
+  border-left: 5px solid #d4af37;
+  padding-left: 15px;
+  margin-bottom: 30px;
+}
+
+/* POSTS */
+.post {
+  margin-bottom: 25px;
+}
+
+.post h3 {
   color: #0b3d2e;
 }
 
-.post {
-  margin-bottom: 20px;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-ul li {
-  padding: 8px 0;
+.post a {
+  text-decoration: none;
+  color: #d4af37;
   font-weight: bold;
 }
 
+/* BUTTONS */
+a {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: #145c42;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+a:hover {
+  background: #d4af37;
+  color: #0b3d2e;
+}
+
+/* LIVE SECTION SPECIAL STYLE */
+#live {
+  background: linear-gradient(135deg, #0b3d2e, #145c42);
+  color: white;
+}
+
+#live h2 {
+  color: #d4af37;
+  border-left: 5px solid white;
+}
+
+/* FOOTER */
 footer {
   text-align: center;
-  padding: 20px;
+  padding: 25px;
   background: #0b3d2e;
   color: white;
+  margin-top: 50px;
 }
