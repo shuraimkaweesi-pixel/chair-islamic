@@ -20,6 +20,7 @@
     <li><a href="#latest-posts">Posts</a></li>
     <li><a href="#topics">Topics</a></li>
     <li><a href="#live">Live</a></li>
+    <li><a href="#ask-islam">Ask</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contacts">Contact</a></li>
   </ul>
@@ -70,6 +71,14 @@
   </a>
 </section>
 
+<!-- ASK ANYTHING ABOUT ISLAM -->
+<section id="ask-islam" class="fade-in">
+  <h2>🤔 Ask Anything You Need to Know About Islam</h2>
+  <input type="text" id="userQuestion" placeholder="Type your question here..." />
+  <button onclick="getAnswer()">Ask</button>
+  <p id="aiAnswer"></p>
+</section>
+
 <!-- ABOUT -->
 <section id="about" class="fade-in">
   <h2>About Chair Islamic CRV TV</h2>
@@ -112,6 +121,20 @@ window.addEventListener("scroll", function() {
     }
   });
 });
+
+// Simple AI responses
+const responses = {
+  "what is islam": "Islam is the religion of peace and submission to Allah.",
+  "who is muhammad": "Prophet Muhammad (peace be upon him) is the last messenger of Allah.",
+  "ramadan": "Ramadan is the holy month of fasting, reflection, and prayer.",
+  "quran": "The Quran is the holy book of Islam, revealed to Prophet Muhammad (peace be upon him)."
+};
+
+function getAnswer() {
+  const question = document.getElementById("userQuestion").value.toLowerCase();
+  const answer = responses[question] || "Sorry, I don't know the answer to that yet. You can try asking another question.";
+  document.getElementById("aiAnswer").innerText = answer;
+}
 </script>
 
 </body>
