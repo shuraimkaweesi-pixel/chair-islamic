@@ -21,10 +21,11 @@ export default async function handler(req, res) {
       temperature: 0.5
     });
 
-    const aiAnswer = response.choices[0].message.content;
-    res.status(200).json({ answer: aiAnswer });
+    const answer = response.choices[0].message.content;
+    res.status(200).json({ answer });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "OpenAI request failed." });
   }
 }
+Add AI backend function chat.js
