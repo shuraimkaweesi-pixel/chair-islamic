@@ -1,4 +1,4 @@
-p<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -122,7 +122,15 @@ p<!DOCTYPE html>
     transform: scale(1.02);
   }
 
-  /* Ask a Scholar form */
+  /* Ask a Scholar / AI */
+  #ask-scholar {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 40px 20px;
+    border-radius: 12px;
+    margin-top: 40px;
+    text-align: center;
+  }
+
   #ask-scholar input {
     width: 70%;
     padding: 12px;
@@ -145,6 +153,11 @@ p<!DOCTYPE html>
 
   #ask-scholar button:hover { background: white; }
 
+  /* Topics list */
+  ul { list-style: none; padding: 0; }
+  ul li { margin: 10px 0; }
+
+  /* Footer */
   footer {
     text-align: center;
     padding: 25px;
@@ -170,7 +183,6 @@ p<!DOCTYPE html>
   }
 
   .whatsapp-btn.btn2 { bottom: 80px; }
-
   .whatsapp-btn:hover { background: #128c5e; }
 </style>
 </head>
@@ -221,14 +233,13 @@ p<!DOCTYPE html>
   </ul>
 </section>
 
-<!-- ASK A SCHOLAR -->
+<!-- ASK A SCHOLAR / AI -->
 <section id="ask-scholar" class="fade-in">
   <h2>🤔 Ask a Scholar</h2>
-  <form action="mailto:youremail@example.com" method="POST" enctype="text/plain">
-    <input type="text" name="question" placeholder="Type your question here..." required />
-    <button type="submit">Send</button>
-  </form>
-  <p>Shuraim Kaweesi, Founder of Chair Islamic TV, will personally answer your questions.</p>
+  <input type="text" id="userQuestion" placeholder="Type your question here..." />
+  <button onclick="getAnswer()">Ask</button>
+  <p id="aiAnswer"></p>
+  <p>Shuraim Kaweesi, Founder of Chair Islamic TV, will personally answer your questions, inshaAllah.</p>
 </section>
 
 <!-- ABOUT -->
@@ -259,19 +270,34 @@ p<!DOCTYPE html>
 </footer>
 
 <script>
+// MOBILE MENU
 function toggleMenu() {
   document.getElementById("navLinks").classList.toggle("active");
 }
 
-// Scroll animations
+// SCROLL ANIMATION
 window.addEventListener("scroll", function() {
   document.querySelectorAll(".fade-in").forEach(section => {
     const rect = section.getBoundingClientRect();
-    if(rect.top < window.innerHeight - 100) {
-      section.classList.add("show");
-    }
+    if(rect.top < window.innerHeight - 100) section.classList.add("show");
   });
 });
+
+// FAKE AI INTERACTIVE
+const responses = {
+  "what is islam": "Islam is the religion of peace and submission to Allah, based on the Qur'an and Sunnah.",
+  "who is allah": "Allah is the One true God, the Creator of the heavens and the earth.",
+  "who is muhammad": "Prophet Muhammad (peace be upon him) is the last messenger of Allah.",
+  "what is ramadan": "Ramadan is the holy month of fasting, reflection, and prayer.",
+  "what is quran": "The Quran is the holy book of Islam, revealed to Prophet Muhammad (peace be upon him)."
+};
+
+function getAnswer() {
+  const question = document.getElementById("userQuestion").value.toLowerCase().trim();
+  const answer = responses[question] || 
+                 "Thank you for your question. Shuraim Kaweesi will personally answer it soon, inshaAllah.";
+  document.getElementById("aiAnswer").innerText = answer;
+}
 </script>
 
 </body>
