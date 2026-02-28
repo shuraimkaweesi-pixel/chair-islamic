@@ -3,300 +3,216 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chair Islamic TV</title>
 
-<!-- FANCY COLORS & STYLE -->
+<title>Chair Islamic TV – Authentic Islamic Knowledge</title>
+
+<!-- SEO Meta -->
+<meta name="description" content="Chair Islamic TV – Learn authentic Islamic knowledge through lectures, khutbahs, Quran reflections, and Islamic advice. Founded by Shuraim Kaweesi.">
+<meta name="keywords" content="Islam, Quran, Hadith, Islamic TV, Shuraim Kaweesi, Islamic Advice, Ramadan, Muslim Knowledge">
+<meta name="author" content="Shuraim Kaweesi">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Chair Islamic TV">
+<meta property="og:description" content="Authentic Islamic knowledge, lectures and reflections. Ask your questions directly.">
+<meta property="og:type" content="website">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Chair Islamic TV">
+<meta name="twitter:description" content="Authentic Islamic lectures and Quran reflections.">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Chair Islamic TV",
+  "founder": "Shuraim Kaweesi"
+}
+</script>
+
 <style>
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(to bottom, #06251c, #0b3d2e);
-    color: #fff;
-  }
+body {
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#041c14,#0f4d3a,#06251c);
+  color:white;
+}
 
-  /* NAVBAR */
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-  }
+/* NAVBAR */
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 40px;
+  position:fixed;
+  width:100%;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(10px);
+  z-index:1000;
+}
+.logo{
+  color:#FFD700;
+  font-weight:bold;
+  font-size:22px;
+}
+.nav-links{
+  list-style:none;
+  display:flex;
+  gap:25px;
+}
+.nav-links a{
+  color:white;
+  text-decoration:none;
+  transition:.3s;
+}
+.nav-links a:hover{
+  color:#FFD700;
+}
 
-  .navbar .logo {
-    color: #FFD700;
-    font-size: 24px;
-    font-weight: bold;
-  }
+/* HERO */
+.hero{
+  padding-top:120px;
+  text-align:center;
+  padding-bottom:60px;
+}
+.hero h1{
+  font-size:40px;
+  color:#FFD700;
+}
+.hero p{
+  max-width:700px;
+  margin:auto;
+  opacity:.9;
+}
 
-  .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 25px;
-  }
+/* SECTIONS */
+section{
+  max-width:1100px;
+  margin:60px auto;
+  padding:40px 20px;
+}
+h2{
+  color:#FFD700;
+  border-left:5px solid #FFD700;
+  padding-left:10px;
+}
 
-  .nav-links a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 500;
-    transition: 0.3s;
-  }
+/* CARDS */
+.card{
+  background:rgba(255,255,255,0.05);
+  padding:20px;
+  border-radius:12px;
+  margin-bottom:20px;
+  transition:.3s;
+}
+.card:hover{
+  background:rgba(255,215,0,0.1);
+  transform:scale(1.02);
+}
 
-  .nav-links a:hover {
-    color: #FFD700;
-    transform: scale(1.1);
-  }
+/* VIDEO */
+iframe{
+  width:100%;
+  height:400px;
+  border-radius:12px;
+  border:3px solid #FFD700;
+}
 
-  /* MOBILE MENU */
-  .hamburger {
-    display: none;
-    font-size: 28px;
-    cursor: pointer;
-    color: #fff;
-  }
+/* ASK AI */
+#ask-scholar{
+  text-align:center;
+}
+#ask-scholar input{
+  width:60%;
+  padding:12px;
+  border-radius:8px;
+  border:none;
+}
+#ask-scholar button{
+  padding:12px 20px;
+  border:none;
+  border-radius:8px;
+  background:#FFD700;
+  font-weight:bold;
+  cursor:pointer;
+}
 
-  @media(max-width:768px){
-    .nav-links {
-      position: absolute;
-      top: 70px;
-      right: 0;
-      background: #06251c;
-      flex-direction: column;
-      width: 200px;
-      display: none;
-      padding: 20px;
-      border-radius: 8px;
-    }
-
-    .nav-links.active { display: flex; }
-    .hamburger { display: block; }
-  }
-
-  section {
-    padding: 100px 20px;
-    max-width: 1100px;
-    margin: auto;
-    margin-top: 60px;
-    border-radius: 12px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.8s ease-out;
-  }
-
-  section.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  h2 {
-    color: #FFD700;
-    border-left: 5px solid #FFD700;
-    padding-left: 15px;
-    margin-bottom: 20px;
-  }
-
-  /* Featured video */
-  #featured iframe {
-    width: 100%;
-    height: 400px;
-    border-radius: 12px;
-    border: 3px solid #FFD700;
-  }
-
-  /* Posts */
-  .post {
-    background: rgba(255,255,255,0.05);
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 12px;
-    transition: 0.3s;
-  }
-
-  .post:hover {
-    background: rgba(255,215,0,0.1);
-    transform: scale(1.02);
-  }
-
-  /* Ask a Scholar / AI */
-  #ask-scholar {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 40px 20px;
-    border-radius: 12px;
-    margin-top: 40px;
-    text-align: center;
-  }
-
-  #ask-scholar input {
-    width: 70%;
-    padding: 12px;
-    border-radius: 8px;
-    border: none;
-    font-size: 16px;
-    margin-right: 10px;
-  }
-
-  #ask-scholar button {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    background: #FFD700;
-    color: #0b3d2e;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-
-  #ask-scholar button:hover { background: white; }
-
-  /* Topics list */
-  ul { list-style: none; padding: 0; }
-  ul li { margin: 10px 0; }
-
-  /* Footer */
-  footer {
-    text-align: center;
-    padding: 25px;
-    background: #145c42;
-    color: #fff;
-    margin-top: 50px;
-  }
-
-  /* WhatsApp buttons */
-  .whatsapp-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #25D366;
-    color: white;
-    padding: 15px 20px;
-    border-radius: 50px;
-    font-size: 18px;
-    text-decoration: none;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    z-index: 1000;
-    transition: 0.3s;
-  }
-
-  .whatsapp-btn.btn2 { bottom: 80px; }
-  .whatsapp-btn:hover { background: #128c5e; }
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:30px;
+  background:#0f4d3a;
+  margin-top:60px;
+}
 </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
   <div class="logo">CHAIR ISLAMIC TV</div>
-  <div class="hamburger" onclick="toggleMenu()">☰</div>
-  <ul class="nav-links" id="navLinks">
+  <ul class="nav-links">
     <li><a href="#featured">Featured</a></li>
-    <li><a href="#latest-posts">Posts</a></li>
-    <li><a href="#topics">Topics</a></li>
-    <li><a href="#ask-scholar">Ask a Scholar</a></li>
+    <li><a href="#posts">Posts</a></li>
+    <li><a href="#ask-scholar">Ask</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#contacts">Contact</a></li>
   </ul>
 </nav>
 
-<!-- FEATURED VIDEO -->
-<section id="featured" class="fade-in">
-  <h2>🌟 Featured Video</h2>
+<div class="hero">
+  <h1>Chair Islamic TV – Authentic Islamic Knowledge</h1>
+  <p>Spreading Quran, Sunnah and beneficial reminders to empower the Ummah. Founded by Shuraim Kaweesi.</p>
+</div>
+
+<section id="featured">
+  <h2>Featured Lecture</h2>
   <iframe src="https://www.youtube.com/embed/HqTKlgAlW_0" allowfullscreen></iframe>
 </section>
 
-<!-- LATEST POSTS -->
-<section id="latest-posts" class="fade-in">
-  <h2>📰 Latest Posts</h2>
-  <div class="post">
+<section id="posts">
+  <h2>Latest Reflections</h2>
+  <div class="card">
     <h3>Reflection on Surah Al-Baqarah</h3>
-    <p>A reminder about patience, sincerity, and trust in Allah.</p>
+    <p>A reminder about patience and trust in Allah.</p>
   </div>
-  <div class="post">
+  <div class="card">
     <h3>Hadith of the Week</h3>
     <p>The best among you are those who learn the Qur'an and teach it.</p>
   </div>
 </section>
 
-<!-- TOPICS -->
-<section id="topics" class="fade-in">
-  <h2>📚 Popular Topics</h2>
-  <ul>
-    <li>📖 Quran Reflections</li>
-    <li>🕌 Hadith of the Week</li>
-    <li>💡 Islamic Advice</li>
-    <li>🌙 Ramadan Series</li>
-  </ul>
+<section id="ask-scholar">
+  <h2>Ask a Question</h2>
+  <input type="text" id="question" placeholder="Type your question...">
+  <button onclick="reply()">Ask</button>
+  <p id="answer"></p>
+  <p><strong>Founder:</strong> Shuraim Kaweesi</p>
 </section>
 
-<!-- ASK A SCHOLAR / AI -->
-<section id="ask-scholar" class="fade-in">
-  <h2>🤔 Ask a Scholar</h2>
-  <input type="text" id="userQuestion" placeholder="Type your question here..." />
-  <button onclick="getAnswer()">Ask</button>
-  <p id="aiAnswer"></p>
-  <p>Shuraim Kaweesi, Founder of Chair Islamic TV, will personally answer your questions, inshaAllah.</p>
-</section>
-
-<!-- ABOUT -->
-<section id="about" class="fade-in">
+<section id="about">
   <h2>About Chair Islamic TV</h2>
   <p>
     Chair Islamic TV is dedicated to spreading authentic Islamic knowledge,
-    empowering the Muslim Ummah through lectures, khutbahs, Quran reflections and live events.
-    <br><br>
-    <strong>Founder:</strong> Shuraim Kaweesi
+    lectures, khutbahs and Quran reflections for the global Muslim community.
   </p>
 </section>
 
-<!-- CONTACTS -->
-<section id="contacts" class="fade-in">
-  <h2>📞 Contact Us</h2>
-  <p>Phone/WhatsApp 1: <a href="https://wa.me/256754178966" target="_blank">0754178966</a></p>
-  <p>Phone/WhatsApp 2: <a href="https://wa.me/256704372147" target="_blank">0704372147</a></p>
-  <p>Email: <a href="mailto:info@chairislamictv.com">info@chairislamictv.com</a></p>
-</section>
-
-<!-- WhatsApp floating buttons -->
-<a href="https://wa.me/256754178966" class="whatsapp-btn" target="_blank">💬 WhatsApp 1</a>
-<a href="https://wa.me/256704372147" class="whatsapp-btn btn2" target="_blank">💬 WhatsApp 2</a>
-
-<footer class="fade-in">
-  © 2026 Chair Islamic TV | All Rights Reserved
+<footer>
+  © 2026 Chair Islamic TV | Founded by Shuraim Kaweesi
 </footer>
 
 <script>
-// MOBILE MENU
-function toggleMenu() {
-  document.getElementById("navLinks").classList.toggle("active");
-}
-
-// SCROLL ANIMATION
-window.addEventListener("scroll", function() {
-  document.querySelectorAll(".fade-in").forEach(section => {
-    const rect = section.getBoundingClientRect();
-    if(rect.top < window.innerHeight - 100) section.classList.add("show");
-  });
-});
-
-// FAKE AI INTERACTIVE
-const responses = {
-  "what is islam": "Islam is the religion of peace and submission to Allah, based on the Qur'an and Sunnah.",
-  "who is allah": "Allah is the One true God, the Creator of the heavens and the earth.",
-  "who is muhammad": "Prophet Muhammad (peace be upon him) is the last messenger of Allah.",
-  "what is ramadan": "Ramadan is the holy month of fasting, reflection, and prayer.",
-  "what is quran": "The Quran is the holy book of Islam, revealed to Prophet Muhammad (peace be upon him)."
+const responses={
+"what is islam":"Islam is submission to Allah based on the Qur'an and Sunnah.",
+"who is muhammad":"Prophet Muhammad (peace be upon him) is the final messenger of Allah.",
+"what is ramadan":"Ramadan is the month of fasting and spiritual reflection."
 };
 
-function getAnswer() {
-  const question = document.getElementById("userQuestion").value.toLowerCase().trim();
-  const answer = responses[question] || 
-                 "Thank you for your question. Shuraim Kaweesi will personally answer it soon, inshaAllah.";
-  document.getElementById("aiAnswer").innerText = answer;
+function reply(){
+const q=document.getElementById("question").value.toLowerCase();
+document.getElementById("answer").innerText=
+responses[q]||"Thank you for your question. Shuraim Kaweesi will respond soon, inshaAllah.";
 }
 </script>
 
