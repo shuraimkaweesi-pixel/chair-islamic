@@ -6,16 +6,30 @@
 
 <title>Chair Islamic TV | Learn Authentic Quran & Sunnah</title>
 
-<meta name="description" content="Chair Islamic TV – Authentic Islamic lectures, Quran reflections, khutbahs and Islamic guidance. Founded by Shuraim Kaweesi.">
+<meta name="description" content="Chair Islamic TV – Authentic Islamic lectures, Quran reflections, khutbahs and guidance. Founded by Shuraim Kaweesi.">
 <meta name="author" content="Shuraim Kaweesi">
 <meta name="google-site-verification" content="MoZqva1Hd1NewOo69A7hxId1dnainlfzWlWDZ6U7JQ4" />
 
 <style>
+:root{
+  --primary:#FFD700;
+  --bg-dark:#031b14;
+  --bg-light:#f4f4f4;
+  --text-dark:white;
+  --text-light:#111;
+}
+
 body{
   margin:0;
   font-family:'Segoe UI',sans-serif;
-  background:linear-gradient(135deg,#031b14,#0f4d3a,#06251c);
-  color:white;
+  background:var(--bg-dark);
+  color:var(--text-dark);
+  transition:.3s ease;
+}
+
+.light-mode{
+  background:var(--bg-light);
+  color:var(--text-light);
 }
 
 /* NAVBAR */
@@ -30,19 +44,18 @@ body{
   top:0;
   z-index:1000;
 }
-<button id="theme-toggle">🌙</button>
+
 .logo{
   display:flex;
   align-items:center;
   gap:12px;
   font-weight:bold;
   font-size:20px;
-  color:#FFD700;
+  color:var(--primary);
 }
 
 .logo img{
   height:50px;
-  width:auto;
 }
 
 .nav-links{
@@ -53,12 +66,16 @@ body{
 
 .nav-links a{
   text-decoration:none;
-  color:white;
-  transition:.3s;
+  color:inherit;
 }
 
-.nav-links a:hover{
-  color:#FFD700;
+#theme-toggle{
+  background:none;
+  border:2px solid var(--primary);
+  color:var(--primary);
+  padding:6px 12px;
+  border-radius:6px;
+  cursor:pointer;
 }
 
 /* HERO */
@@ -69,37 +86,8 @@ body{
 }
 
 .hero h1{
+  color:var(--primary);
   font-size:42px;
-  color:#FFD700;
-}
-
-.hero p{
-  max-width:750px;
-  margin:auto;
-  opacity:.9;
-  font-size:18px;
-}
-
-.cta-buttons{
-  margin-top:30px;
-}
-
-.cta-buttons a{
-  text-decoration:none;
-  padding:12px 25px;
-  margin:10px;
-  border-radius:8px;
-  font-weight:bold;
-}
-
-.primary-btn{
-  background:#FFD700;
-  color:black;
-}
-
-.secondary-btn{
-  border:2px solid #FFD700;
-  color:#FFD700;
 }
 
 /* SECTIONS */
@@ -107,11 +95,18 @@ section{
   max-width:1100px;
   margin:60px auto;
   padding:40px 20px;
+  opacity:0;
+  transform:translateY(40px);
+  transition:.6s ease;
+}
+
+section.visible{
+  opacity:1;
+  transform:translateY(0);
 }
 
 h2{
-  color:#FFD700;
-  margin-bottom:20px;
+  color:var(--primary);
 }
 
 /* CARDS */
@@ -120,12 +115,11 @@ h2{
   padding:25px;
   border-radius:15px;
   margin-bottom:25px;
-  transition:.3s;
 }
 
-.card:hover{
-  transform:translateY(-5px);
-  background:rgba(255,215,0,0.08);
+.card a{
+  color:var(--primary);
+  text-decoration:none;
 }
 
 /* VIDEO */
@@ -133,36 +127,94 @@ iframe{
   width:100%;
   height:400px;
   border-radius:15px;
-  border:3px solid #FFD700;
+  border:3px solid var(--primary);
 }
 
-/* ASK SECTION */
-#ask-scholar{
+/* DONATION */
+#donate{
+  text-align:center;
+  background:rgba(255,215,0,0.1);
+  border-radius:15px;
+}
+
+.donate-btn{
+  background:var(--primary);
+  color:black;
+  padding:12px 25px;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+/* FOOTER */
+footer{
+  background:#0b3d2e;
+  padding:40px 20px;
   text-align:center;
 }
 
-#ask-scholar input{
-  width:60%;
-  padding:12px;
-  border-radius:8px;
-  border:none;
-  margin-bottom:15px;
+footer a{
+  color:var(--primary);
+  text-decoration:none;
 }
+</style>
+</head>
 
-#ask-scholar button{
-  padding:12px 25px;
-  border:none;
-  border-radius:8px;
-  background:#FFD700;
-  font-weight:bold;
-  cursor:pointer;
-}
-<section id="donate">
-  <h2>Support Chair Islamic TV</h2>
-  <p>Your support helps us spread authentic Islamic knowledge worldwide.</p>
-  <a href="#" class="primary-btn">Donate Now</a>
+<body>
+
+<nav class="navbar">
+  <div class="logo">
+    <img src="logo.png" alt="Chair Islamic TV Logo">
+    CHAIR ISLAMIC TV
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#featured">Featured</a></li>
+    <li><a href="#donate">Donate</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+
+  <button id="theme-toggle">🌙</button>
+</nav>
+
+<div class="hero">
+  <h1>Chair Islamic TV</h1>
+  <p>Authentic Islamic knowledge based on the Quran and Sunnah.</p>
+</div>
+
+<section id="featured">
+  <h2>Featured Lecture</h2>
+  <iframe src="https://www.youtube.com/embed/HqTKlgAlW_0" allowfullscreen></iframe>
 </section>
-/* FOOTER */
+
+<section id="blog">
+  <h2>Latest Blog Posts</h2>
+
+  <div class="card">
+    <h3><a href="posts/surah-baqarah.html">Reflection on Surah Al-Baqarah</a></h3>
+    <p>Understanding patience and reliance upon Allah.</p>
+  </div>
+
+  <div class="card">
+    <h3><a href="posts/hadith-week.html">Hadith of the Week</a></h3>
+    <p>The best among you are those who learn the Qur'an and teach it.</p>
+  </div>
+
+</section>
+
+<section id="donate">
+  <h2>Support the Da’wah</h2>
+  <p>Your support helps us spread authentic Islamic knowledge globally.</p>
+  <br>
+  <a href="#" class="donate-btn">Donate Now</a>
+</section>
+
+<section id="about">
+  <h2>About</h2>
+  <p>Founded by Shuraim Kaweesi, Chair Islamic TV aims to spread authentic Islamic teachings through digital media.</p>
+</section>
+
 <footer>
   <p>© 2026 Chair Islamic TV</p>
   <p>Founded by Shuraim Kaweesi</p>
@@ -173,95 +225,27 @@ iframe{
   </p>
 </footer>
 
-footer p{
-  margin:8px 0;
-  opacity:.8;
-}
-</style>
-</head>
-
-<body>
-
-<nav class="navbar">
-  <div class="logo">
-  <img src="logo.png" alt="Chair Islamic TV Logo">
-  <span>CHAIR ISLAMIC TV</span>
-  </div>
-
-  <ul class="nav-links">
-    <li><a href="#featured">Featured</a></li>
-    <li><a href="#posts">Reflections</a></li>
-    <li><a href="#ask-scholar">Ask</a></li>
-    <li><a href="#about">About</a></li>
-  </ul>
-</nav>
-
-<div class="hero">
-  <h1>Chair Islamic TV</h1>
-  <p>
-    Learn authentic Islamic knowledge through Quran reflections,
-    khutbahs and beneficial reminders based on the Quran and Sunnah.
-  </p>
-
-  <div class="cta-buttons">
-    <a href="#featured" class="primary-btn">Watch Lecture</a>
-    <a href="#ask-scholar" class="secondary-btn">Ask a Question</a>
-  </div>
-</div>
-
-<section id="featured">
-  <h2>Featured Lecture</h2>
-  <iframe src="https://www.youtube.com/embed/HqTKlgAlW_0" allowfullscreen></iframe>
-</section>
-
-<section id="posts">
-  <h2>Latest Reflections</h2>
-
-  <div class="card">
-    <h3>Reflection on Surah Al-Baqarah</h3>
-    <p>A reminder about patience and reliance upon Allah in times of difficulty.</p>
-  </div>
-
-  <div class="card">
-    <h3>Hadith of the Week</h3>
-    <p>The best among you are those who learn the Qur'an and teach it.</p>
-  </div>
-
-</section>
-
-<section id="ask-scholar">
-  <h2>Ask a Question</h2>
-  <input type="text" id="question" placeholder="Type your question...">
-  <br>
-  <button onclick="reply()">Ask</button>
-  <p id="answer"></p>
-</section>
-
-<section id="about">
-  <h2>About Chair Islamic TV</h2>
-  <p>
-    Chair Islamic TV was founded by Shuraim Kaweesi with the mission
-    of spreading authentic Islamic teachings globally through modern digital media.
-  </p>
-</section>
-
-<footer>
-  <p>© 2026 Chair Islamic TV</p>
-  <p>Founded by Shuraim Kaweesi</p>
-</footer>
-
 <script>
-const responses={
-"what is islam":"Islam means submission to Allah according to the Qur'an and Sunnah.",
-"who is muhammad":"Prophet Muhammad (peace be upon him) is the final messenger of Allah.",
-"what is ramadan":"Ramadan is the month of fasting, mercy and spiritual purification."
-};
+// Light/Dark Mode
+const toggle = document.getElementById("theme-toggle");
+toggle.addEventListener("click",()=>{
+  document.body.classList.toggle("light-mode");
+  toggle.textContent =
+    document.body.classList.contains("light-mode") ? "🌞" : "🌙";
+});
 
-function reply(){
-const q=document.getElementById("question").value.toLowerCase();
-document.getElementById("answer").innerText=
-responses[q]||"Thank you for your question. We will respond soon, inshaAllah.";
-}
+// Scroll Animation
+const sections = document.querySelectorAll("section");
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("visible");
+    }
+  });
+});
+sections.forEach(section=>{
+  observer.observe(section);
+});
 </script>
 
 </body>
