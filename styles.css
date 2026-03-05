@@ -301,3 +301,13 @@ footer.show {
   background:#f4f4f4;
   color:#111;
 }
+section{
+  opacity:0;
+  transform:translateY(40px);
+  transition:all .6s ease;
+}
+
+section.visible{
+  opacity:1;
+  transform:translateY(0);
+}
