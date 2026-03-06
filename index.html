@@ -20,7 +20,80 @@ margin:0;
 background:#0f172a;
 color:white;
 }
+<!-- ISLAMIC RADIO SECTION -->
+<section class="radio-section">
 
+<h2>📻 CHAIR ISLAMIC RADIO</h2>
+<p class="radio-sub">Live Quran Recitation • Islamic Lectures • Nasheeds</p>
+
+<div class="radio-player">
+<span class="live">🔴 LIVE</span>
+
+<audio controls>
+<source src="https://stream.radiojar.com/8s5u5tpdtwzuv" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>
+
+</div>
+
+<p class="radio-founder">Founder: Shuraim Kaweesi</p>
+
+</section>
+
+<style>
+
+.radio-section{
+background: linear-gradient(135deg,#0a0a0a,#1a1a1a,#000);
+padding:60px 20px;
+text-align:center;
+color:white;
+border-top:3px solid gold;
+border-bottom:3px solid gold;
+}
+
+.radio-section h2{
+font-size:34px;
+color:gold;
+margin-bottom:10px;
+letter-spacing:1px;
+}
+
+.radio-sub{
+color:#ddd;
+margin-bottom:30px;
+font-size:16px;
+}
+
+.radio-player{
+background:#111;
+border:2px solid gold;
+border-radius:12px;
+padding:30px;
+max-width:400px;
+margin:auto;
+box-shadow:0 0 20px rgba(255,215,0,0.3);
+}
+
+.live{
+display:block;
+color:red;
+font-weight:bold;
+margin-bottom:15px;
+font-size:14px;
+}
+
+audio{
+width:100%;
+filter:drop-shadow(0 0 8px gold);
+}
+
+.radio-founder{
+margin-top:25px;
+font-size:14px;
+color:#bbb;
+}
+
+</style>
 header{
 display:flex;
 justify-content:space-between;
@@ -203,7 +276,7 @@ container.appendChild(article);
 
 <h3>Mobile Money Donation</h3>
 
-<p><strong>Send to:</strong> 0754178966</p>
+<p><strong>Send to:</strong> 0704372147</p>
 
 <p>Name: Shuraim Kaweesi</p>
 
@@ -212,7 +285,16 @@ container.appendChild(article);
 <p id="copied" style="display:none;color:lightgreen">
 Number copied!
 </p>
+<section id="radio">
+<h2>📻 CHAIR ISLAMIC RADIO</h2>
+<p>Listen to Quran Recitation & Islamic Lectures</p>
 
+<audio controls autoplay>
+  <source src="https://stream.radiojar.com/8s5u5tpdtwzuv" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+</section>
 </div>
 
 </section>
