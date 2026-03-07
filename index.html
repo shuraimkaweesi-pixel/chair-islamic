@@ -32,7 +32,13 @@
 </script>
 
 <link rel="icon" href="logo.png" />
+<script>
+const toggle=document.getElementById("themeToggle")
 
+toggle.onclick=function(){
+document.body.classList.toggle("light")
+}
+</script>
 <style>
 /* GENERAL */
 body {
