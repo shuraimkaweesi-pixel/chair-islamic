@@ -12,6 +12,19 @@ background-position:center;
 background-repeat:no-repeat;
 background-attachment:fixed;
 }
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+color:white;
+
+background:
+linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.8)),
+url("images/background.jpg");
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+}
 
 /* =======================
    NAVBAR
