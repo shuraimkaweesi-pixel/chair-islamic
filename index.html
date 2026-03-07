@@ -1,32 +1,70 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Chair Islamic TV</title><link rel="stylesheet" href="styles.css"><!-- Android App Ready --><meta name="theme-color" content="#000000">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.json"></head><body><!-- NAVBAR --><nav class="navbar"><a href="#home">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Chair Islamic TV</title><link rel="stylesheet" href="styles.css"><meta name="theme-color" content="#000000">
+<meta name="mobile-web-app-capable" content="yes"></head><body><!-- NAVBAR --><nav class="navbar"><a href="#home">
 <img src="logo.png" height="50">
 </a><ul class="nav-links"><li><a href="#home">Home</a></li>
 <li><a href="#live">Live</a></li>
 <li><a href="#youtube">YouTube</a></li>
 <li><a href="#radio">Radio</a></li>
-<li><a href="#quran">Quran</a></li></ul></nav><!-- HERO --><section id="home" class="hero"><h1>Chair Islamic TV</h1><p>
-Spreading Islamic knowledge through Quran, lectures, live streams and radio.
-</p></section><!-- TIKTOK LIVE --><section id="live"><h2>Live on TikTok</h2><div class="card"><p>Watch our Islamic livestreams on TikTok.</p><a href="https://www.tiktok.com/@chairislamictv/live" target="_blank"><button>Watch Live on TikTok</button>
+<li><a href="#quran">Quran</a></li></ul></nav><!-- HERO --><section id="home" class="hero"><h1>Chair Islamic TV</h1><p>Spreading Islamic knowledge through Quran, lectures, live streams and radio.</p></section><!-- TIKTOK LIVE --><section id="live"><h2>TikTok Live</h2><div class="card" id="tiktokStatus"><p id="liveText">Checking live status...</p><a href="https://www.tiktok.com/@chairislamictv/live" target="_blank"><button>Watch Live on TikTok</button>
 
-</a></div></section><!-- YOUTUBE SECTION --><section id="youtube"><h2>Chair Islamic TV on YouTube</h2><div class="card"><iframe
+</a></div></section><!-- YOUTUBE VIDEOS --><section id="youtube"><h2>Latest Videos</h2><div class="card"><iframe
 width="100%"
 height="400"
 src="https://www.youtube.com/embed?listType=user_uploads&list=chairislamtv"
-title="Chair Islamic TV YouTube"
 frameborder="0"
 allowfullscreen>
-</iframe><br><br>
+</iframe></div><br><a href="https://youtube.com/@chairislamtv" target="_blank"><button>Visit YouTube Channel</button>
 
-<a href="https://youtube.com/@chairislamtv" target="_blank"><button>Visit YouTube Channel</button>
-
-</a></div></section><!-- RADIO SECTION (UNCHANGED) --><section id="radio"><h2>Islamic Radio</h2><div class="card"><p>Listen to our Islamic radio broadcast.</p><audio controls><source src="YOUR-RADIO-STREAM-LINK" type="audio/mpeg"></audio></div></section><!-- QURAN SECTION --><section id="quran"><h2>Quran Recitation</h2><div class="card"><iframe
+</a></section><!-- RADIO --><section id="radio"><h2>Islamic Radio</h2><div class="card"><p>Listen to our Islamic radio broadcast.</p><audio controls><source src="YOUR-RADIO-STREAM-LINK" type="audio/mpeg"></audio></div></section><!-- QURAN --><section id="quran"><h2>Quran Recitation</h2><div class="card"><iframe
 width="100%"
 height="400"
 src="https://www.youtube.com/embed/4Weg8qZJb3U"
-title="Quran Recitation"
 frameborder="0"
 allowfullscreen>
-</iframe></div></section><!-- FOOTER --><footer><p>© 2026 Chair Islamic TV</p></footer></body></html>
+</iframe></div></section><!-- INSTALL APP --><section><h2>Install Chair Islamic TV App</h2><button id="installApp">Install App</button>
+
+</section><!-- FOOTER --><footer><p>© 2026 Chair Islamic TV</p></footer><!-- SCRIPTS --><script>
+
+const liveText = document.getElementById("liveText");
+
+function checkLive(){
+
+const now = new Date().getHours();
+
+if(now >= 18 && now <= 22){
+
+liveText.innerHTML = "🔴 Chair Islamic TV is LIVE on TikTok!";
+
+}else{
+
+liveText.innerHTML = "⚫ Currently offline. Follow us on TikTok.";
+
+}
+
+}
+
+checkLive();
+
+</script><script>
+
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+
+e.preventDefault();
+
+deferredPrompt = e;
+
+document.getElementById("installApp").style.display="block";
+
+});
+
+
+document.getElementById("installApp").addEventListener("click", () => {
+
+deferredPrompt.prompt();
+
+});
+
+</script></body></html>
