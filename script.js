@@ -62,3 +62,8 @@ sections.forEach(section=>{
   observer.observe(section);
 });
 </script>
+function playAyah(surah, ayah, reciter) {
+  const audioUrl = `https://everyayah.com/data/${reciter}/${String(surah).padStart(3,'0')}${String(ayah).padStart(3,'0')}.mp3`;
+  const audio = new Audio(audioUrl);
+  audio.play();
+}
