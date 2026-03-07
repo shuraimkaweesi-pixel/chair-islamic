@@ -1,18 +1,15 @@
-/* ==========================
-   BODY & GLOBAL STYLES
-========================== */
 /* =======================
    BODY & GENERAL
 ======================= */
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #041c14, #0f4d3a, #06251c);
-  color: white;
+  background: #0c0c0c; /* deep black for luxury feel */
+  color: #ffffff; /* default text color */
 }
 
 /* =======================
-   NAVBAR (without logo styling)
+   NAVBAR
 ======================= */
 .navbar {
   display: flex;
@@ -21,7 +18,7 @@ body {
   padding: 20px 40px;
   position: fixed;
   width: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0,0,0,0.85);
   backdrop-filter: blur(10px);
   z-index: 1000;
 }
@@ -33,13 +30,14 @@ body {
 }
 
 .nav-links a {
-  color: white;
+  color: #ffffff;
   text-decoration: none;
+  font-weight: bold;
   transition: 0.3s;
 }
 
 .nav-links a:hover {
-  color: #FFD700;
+  color: #FFD700; /* gold hover effect */
 }
 
 /* =======================
@@ -49,47 +47,58 @@ body {
   padding-top: 120px;
   text-align: center;
   padding-bottom: 60px;
+  background: #0a0a0a;
+  border-bottom: 3px solid #FFD700;
 }
 
 .hero h1 {
-  font-size: 40px;
-  color: #FFD700;
+  font-size: 42px;
+  color: #FFD700; /* luxurious gold */
+  text-shadow: 0 0 10px #FFD700;
 }
 
 .hero p {
   max-width: 700px;
-  margin: auto;
-  opacity: 0.9;
+  margin: 20px auto 0 auto;
+  color: #bfffc1; /* soft green for readability */
+  font-size: 18px;
+  line-height: 1.6;
 }
 
 /* =======================
-   SECTIONS
+   GOLD SECTIONS
 ======================= */
 section {
   max-width: 1100px;
   margin: 60px auto;
   padding: 40px 20px;
+  background: rgba(255,215,0,0.05); /* subtle gold overlay */
+  border-left: 5px solid #FFD700; /* gold accent */
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255,215,0,0.2);
 }
 
 h2 {
   color: #FFD700;
-  border-left: 5px solid #FFD700;
-  padding-left: 10px;
+  margin-bottom: 20px;
+  font-size: 28px;
+  text-shadow: 0 0 5px #FFD700;
 }
 
 /* =======================
-   CARDS
+   CARDS / POSTS
 ======================= */
 .card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0,0,0,0.7);
   padding: 20px;
   border-radius: 12px;
   margin-bottom: 20px;
+  border-left: 5px solid #FFD700;
   transition: 0.3s;
 }
 
 .card:hover {
-  background: rgba(255, 215, 0, 0.1);
+  background: rgba(255,215,0,0.1);
   transform: scale(1.02);
 }
 
@@ -108,6 +117,10 @@ iframe {
 ======================= */
 #ask-scholar {
   text-align: center;
+  padding: 30px;
+  background: rgba(0,0,0,0.85);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255,215,0,0.3);
 }
 
 #ask-scholar input {
@@ -115,6 +128,8 @@ iframe {
   padding: 12px;
   border-radius: 8px;
   border: none;
+  background: #111;
+  color: #bfffc1;
 }
 
 #ask-scholar button {
@@ -122,12 +137,14 @@ iframe {
   border: none;
   border-radius: 8px;
   background: #FFD700;
+  color: #0c0c0c;
   font-weight: bold;
   cursor: pointer;
+  transition: 0.3s;
 }
 
-#ask-scholar p {
-  margin-top: 12px;
+#ask-scholar button:hover {
+  background: #e6c200;
 }
 
 /* =======================
@@ -135,351 +152,19 @@ iframe {
 ======================= */
 footer {
   text-align: center;
-  padding: 30px;
-  background: #0f4d3a;
-  margin-top: 60px;
-}
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #0b3d2e;
-  color: #fff;
-}
-
-/* ==========================
-   NAVBAR
-========================== */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 40px;
-  position: fixed;
-  width: 100%;
-  z-index: 1000;
-  transition: 0.4s;
-  background: #0b3d2e;
-}
-
-.navbar.scrolled {
-  background: #145c42;
-}
-
-.logo {
-  color: #d4af37;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 25px;
-}
-
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  transition: 0.3s;
-}
-
-.nav-links a:hover {
-  color: #d4af37;
-  transform: scale(1.05);
-}
-
-/* ==========================
-   MOBILE MENU
-========================== */
-.hamburger {
-  display: none;
-  font-size: 28px;
-  color: white;
-  cursor: pointer;
-}
-
-@media(max-width:768px){
-  .nav-links {
-    position: absolute;
-    top: 70px;
-    right: 0;
-    background: #0b3d2e;
-    flex-direction: column;
-    width: 200px;
-    display: none;
-    padding: 20px;
-  }
-
-  .nav-links.active {
-    display: flex;
-  }
-
-  .hamburger {
-    display: block;
-  }
-}
-
-/* ==========================
-   SECTIONS
-========================== */
-section {
-  padding: 80px 20px;
-  max-width: 1100px;
-  margin: auto;
-  background: transparent;
-  margin-top: 40px;
-  border-radius: 12px;
-  box-shadow: none;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.8s ease-out;
-}
-
-section.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ==========================
-   HEADINGS (GOLD SHIMMER)
-========================== */
-h2 {
-  position: relative;
-  color: #d4af37;
-  border-left: 5px solid #d4af37;
-  padding-left: 15px;
-  background: linear-gradient(90deg, #d4af37 0%, #fff 50%, #d4af37 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shimmer 3s linear infinite;
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-
-/* ==========================
-   POSTS & LISTS
-========================== */
-.post {
-  margin-bottom: 20px;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-ul li {
-  margin: 10px 0;
-}
-
-/* ==========================
-   BUTTONS & LINKS
-========================== */
-a {
-  display: inline-block;
-  padding: 10px 20px;
-  background: #145c42;
-  color: white;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: 0.3s;
-}
-
-a:hover {
-  background: #d4af37;
-  color: #0b3d2e;
-  transform: scale(1.05);
-}
-
-/* ==========================
-   LIVE SECTION
-========================== */
-#live {
-  background: linear-gradient(135deg, #0b3d2e, #145c42);
-  color: white;
-}
-
-#live h2 {
-  color: #d4af37;
-  border-left: 5px solid white;
-}
-
-/* ==========================
-   FOOTER
-========================== */
-footer {
-  text-align: center;
-  padding: 25px;
-  background: #145c42;
-  color: white;
-  margin-top: 50px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.8s ease-out;
-}
-
-footer.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ==========================
-   WHATSAPP BUTTONS
-========================== */
-.whatsapp-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #25D366;
-  color: white;
-  padding: 15px 20px;
-  border-radius: 50px;
-  font-size: 18px;
-  text-decoration: none;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-  z-index: 1000;
-  transition: 0.3s;
-  animation: bounce 2s infinite;
-}
-
-.whatsapp-btn.btn2 {
-  bottom: 80px;
-}
-
-.whatsapp-btn:hover {
-  background: #128c5e;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-/* ==========================
-   ASK ANYTHING ABOUT ISLAM (PREMIUM GOLD-GREEN)
-========================== */
-#ask-islam {
-  background: linear-gradient(145deg, #0b3d0b, #145214);
   padding: 40px 20px;
-  border-radius: 15px;
-  margin: 50px auto;
-  max-width: 800px;
-  color: #f7d56f;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  text-align: center;
-}
-
-#ask-islam h2 {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color: #ffd966;
-  text-shadow: 1px 1px 2px #000;
-}
-
-#ask-islam input[type="text"] {
-  width: 70%;
-  padding: 12px 15px;
-  border-radius: 10px;
-  border: 2px solid #ffd966;
-  outline: none;
-  font-size: 1rem;
-  margin-bottom: 15px;
-  transition: all 0.3s ease;
-}
-
-#ask-islam input[type="text"]:focus {
-  border-color: #ffec99;
-  box-shadow: 0 0 10px #ffd966;
-}
-
-#ask-islam button {
-  padding: 12px 25px;
-  border-radius: 10px;
-  border: none;
-  background-color: #ffd966;
-  color: #0b3d0b;
+  background: #0f4d3a;
+  color: #ffffff;
   font-weight: bold;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  letter-spacing: 1px;
+  border-top: 3px solid #FFD700;
 }
 
-#ask-islam button:hover {
-  background-color: #ffec99;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+footer a {
+  color: #FFD700;
+  text-decoration: none;
 }
 
-#aiAnswer {
-  margin-top: 20px;
-  font-size: 1.2rem;
-  min-height: 50px;
-  background-color: rgba(255, 255, 150, 0.1);
-  padding: 15px;
-  border-radius: 10px;
-  border-left: 4px solid #ffd966;
-  color: #fffde7;
-  line-height: 1.5;
-  transition: all 0.3s ease;
+footer a:hover {
+  text-decoration: underline;
 }
-#theme-toggle{
-  background:none;
-  border:2px solid #FFD700;
-  color:#FFD700;
-  padding:6px 12px;
-  border-radius:6px;
-  cursor:pointer;
-}
-
-.light-mode{
-  background:#f4f4f4;
-  color:#111;
-}
-section{
-  opacity:0;
-  transform:translateY(40px);
-  transition:all .6s ease;
-}
-
-section.visible{
-  opacity:1;
-  transform:translateY(0);
-}
-<style>
-body{
-background:#0c0c0c;
-color:white;
-transition:0.4s;
-}
-.prayer{
-background:#111;
-padding:20px;
-border-radius:10px;
-border:1px solid gold;
-}
-
-.prayer h3{
-color:gold;
-margin-bottom:10px;
-}
-
-.light .prayer{
-background:#f0f0f0;
-}
-body.light{
-background:white;
-color:black;
-}
-
-header{
-background:#000;
-}
-
-body.light header{
-background:#eee;
-}
-</style>
