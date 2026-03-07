@@ -2,15 +2,13 @@
 <html lang="en">
 
 <head>
-   <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#FFD700">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Chair Islamic TV</title>
 
-<!-- Android App Ready -->
-<meta name="theme-color" content="#000000">
+<!-- PWA Manifest -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
@@ -29,15 +27,6 @@ body{
   background-position:center;
   background-attachment:fixed;
 }
-   <script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/chair-islamic-t.v./sw.js')
-      .then(reg => console.log('Service Worker registered.', reg))
-      .catch(err => console.log('Service Worker registration failed:', err));
-  });
-}
-</script>
 
 /* =======================
    NAVBAR
@@ -299,7 +288,10 @@ footer a:hover {
   <p>© 2026 Chair Islamic TV</p>
 </footer>
 
-<!-- SCRIPTS -->
+<!-- =======================
+   SCRIPTS
+======================= -->
+
 <script>
 // TikTok live status
 const liveText = document.getElementById("liveText");
@@ -373,6 +365,17 @@ function loadSurah(number){
 surahSelect.addEventListener("change", () => {
   loadSurah(surahSelect.value);
 });
+</script>
+
+<script>
+// Register service worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/chair-islamic-t.v./sw.js')
+      .then(reg => console.log('Service Worker registered.', reg))
+      .catch(err => console.log('Service Worker registration failed:', err));
+  });
+}
 </script>
 
 </body>
