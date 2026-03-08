@@ -222,46 +222,37 @@ loadHadith()
 
 
 // ===============================
-// YOUTUBE VIDEOS
+// YOUTUBE VIDEOS - Reliable Embed
 // ===============================
-
-const channelID = "UC5_wjk8WksHOOZHflU9heJQ";
-
 const youtubeContainer = document.getElementById("youtubeVideos");
 
-async function loadYouTubeVideos(){
+// Your channel ID
+const channelID = "UC5_wjk8WksHOOZHflU9heJQ";
 
-try{
+// YouTube embed URLs for latest 5 videos
+const videoIDs = [
+  "replace_with_first_video_id",
+  "replace_with_second_video_id",
+  "replace_with_third_video_id",
+  "replace_with_fourth_video_id",
+  "replace_with_fifth_video_id"
+];
 
-let response = await fetch(
-`https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?channel_id=${channelID}`
-)
-
-let data = await response.json()
-
-let html = ""
-
-data.items.slice(0,5).forEach(video=>{
-
-let id = video.link.split("v=")[1]
-
-html += `
-<iframe
-src="https://youtu.be/zGIBIOMA0PQ?si=uD3OB8C-eFJKwQCn/embed/${id}"
-allowfullscreen
-></iframe>
-`
-
-})
-
-youtubeContainer.innerHTML = html
-
-}catch{
-
-youtubeContainer.innerHTML="Could not load videos"
-
+// If you want to auto update, you can later fetch via YouTube API key
+function loadYouTubeVideos() {
+  let html = "";
+  videoIDs.forEach(id => {
+    html += `
+      <iframe width="100%" height="315"
+        src="https://www.youtube.com/embed/${id}"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe><br><br>
+    `;
+  });
+  youtubeContainer.innerHTML = html;
 }
 
-}
-
-loadYouTubeVideos()
+loadYouTubeVideos();
