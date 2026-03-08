@@ -1,35 +1,6 @@
-// ===============================
-// Chair Islamic TV - Main Script
-// ===============================
-
-// Register Service Worker
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker
-    .register("sw.js")
-    .then(() => console.log("Service Worker Registered"))
-    .catch((err) => console.log("SW registration failed:", err));
-}
-
-// ===============================
-// Ask Question via Email
-// ===============================
-function sendQuestion() {
-  const question = document.getElementById("userQuestion").value;
-
-  if (!question.trim()) {
-    document.getElementById("questionStatus").innerText =
-      "Please type your question first.";
-    return;
-  }
-
-  window.location.href =
-    "mailto:shuraimkaweesi@gmail.com?subject=Question from Chair Islamic TV&body=" +
-    encodeURIComponent(question);
-}
-
-// ===============================
-// Quran Reader Logic
-// ===============================
+// ==========================
+// Quran Reader Upgrade
+// ==========================
 
 const surahs = [
 "Al-Fatiha","Al-Baqarah","Al-Imran","An-Nisa","Al-Ma'idah","Al-An'am","Al-A'raf","Al-Anfal","At-Tawbah","Yunus",
@@ -46,52 +17,71 @@ const surahs = [
 "Al-Masad","Al-Ikhlas","Al-Falaq","An-Nas"
 ];
 
-// Reciters (working servers)
-const reciters = {
-  afasy: "https://server8.mp3quran.net/afs/",
-  sudais: "https://server7.mp3quran.net/sds/",
-  ghamdi: "https://server7.mp3quran.net/s_gmd/"
+const surahSelect = document.getElementById("surahSelect");
+
+surahs.forEach((name, index)=>{
+const option=document.createElement("option");
+option.value=index+1;
+option.textContent=`${index+1}. ${name}`;
+surahSelect.appendChild(option);
+});
+
+function loadSurah(){
+
+const surahNumber=document.getElementById("surahSelect").value;
+
+if(!surahNumber) return;
+
+fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}/editions/quran-uthmani,en.sahih`)
+.then(res=>res.json())
+.then(data=>{
+
+const arabic=data.data[0].ayahs;
+const translation=data.data[1].ayahs;
+
+let html="";
+
+for(let i=0;i<arabic.length;i++){
+
+html+=`
+<div class="ayah">
+<p style="font-size:22px;direction:rtl;text-align:right">${arabic[i].text}</p>
+<p style="color:#bfffc1">${translation[i].text}</p>
+<hr>
+</div>
+`;
+
+}
+
+document.getElementById("quranText").innerHTML=html;
+
+});
+
+loadAudio();
+
+}
+
+function loadAudio(){
+
+const surahNumber=document.getElementById("surahSelect").value;
+const reciter=document.getElementById("reciterSelect").value;
+
+const reciters={
+afasy:"https://server8.mp3quran.net/afs/",
+sudais:"https://server7.mp3quran.net/sds/",
+ghamdi:"https://server7.mp3quran.net/s_gmd/"
 };
 
-const surahSelect = document.getElementById("surahSelect");
-const reciterSelect = document.getElementById("reciterSelect");
-const ayahContainer = document.getElementById("ayahContainer");
+const surahCode=String(surahNumber).padStart(3,"0");
 
-// Populate Surah Dropdown
-if (surahSelect) {
-  surahs.forEach((name, index) => {
-    const option = document.createElement("option");
-    option.value = index + 1;
-    option.textContent = `${index + 1}. ${name}`;
-    surahSelect.appendChild(option);
-  });
+const audioURL=reciters[reciter]+surahCode+".mp3";
+
+document.getElementById("audioPlayer").innerHTML=
+`
+<h3>Surah Audio</h3>
+<audio controls style="width:100%">
+<source src="${audioURL}" type="audio/mpeg">
+</audio>
+`;
+
 }
-
-// Open Quran Reader
-function openQuranReader() {
-  document.getElementById("quranReader").style.display = "block";
-}
-
-// Close Quran Reader
-function closeQuranReader() {
-  document.getElementById("quranReader").style.display = "none";
-}
-
-// Play Surah
-surahSelect.addEventListener("change", function () {
-
-  const surahNumber = surahSelect.value;
-  const reciterKey = reciterSelect.value;
-
-  if (!surahNumber) return;
-
-  const surahCode = String(surahNumber).padStart(3, "0");
-  const audioURL = reciters[reciterKey] + surahCode + ".mp3";
-
-  ayahContainer.innerHTML = `
-    <h3>Playing Surah ${surahs[surahNumber - 1]}</h3>
-    <audio controls autoplay style="width:100%;">
-      <source src="${audioURL}" type="audio/mpeg">
-    </audio>
-  `;
-});
