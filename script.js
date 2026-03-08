@@ -72,7 +72,7 @@ const reciterSelect = document.getElementById('reciterSelect');
 const audioPlayerDiv = document.getElementById('audioPlayer');
 const quranTextDiv = document.getElementById('quranText');
 
-// Populate surahs with proper names
+// Populate surahs with Arabic + English names
 fetch("https://alquran-api.pages.dev/api/quran?lang=en")
   .then(res => res.json())
   .then(data => {
@@ -84,7 +84,7 @@ fetch("https://alquran-api.pages.dev/api/quran?lang=en")
     });
   });
 
-// Reciters audio base URLs
+// Audio URLs
 const reciters = {
   afasy: 'https://cdn.islamic.network/quran/audio-surah/ar.alafasy/',
   sudais: 'https://cdn.islamic.network/quran/audio-surah/ar.abdulrahmanalsudais/',
@@ -121,4 +121,4 @@ async function loadSurah() {
     console.log(err);
     quranTextDiv.innerHTML = "Unable to load Quran text. Try again.";
   }
-        }
+}
