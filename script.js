@@ -3,17 +3,19 @@
 // ----------------------
 
 // ----------------------
-// 1. Quran Reader (UPDATED)
+// 1. Quran Reader
 // ----------------------
 
-const surahSelect = document.getElementById('surahSelect');
-const reciterSelect = document.getElementById('reciterSelect');
-const audioPlayer = document.getElementById('audioPlayer');
-const quranText = document.getElementById('quranText');
+const surahSelect = document.getElementById("surahSelect");
+const reciterSelect = document.getElementById("reciterSelect");
+const audioPlayer = document.getElementById("audioPlayer");
+const quranText = document.getElementById("quranText");
 
 let quranData = [];
+let audioData = [];
 
-async function loadSurahList() {
+// Load Quran text
+async function loadQuran() {
   try {
 
     const res = await fetch("quran-complete.json");
@@ -21,11 +23,13 @@ async function loadSurahList() {
 
     quranData.forEach((surah, index) => {
 
-      const option = document.createElement('option');
+      const option = document.createElement("option");
+
       option.value = index + 1;
 
       option.textContent =
-        `${index + 1}. ${surah.name_translations.ar} (${surah.name_translations.en})`;
+        `${index + 1}. ${surah.name_translations?.ar || surah.name}
+        (${surah.name_translations?.en || ""})`;
 
       surahSelect.appendChild(option);
 
@@ -33,72 +37,97 @@ async function loadSurahList() {
 
   } catch (err) {
 
-    console.error("Failed to load Quran:", err);
+    console.error("Quran JSON failed to load", err);
 
   }
 }
 
 
-function playAyahAudio(surahNum, ayahNum) {
+// Load reciter audio list
+async function loadAudio() {
 
-  const surah = quranData[surahNum - 1];
+  try {
 
-  if (!surah || !surah.recitation) {
-    alert("Audio not available");
-    return;
+    const res = await fetch("quran.json");
+    audioData = await res.json();
+
+  } catch (err) {
+
+    console.error("Audio JSON failed", err);
+
   }
 
-  const base = surah.recitation;
-
-  const parts = base.split("/");
-
-  const file = ayahNum.toString().padStart(3, "0") + ".mp3";
-
-  parts[parts.length - 1] = file;
-
-  const audioURL = parts.join("/");
-
-  const audio = new Audio(audioURL);
-
-  audio.play();
 }
 
 
+// Load selected surah
 function loadSurah() {
 
   const surahNum = parseInt(surahSelect.value);
 
   if (!surahNum) {
+
     alert("Please select a Surah!");
+
     return;
+
   }
 
   const surah = quranData[surahNum - 1];
 
+  if (!surah) {
+
+    alert("Surah not found");
+
+    return;
+
+  }
+
   quranText.innerHTML = "";
 
-  // load full surah audio
-  audioPlayer.innerHTML = `
-  <audio controls style="width:100%">
-    <source src="${surah.recitation}" type="audio/mpeg">
-  </audio>
-  `;
+  // AUDIO
+  const reciterIndex = reciterSelect.selectedIndex;
 
-  // display ayahs
-  surah.ayahs.forEach(ayah => {
+  if (audioData[reciterIndex]) {
+
+    const recitationURL =
+      audioData[reciterIndex].recitation.replace("001.mp3",
+      surahNum.toString().padStart(3,"0") + ".mp3");
+
+    audioPlayer.innerHTML = `
+      <audio controls style="width:100%">
+      <source src="${recitationURL}" type="audio/mpeg">
+      </audio>
+    `;
+
+  }
+
+  // AYAH DISPLAY
+  const ayahs = surah.ayahs || surah.verses || [];
+
+  ayahs.forEach((ayah, index) => {
+
+    const arabic =
+      ayah.text || ayah.arabic || "";
+
+    const translation =
+      ayah.translation?.en ||
+      ayah.translation ||
+      ayah.en ||
+      "";
 
     const div = document.createElement("div");
 
     div.className = "ayah";
 
     div.innerHTML = `
-      <button onclick="playAyahAudio(${surahNum},${ayah.number})">
-      🔊 ${ayah.number}
-      </button>
+      <div class="arabic">
+      ${arabic}
+      </div>
 
-      <div class="arabic">${ayah.text}</div>
-
-      <div class="translation">${ayah.translation}</div>
+      <div class="translation">
+      ${translation}
+      </div>
     `;
 
     quranText.appendChild(div);
@@ -108,13 +137,15 @@ function loadSurah() {
 }
 
 
+
 // ----------------------
 // 2. Auto Latest YouTube Video
 // ----------------------
 
-const youtubeDiv = document.getElementById('youtubeVideos');
+const youtubeDiv = document.getElementById("youtubeVideos");
 
 async function loadLatestYouTube() {
+
   try {
 
     const channelId = "UC-chairislamictv";
@@ -131,28 +162,34 @@ async function loadLatestYouTube() {
 
     if (data.items && data.items.length > 0) {
 
-      const latestVideoId = data.items[0].link.split('v=')[1];
+      const latestVideoId =
+        data.items[0].link.split("v=")[1];
 
       youtubeDiv.innerHTML = `
-        <iframe width="100%" height="315"
-        src="https://www.youtube.com/embed/${latestVideoId}"
-        frameborder="0" allowfullscreen></iframe>
+      <iframe width="100%" height="315"
+      src="https://www.youtube.com/embed/${latestVideoId}"
+      frameborder="0" allowfullscreen>
+      </iframe>
       `;
 
     } else {
 
-      youtubeDiv.innerHTML = "<p>No videos found.</p>";
+      youtubeDiv.innerHTML =
+        "<p>No videos found.</p>";
 
     }
 
   } catch (err) {
 
-    console.error("Error fetching latest YouTube video:", err);
+    console.error("YouTube load error", err);
 
-    youtubeDiv.innerHTML = "<p>Failed to load latest video.</p>";
+    youtubeDiv.innerHTML =
+      "<p>Failed to load latest video.</p>";
 
   }
+
 }
+
 
 
 // ----------------------
@@ -161,74 +198,77 @@ async function loadLatestYouTube() {
 
 async function getPrayerTimes() {
 
-  const city = document.getElementById('cityInput').value;
+  const city =
+    document.getElementById("cityInput").value;
 
-  if (!city) return alert("Enter a city!");
+  if (!city)
+    return alert("Enter a city!");
 
   try {
 
-    const res = await fetch(
+    const res =
+      await fetch(
       `https://api.aladhan.com/v1/timingsByCity?city=${city}&country=&method=2`
-    );
+      );
 
     const data = await res.json();
 
-    const timings = data.data.timings;
+    const t = data.data.timings;
 
-    const container = document.getElementById('prayerTimes');
-
-    container.innerHTML = `
-      <p>Fajr: ${timings.Fajr}</p>
-      <p>Dhuhr: ${timings.Dhuhr}</p>
-      <p>Asr: ${timings.Asr}</p>
-      <p>Maghrib: ${timings.Maghrib}</p>
-      <p>Isha: ${timings.Isha}</p>
+    document.getElementById("prayerTimes").innerHTML = `
+      <p>Fajr: ${t.Fajr}</p>
+      <p>Dhuhr: ${t.Dhuhr}</p>
+      <p>Asr: ${t.Asr}</p>
+      <p>Maghrib: ${t.Maghrib}</p>
+      <p>Isha: ${t.Isha}</p>
     `;
 
   } catch (err) {
 
-    console.error(err);
-
-    alert("Failed to fetch prayer times.");
+    alert("Failed to load prayer times");
 
   }
 
 }
 
 
+
 // ----------------------
-// 4. Ask Question via Email
+// 4. Ask Question Email
 // ----------------------
 
 function sendQuestion() {
 
-  const name = document.getElementById('userName').value;
+  const name =
+    document.getElementById("userName").value;
 
-  const email = document.getElementById('userEmail').value;
+  const email =
+    document.getElementById("userEmail").value;
 
-  const question = document.getElementById('userQuestion').value;
+  const question =
+    document.getElementById("userQuestion").value;
 
   if (!name || !email || !question)
-    return alert("All fields are required!");
+    return alert("All fields required!");
 
   window.location.href =
     `mailto:shuraimkaweesi@gmail.com?subject=Question from ${name}&body=${
       encodeURIComponent(question + "\n\nEmail: " + email)
     }`;
 
-  document.getElementById('questionStatus').textContent =
-    "Email opened in your mail client.";
-
 }
 
 
+
 // ----------------------
-// 5. Initialize Everything
+// 5. Initialize
 // ----------------------
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
 
-  loadSurahList();
+  loadQuran();
+
+  loadAudio();
 
   loadLatestYouTube();
 
