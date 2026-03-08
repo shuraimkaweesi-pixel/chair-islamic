@@ -1,59 +1,27 @@
-// sw.js - Chair Islamic TV Service Worker
-const CACHE_NAME = 'chair-islamic-tv-v1';
+const CACHE_NAME = 'chair-tv-v1';
 const urlsToCache = [
   '/',
   '/index.html',
   '/script.js',
+  '/quran.json',
   '/manifest.json',
-  '/images/background.jpg',
-  // Add any other static assets like CSS files or logos
+  '/style.css',
 ];
 
-// Install event - caching static assets
-self.addEventListener('install', (event) => {
-  console.log('[ServiceWorker] Install');
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log('[ServiceWorker] Caching app shell');
-      return cache.addAll(urlsToCache);
-    })
+self.addEventListener('install', e=>{
+  e.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
   );
 });
 
-// Activate event - cleanup old caches
-self.addEventListener('activate', (event) => {
-  console.log('[ServiceWorker] Activate');
-  event.waitUntil(
-    caches.keys().then((keyList) =>
-      Promise.all(
-        keyList.map((key) => {
-          if (key !== CACHE_NAME) {
-            console.log('[ServiceWorker] Removing old cache', key);
-            return caches.delete(key);
-          }
-        })
-      )
-    )
+self.addEventListener('activate', e=>{
+  e.waitUntil(
+    caches.keys().then(keys=>Promise.all(keys.map(k=>k!==CACHE_NAME?caches.delete(k):null)))
   );
 });
 
-// Fetch event - respond with cached content when offline
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      if (response) {
-        return response; // serve cached
-      }
-      return fetch(event.request).then((networkResponse) => {
-        // Optional: cache new requests dynamically
-        return caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, networkResponse.clone());
-          return networkResponse;
-        });
-      });
-    }).catch(() => {
-      // Fallback offline page if needed
-      return caches.match('/index.html');
-    })
+self.addEventListener('fetch', e=>{
+  e.respondWith(
+    caches.match(e.request).then(r=>r||fetch(e.request))
   );
 });
