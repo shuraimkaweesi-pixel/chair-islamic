@@ -51,92 +51,88 @@ txt.includes(input) ? "block":"none"
 }
 
 
-// ===============================
-// LOAD SURAH
-// ===============================
+async function loadSurah() {
 
-async function loadSurah(){
+  const surahNumber = parseInt(document.getElementById("surahSelect").value);
 
-let surahNumber=surahSelect.value
+  if (!surahNumber) {
+    alert("Please select a Surah");
+    return;
+  }
 
-if(!surahNumber){
+  try {
 
-alert("Select Surah")
+    // Fetch Quran files
+    const arabicRes = await fetch("quran.json");
+    const englishRes = await fetch("quran_en.json");
 
-return
+    if (!arabicRes.ok || !englishRes.ok) {
+      throw new Error("Quran JSON files not found");
+    }
 
-}
+    const arabicData = await arabicRes.json();
+    const englishData = await englishRes.json();
 
-try{
+    // Support different JSON structures
+    const arabicSurah =
+      arabicData[surahNumber - 1] ||
+      arabicData.data?.surahs?.[surahNumber - 1] ||
+      arabicData.surahs?.[surahNumber - 1];
 
-let arabicRes=await fetch("quran.json")
-let englishRes=await fetch("quran_en.json")
+    const englishSurah =
+      englishData[surahNumber - 1] ||
+      englishData.data?.surahs?.[surahNumber - 1] ||
+      englishData.surahs?.[surahNumber - 1];
 
-let arabic=await arabicRes.json()
-let english=await englishRes.json()
+    if (!arabicSurah) {
+      throw new Error("Surah not found in Arabic file");
+    }
 
-let arabicAyahs=arabic[surahNumber-1].ayahs
-let englishAyahs=english[surahNumber-1].ayahs
+    const arabicAyahs = arabicSurah.ayahs || arabicSurah.verses || [];
+    const englishAyahs = englishSurah?.ayahs || englishSurah?.verses || [];
 
-let html=""
+    let html = "";
 
-for(let i=0;i<arabicAyahs.length;i++){
+    for (let i = 0; i < arabicAyahs.length; i++) {
 
-html+=`
+      const arabicText = arabicAyahs[i].text || arabicAyahs[i];
+      const englishText = englishAyahs[i]?.text || englishAyahs[i] || "";
 
-<div class="ayah">
+      html += `
+        <div class="ayah">
+          <div class="arabic">${i + 1}. ${arabicText}</div>
+          <div class="translation">${i + 1}. ${englishText}</div>
+        </div>
+      `;
+    }
 
-<div class="arabic">
-${i+1}. ${arabicAyahs[i].text}
-</div>
+    document.getElementById("quranText").innerHTML = html;
 
-<div class="translation">
-${i+1}. ${englishAyahs[i]?.text || ""}
-</div>
+    // AUDIO PLAYER
+    const reciter = document.getElementById("reciterSelect").value;
 
-</div>
+    const reciters = {
+      afasy: "https://server8.mp3quran.net/afs/",
+      baset: "https://server8.mp3quran.net/bas/",
+      ghamdi: "https://server7.mp3quran.net/s_gmd/"
+    };
 
-`
+    const surahCode = String(surahNumber).padStart(3, "0");
+    const audioURL = reciters[reciter] + surahCode + ".mp3";
 
-}
+    document.getElementById("audioPlayer").innerHTML = `
+      <audio controls>
+        <source src="${audioURL}" type="audio/mpeg">
+      </audio>
+    `;
 
-document.getElementById("quranText").innerHTML=html
+  } catch (error) {
 
+    console.error(error);
 
-// ===============================
-// AUDIO PLAYER
-// ===============================
-
-let surahCode=String(surahNumber).padStart(3,'0')
-
-let reciter=document.getElementById("reciterSelect").value
-
-let reciters={
-afasy:"https://server8.mp3quran.net/afs/",
-baset:"https://server8.mp3quran.net/bas/",
-ghamdi:"https://server7.mp3quran.net/s_gmd/"
-}
-
-let audioURL=reciters[reciter]+surahCode+".mp3"
-
-document.getElementById("audioPlayer").innerHTML=`
-
-<h3>Surah Audio</h3>
-
-<audio controls>
-<source src="${audioURL}" type="audio/mpeg">
-</audio>
-
-`
-
-}catch(e){
-
-console.log(e)
-
-alert("Error loading Quran")
-
-}
-
+    document.getElementById("quranText").innerHTML =
+      "<p style='color:red'>Failed to load Surah. Check Quran JSON files.</p>";
+  }
 }
 
 
