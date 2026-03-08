@@ -142,3 +142,42 @@ document.getElementById("prayerTimes").innerHTML=
 });
 
 }
+// ======================
+// AUTO YOUTUBE VIDEOS
+// ======================
+
+const channelID = "UCeY0bbntWzzVIaj2QGz7x9w"; 
+const youtubeContainer = document.getElementById("youtubeVideos");
+
+fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelID}`)
+
+.then(response => response.text())
+
+.then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+
+.then(data => {
+
+const entries = data.querySelectorAll("entry");
+
+let html = "";
+
+for(let i=0;i<3;i++){
+
+const videoID = entries[i].querySelector("yt\\:videoId").textContent;
+
+html += `
+
+<iframe width="100%" height="315"
+src="https://www.youtube.com/embed/${videoID}"
+allowfullscreen>
+</iframe>
+
+<br><br>
+
+`;
+
+}
+
+youtubeContainer.innerHTML = html;
+
+});
