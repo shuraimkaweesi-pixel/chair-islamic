@@ -85,3 +85,32 @@ document.getElementById("audioPlayer").innerHTML=
 `;
 
 }
+// ==========================
+// Prayer Times
+// ==========================
+
+function getPrayerTimes(){
+
+const city=document.getElementById("cityInput").value || "Kampala";
+
+fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=Uganda&method=2`)
+.then(res=>res.json())
+.then(data=>{
+
+const t=data.data.timings;
+
+document.getElementById("prayerTimes").innerHTML=
+`
+<h3>Prayer Times for ${city}</h3>
+
+<p>🕌 Fajr: ${t.Fajr}</p>
+<p>🌅 Sunrise: ${t.Sunrise}</p>
+<p>🕌 Dhuhr: ${t.Dhuhr}</p>
+<p>🌇 Asr: ${t.Asr}</p>
+<p>🌆 Maghrib: ${t.Maghrib}</p>
+<p>🌙 Isha: ${t.Isha}</p>
+`;
+
+});
+
+}
