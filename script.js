@@ -225,26 +225,43 @@ loadHadith()
 // YOUTUBE VIDEOS
 // ===============================
 
-const channelID="UC5_wjk8WksHOOZHflU9heJQ"
+const channelID = "UC5_wjk8WksHOOZHflU9heJQ";
 
-const youtubeContainer=document.getElementById("youtubeVideos")
+const youtubeContainer = document.getElementById("youtubeVideos");
 
-fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?channel_id=${channelID}`)
+async function loadYouTubeVideos(){
 
-.then(r=>r.json())
+try{
 
-.then(data=>{
+let response = await fetch(
+`https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?channel_id=${channelID}`
+)
 
-let html=""
+let data = await response.json()
 
-data.items.slice(0,3).forEach(v=>{
+let html = ""
 
-let id=v.link.split("v=")[1]
+data.items.slice(0,5).forEach(video=>{
 
-html+=`<iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe>`
+let id = video.link.split("v=")[1]
+
+html += `
+<iframe
+src="https://www.youtube.com/embed/${id}"
+allowfullscreen
+></iframe>
+`
 
 })
 
-youtubeContainer.innerHTML=html
+youtubeContainer.innerHTML = html
 
-})
+}catch{
+
+youtubeContainer.innerHTML="Could not load videos"
+
+}
+
+}
+
+loadYouTubeVideos()
