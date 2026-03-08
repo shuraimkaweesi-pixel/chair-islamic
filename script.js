@@ -1,6 +1,7 @@
 // ======================
 // SURAH LIST
 // ======================
+
 const surahs = [
 "Al-Fatiha","Al-Baqarah","Al-Imran","An-Nisa","Al-Ma'idah","Al-An'am","Al-A'raf","Al-Anfal","At-Tawbah","Yunus",
 "Hud","Yusuf","Ar-Ra'd","Ibrahim","Al-Hijr","An-Nahl","Al-Isra","Al-Kahf","Maryam","Ta-Ha",
@@ -21,58 +22,50 @@ const surahSelect = document.getElementById("surahSelect");
 surahs.forEach((s, i) => {
     const option = document.createElement("option");
     option.value = i + 1;
-    option.textContent = `${i + 1}. ${s}`;
+    option.textContent = (i + 1) + " " + s;
     surahSelect.appendChild(option);
 });
 
 // ======================
 // LOAD SURAH
 // ======================
-async function loadSurah() {
-    const surahNumber = surahSelect.value;
+function loadSurah() {
+    const surahNumber = document.getElementById("surahSelect").value;
+    if (!surahNumber) return;
+
+    // LOAD TEXT
+    fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}/editions/quran-uthmani,en.sahih`)
+        .then(res => res.json())
+        .then(data => {
+            const arabic = data.data[0].ayahs;
+            const translation = data.data[1].ayahs;
+            let html = "";
+            for (let i = 0; i < arabic.length; i++) {
+                html += `
+                <div class="ayah">
+                    <p class="arabic">${arabic[i].text}</p>
+                    <p class="translation">${translation[i].text}</p>
+                </div>
+                `;
+            }
+            document.getElementById("quranText").innerHTML = html;
+        });
+
+    // AUDIO
     const reciter = document.getElementById("reciterSelect").value;
-    if (!surahNumber) return alert("Please select a Surah!");
-
-    try {
-        // Fetch Quran Arabic + English from local json
-        const resArabic = await fetch("quran.json");
-        const resEnglish = await fetch("quran_en.json");
-        const quranArabic = await resArabic.json();
-        const quranEnglish = await resEnglish.json();
-
-        const arabicAyahs = quranArabic[surahNumber - 1].ayahs;
-        const englishAyahs = quranEnglish[surahNumber - 1].ayahs;
-
-        let html = "";
-        for (let i = 0; i < arabicAyahs.length; i++) {
-            html += `
-            <div class="ayah">
-                <p class="arabic">${i+1}. ${arabicAyahs[i].text}</p>
-                <p class="translation">${i+1}. ${englishAyahs[i].text}</p>
-            </div>
-            `;
-        }
-        document.getElementById("quranText").innerHTML = html;
-
-        // Audio
-        const reciters = {
-            afasy: "https://server8.mp3quran.net/afs/",
-            baset: "https://server8.mp3quran.net/bas/",
-            ghamdi: "https://server7.mp3quran.net/s_gmd/"
-        };
-        const surahCode = String(surahNumber).padStart(3, "0");
-        const audioURL = reciters[reciter] + surahCode + ".mp3";
-        document.getElementById("audioPlayer").innerHTML = `
-            <h3>Surah Audio</h3>
-            <audio controls>
-                <source src="${audioURL}" type="audio/mpeg">
-            </audio>
-        `;
-
-    } catch (err) {
-        console.error(err);
-        alert("Failed to load Quran. Make sure quran.json and quran_en.json exist in root.");
-    }
+    const reciters = {
+        afasy: "https://server8.mp3quran.net/afs/",
+        sudais: "https://server11.mp3quran.net/sds/",
+        ghamdi: "https://server7.mp3quran.net/s_gmd/"
+    };
+    const surahCode = String(surahNumber).padStart(3, "0");
+    const audioURL = reciters[reciter] + surahCode + ".mp3";
+    document.getElementById("audioPlayer").innerHTML = `
+        <h3>Surah Audio</h3>
+        <audio controls style="width:100%">
+            <source src="${audioURL}" type="audio/mpeg">
+        </audio>
+    `;
 }
 
 // ======================
@@ -92,8 +85,7 @@ function getPrayerTimes() {
                 <p>🌆 Maghrib: ${t.Maghrib}</p>
                 <p>🌙 Isha: ${t.Isha}</p>
             `;
-        })
-        .catch(err => console.error(err));
+        });
 }
 
 // ======================
@@ -103,17 +95,37 @@ function sendQuestion() {
     const name = document.getElementById("userName").value;
     const email = document.getElementById("userEmail").value;
     const question = document.getElementById("userQuestion").value;
-    if (!question) return document.getElementById("questionStatus").innerText = "Please type your question.";
-
+    if (!question) {
+        document.getElementById("questionStatus").innerText = "Please type your question.";
+        return;
+    }
     const subject = "Islamic Question from Website";
     const body = `Name: ${name}\nEmail: ${email}\n\nQuestion:\n${question}`;
     window.location.href = `mailto:shuraimkaweesi@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
 // ======================
+// INSTALL APP
+// ======================
+let deferredPrompt;
+const installBtn = document.getElementById("installBtn");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = "block";
+});
+
+installBtn.addEventListener("click", async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt = null;
+});
+
+// ======================
 // AUTO YOUTUBE VIDEOS
 // ======================
-const channelID = "UC5_wjk8WksHOOZHflU9heJQ"; // Chair Islamic TV
+const channelID = "UCeY0bbntWzzVIaj2QGz7x9w"; // Chair Islamic TV
 const youtubeContainer = document.getElementById("youtubeVideos");
 
 fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelID}`)
@@ -125,7 +137,10 @@ fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelID}`)
         for (let i = 0; i < Math.min(entries.length, 3); i++) {
             const videoID = entries[i].querySelector("yt\\:videoId").textContent;
             html += `
-                <iframe src="https://www.youtube.com/embed/${videoID}" allowfullscreen></iframe>
+                <iframe width="100%" height="315"
+                src="https://www.youtube.com/embed/${videoID}"
+                allowfullscreen></iframe>
+                <br><br>
             `;
         }
         youtubeContainer.innerHTML = html;
