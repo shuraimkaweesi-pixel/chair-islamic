@@ -1,50 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Chair Islamic TV Quran</title>
-  <style>
-    .ayah { margin-bottom: 15px; }
-    .arabic { font-size: 22px; direction: rtl; text-align: right; }
-    .translation { font-size: 16px; color: #333; }
-    .ayah-number { font-weight: bold; color: #555; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chair Islamic TV - Quran Reader</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; }
+        h1, h2 { text-align: center; }
+        select, input, button { margin: 5px 0; padding: 5px; width: 100%; max-width: 400px; }
+        .ayah { border-bottom: 1px solid #ddd; padding: 10px 0; }
+        .arabic { font-size: 20px; direction: rtl; text-align: right; }
+        .translation { font-size: 16px; color: #333; }
+        #audioPlayer, #prayerTimes, #youtubeVideos { margin-top: 20px; }
+        #installBtn { display: none; padding: 10px 20px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+        form { margin-top: 20px; max-width: 400px; }
+        form input, form textarea, form button { width: 100%; margin-bottom: 10px; }
+    </style>
 </head>
 <body>
 
-  <h1>Chair Islamic TV Quran Reader</h1>
+    <h1>Chair Islamic TV - Quran Reader</h1>
 
-  <label for="surahSelect">Select Surah:</label>
-  <select id="surahSelect">
-    <option value="">--Select Surah--</option>
-  </select>
+    <!-- Surah & Reciter Selection -->
+    <div>
+        <label for="surahSelect">Select Surah:</label>
+        <select id="surahSelect">
+            <option value="">--Select Surah--</option>
+        </select>
 
-  <label for="reciterSelect">Select Reciter:</label>
-  <select id="reciterSelect">
-    <option value="afasy">Afasy</option>
-    <option value="baset">Baset</option>
-    <option value="ghamdi">Ghamdi</option>
-  </select>
+        <label for="reciterSelect">Select Reciter:</label>
+        <select id="reciterSelect">
+            <option value="afasy">Afasy</option>
+            <option value="sudais">Sudais</option>
+            <option value="ghamdi">Ghamdi</option>
+        </select>
 
-  <div id="audioPlayer"></div>
+        <button onclick="loadSurah()">Load Surah</button>
+    </div>
 
-  <div id="quranText"></div>
+    <!-- Quran Text -->
+    <div id="quranText"></div>
 
-  <h2>Latest YouTube Video</h2>
-  <div id="youtubeVideos"></div>
+    <!-- Audio Player -->
+    <div id="audioPlayer"></div>
 
-  <h2>Prayer Times</h2>
-  <input type="text" id="cityInput" placeholder="Enter city">
-  <button onclick="getPrayerTimes()">Get Prayer Times</button>
-  <div id="prayerTimes"></div>
+    <!-- Prayer Times -->
+    <h2>Prayer Times</h2>
+    <input type="text" id="cityInput" placeholder="Enter City (e.g., Kampala)">
+    <button onclick="getPrayerTimes()">Get Prayer Times</button>
+    <div id="prayerTimes"></div>
 
-  <h2>Ask a Question</h2>
-  <input type="text" id="userName" placeholder="Your Name"><br>
-  <input type="email" id="userEmail" placeholder="Your Email"><br>
-  <textarea id="userQuestion" placeholder="Your Question"></textarea><br>
-  <button onclick="sendQuestion()">Send</button>
-  <div id="questionStatus"></div>
+    <!-- YouTube Videos -->
+    <h2>Latest Videos</h2>
+    <div id="youtubeVideos"></div>
 
-  <script src="script.js"></script>
+    <!-- Ask a Question Form -->
+    <h2>Ask a Question</h2>
+    <form onsubmit="sendQuestion(); return false;">
+        <input type="text" id="userName" placeholder="Your Name">
+        <input type="email" id="userEmail" placeholder="Your Email">
+        <textarea id="userQuestion" placeholder="Your Question"></textarea>
+        <button type="submit">Send</button>
+        <p id="questionStatus"></p>
+    </form>
+
+    <!-- Install Button -->
+    <button id="installBtn">Install App</button>
+
+    <!-- Script -->
+    <script src="script.js"></script>
 </body>
 </html>
