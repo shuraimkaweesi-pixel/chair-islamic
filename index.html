@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Chair Islamic TV</title>
-
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#d4af37">
-
-<style>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Chair Islamic TV</title><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#d4af37"><style>
 
 body{
 background:#0f0f0f;
@@ -19,16 +9,16 @@ margin:0;
 padding:20px;
 }
 
-h1,h2{
-color:#ffd700;
-}
-
 .container{
 max-width:900px;
 margin:auto;
 }
 
-select,input,textarea,button{
+h1,h2{
+color:#ffd700;
+}
+
+input,select,textarea,button{
 width:100%;
 padding:10px;
 margin:5px 0;
@@ -40,6 +30,16 @@ button{
 background:#d4af37;
 color:black;
 font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+opacity:0.9;
+}
+
+hr{
+border:1px solid #333;
+margin:30px 0;
 }
 
 .arabic{
@@ -62,87 +62,34 @@ iframe{
 width:100%;
 height:315px;
 border:none;
-margin-bottom:15px;
+margin-bottom:20px;
 }
 
 audio{
 width:100%;
+margin-top:10px;
 }
 
-</style>
-
-</head>
-
-<body>
-
-<div class="container">
-
-<h1>Chair Islamic TV</h1>
-
-<p>
-Welcome to Chair Islamic TV.  
-Read Quran, listen to recitation, watch Islamic videos and check prayer times.
-</p>
-
-<hr>
-
-<h2>Latest Videos</h2>
-
-<div id="youtubeVideos">
+</style></head><body><div class="container"><!-- A. INFO --><h1>Chair Islamic TV</h1><p>
+Welcome to Chair Islamic TV.
+Read the Quran, listen to recitations, watch Islamic videos,
+check prayer times and ask Islamic questions.
+</p><hr><!-- B. LATEST INFO --><h2>Latest Videos</h2><div id="youtubeVideos">
 Loading videos...
-</div>
-
-<hr>
-
-<h2>Ask a Question</h2>
-
-<input id="userName" placeholder="Your Name">
-
-<input id="userEmail" placeholder="Email">
-
-<textarea id="userQuestion" placeholder="Your Question"></textarea>
-
-<button onclick="sendQuestion()">Send Question</button>
-
-<p id="questionStatus"></p>
-
-<hr>
-
-<h2>Prayer Times</h2>
-
-<input id="cityInput" placeholder="Enter City (example Kampala)">
-
-<button onclick="getPrayerTimes()">Get Prayer Times</button>
-
-<div id="prayerTimes"></div>
-
-<hr>
-
-<h2>Quran Reader</h2>
+</div><hr><!-- DAILY HADITH --><h2>Daily Hadith</h2><div id="hadithBox">
+Loading hadith...
+</div><hr><!-- C. ASK QUESTION --><h2>Ask a Question</h2><input id="userName" placeholder="Your Name"><input id="userEmail" placeholder="Your Email"><textarea id="userQuestion" placeholder="Your Question"></textarea><button onclick="sendQuestion()">
+Send Question
+</button><p id="questionStatus"></p><hr><!-- D. PRAYER TIME --><h2>Prayer Times</h2><input id="cityInput" placeholder="Enter City (example Kampala)"><button onclick="getPrayerTimes()">
+Get Prayer Times
+</button><div id="prayerTimes"></div><hr><!-- QURAN READER --><h2>Quran Reader</h2><input
+id="surahSearch"
+placeholder="Search Surah..."
+onkeyup="searchSurah()"
+/>
 
 <select id="surahSelect">
 <option value="">Select Surah</option>
-</select>
-
-<select id="reciterSelect">
-
-<option value="afasy">Mishary Alafasy</option>
-
-<option value="baset">Abdul Baset</option>
-
-<option value="ghamdi">Saad Al Ghamdi</option>
-
-</select>
-
-<button onclick="loadSurah()">Load Surah</button>
-
-<div id="audioPlayer"></div>
-
-<div id="quranText"></div>
-
-</div>
-
-<script src="script.js"></script>
-
-</body>
-</html>
+</select><select id="reciterSelect"><option value="afasy">Mishary Alafasy</option><option value="baset">Abdul Baset</option><option value="ghamdi">Saad Al-Ghamdi</option></select><button onclick="loadSurah()">
+Load Surah
+</button><div id="audioPlayer"></div><div id="quranText"></div></div><script src="script.js"></script></body></html>
