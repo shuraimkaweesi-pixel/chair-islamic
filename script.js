@@ -1,4 +1,4 @@
-// 1️⃣ SERVICE WORKER
+// SERVICE WORKER
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
@@ -7,23 +7,21 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// 2️⃣ INSTALL APP PROMPT
+// INSTALL APP
 let deferredPrompt;
 const installBtn = document.getElementById('installBtn');
-
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
   installBtn.style.display = 'block';
 });
-
 installBtn.addEventListener('click', async () => {
   installBtn.style.display = 'none';
   deferredPrompt.prompt();
   deferredPrompt = null;
 });
 
-// 3️⃣ AUTO LATEST YOUTUBE VIDEO
+// YOUTUBE LATEST
 const youtubeVideosDiv = document.getElementById('youtubeVideos');
 const latestYouTubeVideo = "https://www.youtube.com/embed/zGIBIOMA0PQ?autoplay=0";
 youtubeVideosDiv.innerHTML = `
@@ -32,7 +30,7 @@ youtubeVideosDiv.innerHTML = `
   allowfullscreen></iframe>
 `;
 
-// 4️⃣ PRAYER TIMES
+// PRAYER TIMES
 async function getPrayerTimes() {
   const city = document.getElementById('cityInput').value;
   if (!city) return alert("Please enter a city.");
@@ -54,7 +52,7 @@ async function getPrayerTimes() {
   }
 }
 
-// 5️⃣ ASK QUESTION
+// ASK QUESTION
 function sendQuestion() {
   const name = document.getElementById('userName').value;
   const email = document.getElementById('userEmail').value;
@@ -68,7 +66,7 @@ function sendQuestion() {
   document.getElementById('questionStatus').innerText = "Email client opened. You can send your question now!";
 }
 
-// 6️⃣ QURAN READER
+// QURAN READER
 const surahSelect = document.getElementById('surahSelect');
 const reciterSelect = document.getElementById('reciterSelect');
 const audioPlayerDiv = document.getElementById('audioPlayer');
@@ -82,11 +80,11 @@ for (let i = 1; i <= 114; i++) {
   surahSelect.appendChild(option);
 }
 
-// Reciters
+// Reciters audio base URLs (reliable source)
 const reciters = {
-  afasy: `https://everyayah.com/data/AlAfasy_64kbps/`,
-  sudais: `https://everyayah.com/data/Abdul_Rahman_Al-Sudais_64kbps/`,
-  ghamdi: `https://everyayah.com/data/Saad_Al-Ghamdi_64kbps/`
+  afasy: 'https://cdn.islamic.network/quran/audio-surah/ar.alafasy/',
+  sudais: 'https://cdn.islamic.network/quran/audio-surah/ar.abdulrahmanalsudais/',
+  ghamdi: 'https://cdn.islamic.network/quran/audio-surah/ar.saadghamdi/'
 };
 
 async function loadSurah() {
@@ -101,7 +99,7 @@ async function loadSurah() {
     Your browser does not support audio.
   </audio>`;
 
-  // Fetch Arabic + English translation
+  // Arabic + English translation
   try {
     const res = await fetch(`https://api.alquran.cloud/v1/surah/${surah}/en.asad`);
     const data = await res.json();
