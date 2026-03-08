@@ -1,8 +1,4 @@
-// ===============================
-// Chair Islamic TV - Full script.js
-// ===============================
-
-// 1️⃣ SERVICE WORKER REGISTRATION
+// 1️⃣ SERVICE WORKER
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
@@ -36,7 +32,7 @@ youtubeVideosDiv.innerHTML = `
   allowfullscreen></iframe>
 `;
 
-// 4️⃣ PRAYER TIMES FUNCTION
+// 4️⃣ PRAYER TIMES
 async function getPrayerTimes() {
   const city = document.getElementById('cityInput').value;
   if (!city) return alert("Please enter a city.");
@@ -58,7 +54,7 @@ async function getPrayerTimes() {
   }
 }
 
-// 5️⃣ ASK QUESTION FORM
+// 5️⃣ ASK QUESTION
 function sendQuestion() {
   const name = document.getElementById('userName').value;
   const email = document.getElementById('userEmail').value;
@@ -78,7 +74,7 @@ const reciterSelect = document.getElementById('reciterSelect');
 const audioPlayerDiv = document.getElementById('audioPlayer');
 const quranTextDiv = document.getElementById('quranText');
 
-// Load surah list (1-114)
+// Populate surahs
 for (let i = 1; i <= 114; i++) {
   const option = document.createElement('option');
   option.value = i;
@@ -86,7 +82,7 @@ for (let i = 1; i <= 114; i++) {
   surahSelect.appendChild(option);
 }
 
-// Reciters audio base URLs
+// Reciters
 const reciters = {
   afasy: `https://everyayah.com/data/AlAfasy_64kbps/`,
   sudais: `https://everyayah.com/data/Abdul_Rahman_Al-Sudais_64kbps/`,
@@ -98,14 +94,14 @@ async function loadSurah() {
   const reciter = reciterSelect.value;
   if (!surah) return alert("Select a surah!");
 
-  // 6a️⃣ Audio
+  // Audio
   const audioLink = `${reciters[reciter]}${surah}.mp3`;
   audioPlayerDiv.innerHTML = `<audio controls style="width:100%">
     <source src="${audioLink}" type="audio/mpeg">
     Your browser does not support audio.
   </audio>`;
 
-  // 6b️⃣ Arabic + English translation using AlQuran Cloud API
+  // Fetch Arabic + English translation
   try {
     const res = await fetch(`https://api.alquran.cloud/v1/surah/${surah}/en.asad`);
     const data = await res.json();
