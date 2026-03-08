@@ -2,38 +2,31 @@
 // script.js - Chair Islamic TV Full Features
 // ----------------------
 
-// ----------------------
-// 1. Quran Reader
-// ----------------------
 const surahSelect = document.getElementById('surahSelect');
 const reciterSelect = document.getElementById('reciterSelect');
 const audioPlayer = document.getElementById('audioPlayer');
 const quranText = document.getElementById('quranText');
 
-// Setup reciters
 const reciters = {
   afasy: "afasy",
   baset: "baset",
   ghamdi: "ghamdi"
 };
 
-// Load Quran JSON (quran_en.json)
+// Load Quran JSON
 async function loadSurahList() {
   try {
     const res = await fetch('./quran_en.json');
     const quranData = await res.json();
 
-    // Save data
     window.quranData = quranData;
 
-    // Populate Surah dropdown
     quranData.forEach(surah => {
       const opt = document.createElement('option');
       opt.value = surah.number;
       opt.textContent = `${surah.number}. ${surah.name} (${surah.englishName || surah.english})`;
       surahSelect.appendChild(opt);
     });
-
   } catch (err) {
     console.error("Failed to load Quran JSON:", err);
     alert("Failed to load quran_en.json — check file path and name.");
@@ -54,9 +47,7 @@ function loadSurah() {
   quranText.innerHTML = '';
 
   surah.ayahs.forEach(a => {
-    // Some JSON use different keys for English—try a.en or a.translation
     const englishText = a.en || a.translation || a.textEn || "";
-
     quranText.innerHTML += `
       <div class="ayah">
         <div class="ayah-number">(${a.numberInSurah || a.number})</div>
@@ -66,7 +57,7 @@ function loadSurah() {
     `;
   });
 
-  // Load audio if file exists
+  // Audio
   if (reciters[reciter]) {
     const audioFile = `/audio/${reciter}/${String(surahNum).padStart(3,'0')}.mp3`;
     audioPlayer.innerHTML = `
@@ -79,13 +70,13 @@ function loadSurah() {
 }
 
 // ----------------------
-// 2. Latest YouTube video
+// Latest YouTube Video
 // ----------------------
 const youtubeDiv = document.getElementById('youtubeVideos');
 
 async function loadLatestYouTube() {
   try {
-    const channelId = "UC5_wjk8WksHOOZHflU9heJQ"; // your channel
+    const channelId = "UC5_wjk8WksHOOZHflU9heJQ"; // YOUR CHANNEL
     const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
     const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
     const response = await fetch(proxyUrl);
@@ -97,13 +88,13 @@ async function loadLatestYouTube() {
         <iframe width="100%" height="315" src="https://www.youtube.com/embed/${vid}" allowfullscreen></iframe>
       `;
     }
-  } catch (err) {
+  } catch {
     youtubeDiv.innerHTML = "<p>Unable to load video.</p>";
   }
 }
 
 // ----------------------
-// 3. Prayer Times
+// Prayer Times
 // ----------------------
 async function getPrayerTimes() {
   const city = document.getElementById('cityInput').value;
@@ -127,7 +118,7 @@ async function getPrayerTimes() {
 }
 
 // ----------------------
-// 4. Ask question
+// Ask Question
 // ----------------------
 function sendQuestion() {
   const name = document.getElementById('userName').value;
