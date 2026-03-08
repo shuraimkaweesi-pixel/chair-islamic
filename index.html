@@ -10,6 +10,9 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#FFD700">
 
+  <!-- Versioned CSS to avoid caching -->
+  <link rel="stylesheet" href="style.css?v=2">
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -82,7 +85,6 @@
     #installBtn {
       display: none;
       margin: 20px auto;
-      display: block;
       font-size: 16px;
     }
   </style>
@@ -114,7 +116,7 @@
   </section>
 
   <section id="youtube">
-    <h2>📺 Latest YouTube Videos</h2>
+    <h2>📺 Latest YouTube Video</h2>
     <div id="youtubeVideos"></div>
   </section>
 
@@ -158,9 +160,28 @@
     <div id="quranText"></div>
   </section>
 
-  <!-- Script -->
-  <script src="script.js"></script>
+  <!-- Versioned JS to avoid caching -->
+  <script src="script.js?v=2"></script>
+
+  <script>
+    // PWA Install prompt
+    let deferredPrompt;
+    const installBtn = document.getElementById('installBtn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'block';
+    });
+
+    installBtn.addEventListener('click', async () => {
+      installBtn.style.display = 'none';
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(() => deferredPrompt = null);
+      }
+    });
+  </script>
 
 </body>
-
 </html>
