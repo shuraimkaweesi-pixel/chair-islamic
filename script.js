@@ -1,5 +1,5 @@
 // ===============================
-// Chair Islamic TV - script.js
+// Chair Islamic TV - Full script.js
 // ===============================
 
 // 1️⃣ SERVICE WORKER REGISTRATION
@@ -86,39 +86,41 @@ for (let i = 1; i <= 114; i++) {
   surahSelect.appendChild(option);
 }
 
-function loadSurah() {
+// Reciters audio base URLs
+const reciters = {
+  afasy: `https://everyayah.com/data/AlAfasy_64kbps/`,
+  sudais: `https://everyayah.com/data/Abdul_Rahman_Al-Sudais_64kbps/`,
+  ghamdi: `https://everyayah.com/data/Saad_Al-Ghamdi_64kbps/`
+};
+
+async function loadSurah() {
   const surah = surahSelect.value;
   const reciter = reciterSelect.value;
   if (!surah) return alert("Select a surah!");
 
-  // Quran audio links hosted online
-  const reciters = {
-    afasy: `https://everyayah.com/data/AlAfasy_64kbps/${surah}.mp3`,
-    sudais: `https://everyayah.com/data/Abdul_Rahman_Al-Sudais_64kbps/${surah}.mp3`,
-    ghamdi: `https://everyayah.com/data/Saad_Al-Ghamdi_64kbps/${surah}.mp3`
-  };
-
-  const audioLink = reciters[reciter] || reciters.afasy;
-
+  // 6a️⃣ Audio
+  const audioLink = `${reciters[reciter]}${surah}.mp3`;
   audioPlayerDiv.innerHTML = `<audio controls style="width:100%">
     <source src="${audioLink}" type="audio/mpeg">
     Your browser does not support audio.
   </audio>`;
 
-  // Fetch translation (using Quran API)
-  fetch(`https://api.quran.com/api/v4/verses/by_chapter/${surah}?language=en&words=false`)
-    .then(res => res.json())
-    .then(data => {
-      quranTextDiv.innerHTML = '';
-      data.verses.forEach(v => {
-        const ayahDiv = document.createElement('div');
-        ayahDiv.classList.add('ayah');
-        ayahDiv.innerHTML = `
-          <div class="arabic">${v.text_uthmani}</div>
-          <div class="translation">${v.text_imlaei}</div>
-        `;
-        quranTextDiv.appendChild(ayahDiv);
-      });
-    })
-    .catch(err => console.log(err));
+  // 6b️⃣ Arabic + English translation using AlQuran Cloud API
+  try {
+    const res = await fetch(`https://api.alquran.cloud/v1/surah/${surah}/en.asad`);
+    const data = await res.json();
+    quranTextDiv.innerHTML = '';
+    data.data.ayahs.forEach(a => {
+      const ayahDiv = document.createElement('div');
+      ayahDiv.classList.add('ayah');
+      ayahDiv.innerHTML = `
+        <div class="arabic">${a.text}</div>
+        <div class="translation">${a.translation}</div>
+      `;
+      quranTextDiv.appendChild(ayahDiv);
+    });
+  } catch (err) {
+    console.log(err);
+    quranTextDiv.innerHTML = "Unable to load Quran text. Try again.";
+  }
 }
