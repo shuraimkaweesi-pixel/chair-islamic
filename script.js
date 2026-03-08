@@ -1,131 +1,147 @@
-<!DOCTYPE html>  <html lang="en">  <head>  
-  <meta charset="UTF-8">  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-  <title>Chair Islamic TV</title>    <!-- PWA Manifest -->    <link rel="manifest" href="manifest.json">  
-  <meta name="theme-color" content="#FFD700">    <style>  
-    body {  
-      font-family: Arial, sans-serif;  
-      margin: 0;  
-      background: #000;  
-      color: white;  
-    }  
-  
-    header {  
-      background: #111;  
-      padding: 20px;  
-      text-align: center;  
-      color: #FFD700;  
-    }  
-  
-    nav {  
-      display: flex;  
-      justify-content: center;  
-      gap: 20px;  
-      background: #222;  
-      padding: 10px;  
-    }  
-  
-    nav a {  
-      color: white;  
-      text-decoration: none;  
-      font-weight: bold;  
-    }  
-  
-    section {  
-      padding: 40px;  
-      border-bottom: 1px solid #333;  
-    }  
-  
-    button {  
-      padding: 10px 15px;  
-      background: #FFD700;  
-      border: none;  
-      cursor: pointer;  
-    }  
-  
-    input,  
-    select,  
-    textarea {  
-      padding: 10px;  
-      margin: 5px 0;  
-      width: 100%;  
-      box-sizing: border-box;  
-    }  
-  
-    #quranText {  
-      margin-top: 20px;  
-      line-height: 2;  
-    }  
-  
-    .ayah {  
-      margin-bottom: 15px;  
-    }  
-  
-    .arabic {  
-      font-size: 22px;  
-      direction: rtl;  
-      text-align: right;  
-    }  
-  
-    .translation {  
-      color: #9cff9c;  
-    }  
-  
-    #installBtn {  
-      display: none;  
-      margin: 20px auto;  
-      display: block;  
-      font-size: 16px;  
-    }  
-  </style>  </head>  <body>    <header>  
-    <h1>Chair Islamic TV</h1>  
-    <p>Authentic Islamic Knowledge</p>  
-  </header>    <!-- Install App Button -->  <button id="installBtn">📲 Install Chair Islamic TV App</button>
+// ======================
+// SURAH LIST
+// ======================
 
-  <nav>  
-    <a href="#radio">Radio</a>  
-    <a href="#youtube">YouTube</a>  
-    <a href="#tiktok">TikTok</a>  
-    <a href="#prayer">Prayer</a>  
-    <a href="#quran">Quran</a>  
-  </nav>    <section id="radio">  
-    <h2>📻 Islamic Radio</h2>  
-    <audio controls style="width:100%">  
-      <source src="https://stream.radiojar.com/8s5u5tpdtwzuv" type="audio/mpeg">  
-    </audio>  
-  </section>    <section id="youtube">  
-    <h2>📺 Latest YouTube Videos</h2>  
-    <div id="youtubeVideos"></div>  
-  </section>    <section id="tiktok">  
-    <h2>🎵 TikTok</h2>  
-    <p>Watch our TikTok channel:</p>  
-    <a href="https://www.tiktok.com/@chairislamictv" target="_blank">  
-      <button>Open TikTok</button>  
-    </a>  
-  </section>    <section id="prayer">  
-    <h2>🕌 Prayer Times</h2>  
-    <input id="cityInput" placeholder="Enter city (e.g Kampala)">  
-    <button onclick="getPrayerTimes()">Get Prayer Times</button>  
-    <div id="prayerTimes"></div>  
-  </section>    <section id="questions">  
-    <h2>❓ Ask a Question</h2>  
-    <p>If you have an Islamic question, send it directly.</p>  
-    <input id="userName" placeholder="Your Name">  
-    <input id="userEmail" placeholder="Your Email">  
-    <textarea id="userQuestion" placeholder="Type your question here..." rows="5"></textarea>  
-    <button onclick="sendQuestion()">Send Question</button>  
-    <p id="questionStatus"></p>  
-  </section>    <section id="quran">  
-    <h2>📖 Quran Reader</h2>  
-    <select id="surahSelect">  
-      <option value="">Select Surah</option>  
-    </select>  
-    <select id="reciterSelect">  
-      <option value="afasy">Mishary Al-Afasy</option>  
-      <option value="sudais">Abdul Rahman Al-Sudais</option>  
-      <option value="ghamdi">Saad Al-Ghamdi</option>  
-    </select>  
-    <button onclick="loadSurah()">Load Surah</button>  
-    <div id="audioPlayer"></div>  
-    <div id="quranText"></div>  
-  </section>    <!-- Script -->    <script src="script.js"></script>  </body>  </html>
+const surahs = [
+"Al-Fatiha","Al-Baqarah","Al-Imran","An-Nisa","Al-Ma'idah","Al-An'am","Al-A'raf","Al-Anfal","At-Tawbah","Yunus",
+"Hud","Yusuf","Ar-Ra'd","Ibrahim","Al-Hijr","An-Nahl","Al-Isra","Al-Kahf","Maryam","Ta-Ha",
+"Al-Anbiya","Al-Hajj","Al-Mu'minun","An-Nur","Al-Furqan","Ash-Shu'ara","An-Naml","Al-Qasas","Al-Ankabut","Ar-Rum",
+"Luqman","As-Sajda","Al-Ahzab","Saba","Fatir","Ya-Sin","As-Saffat","Sad","Az-Zumar","Ghafir",
+"Fussilat","Ash-Shura","Az-Zukhruf","Ad-Dukhan","Al-Jathiyah","Al-Ahqaf","Muhammad","Al-Fath","Al-Hujurat","Qaf",
+"Adh-Dhariyat","At-Tur","An-Najm","Al-Qamar","Ar-Rahman","Al-Waqia","Al-Hadid","Al-Mujadila","Al-Hashr","Al-Mumtahina",
+"As-Saff","Al-Jumua","Al-Munafiqun","At-Taghabun","At-Talaq","At-Tahrim","Al-Mulk","Al-Qalam","Al-Haaqqa","Al-Maarij",
+"Nuh","Al-Jinn","Al-Muzzammil","Al-Muddaththir","Al-Qiyama","Al-Insan","Al-Mursalat","An-Naba","An-Naziat","Abasa",
+"At-Takwir","Al-Infitar","Al-Mutaffifin","Al-Inshiqaq","Al-Buruj","At-Tariq","Al-Ala","Al-Ghashiyah","Al-Fajr","Al-Balad",
+"Ash-Shams","Al-Lail","Ad-Dhuha","Ash-Sharh","At-Tin","Al-Alaq","Al-Qadr","Al-Bayyinah","Az-Zalzalah","Al-Adiyat",
+"Al-Qaria","At-Takathur","Al-Asr","Al-Humazah","Al-Fil","Quraish","Al-Ma'un","Al-Kawthar","Al-Kafirun","An-Nasr",
+"Al-Masad","Al-Ikhlas","Al-Falaq","An-Nas"
+];
+
+// populate dropdown
+const surahSelect = document.getElementById("surahSelect");
+surahs.forEach((s, i) => {
+    const option = document.createElement("option");
+    option.value = i + 1;
+    option.textContent = (i + 1) + " " + s;
+    surahSelect.appendChild(option);
+});
+
+// ======================
+// LOAD SURAH
+// ======================
+function loadSurah() {
+    const surahNumber = document.getElementById("surahSelect").value;
+    if (!surahNumber) return;
+
+    // LOAD TEXT
+    fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}/editions/quran-uthmani,en.sahih`)
+        .then(res => res.json())
+        .then(data => {
+            const arabic = data.data[0].ayahs;
+            const translation = data.data[1].ayahs;
+            let html = "";
+            for (let i = 0; i < arabic.length; i++) {
+                html += `
+                <div class="ayah">
+                    <p class="arabic">${arabic[i].text}</p>
+                    <p class="translation">${translation[i].text}</p>
+                </div>
+                `;
+            }
+            document.getElementById("quranText").innerHTML = html;
+        });
+
+    // AUDIO
+    const reciter = document.getElementById("reciterSelect").value;
+    const reciters = {
+        afasy: "https://server8.mp3quran.net/afs/",
+        sudais: "https://server11.mp3quran.net/sds/",
+        ghamdi: "https://server7.mp3quran.net/s_gmd/"
+    };
+    const surahCode = String(surahNumber).padStart(3, "0");
+    const audioURL = reciters[reciter] + surahCode + ".mp3";
+    document.getElementById("audioPlayer").innerHTML = `
+        <h3>Surah Audio</h3>
+        <audio controls style="width:100%">
+            <source src="${audioURL}" type="audio/mpeg">
+        </audio>
+    `;
+}
+
+// ======================
+// PRAYER TIMES
+// ======================
+function getPrayerTimes() {
+    const city = document.getElementById("cityInput").value || "Kampala";
+    fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=Uganda&method=2`)
+        .then(res => res.json())
+        .then(data => {
+            const t = data.data.timings;
+            document.getElementById("prayerTimes").innerHTML = `
+                <p>🕌 Fajr: ${t.Fajr}</p>
+                <p>🌅 Sunrise: ${t.Sunrise}</p>
+                <p>🕌 Dhuhr: ${t.Dhuhr}</p>
+                <p>🌇 Asr: ${t.Asr}</p>
+                <p>🌆 Maghrib: ${t.Maghrib}</p>
+                <p>🌙 Isha: ${t.Isha}</p>
+            `;
+        });
+}
+
+// ======================
+// SEND QUESTION
+// ======================
+function sendQuestion() {
+    const name = document.getElementById("userName").value;
+    const email = document.getElementById("userEmail").value;
+    const question = document.getElementById("userQuestion").value;
+    if (!question) {
+        document.getElementById("questionStatus").innerText = "Please type your question.";
+        return;
+    }
+    const subject = "Islamic Question from Website";
+    const body = `Name: ${name}\nEmail: ${email}\n\nQuestion:\n${question}`;
+    window.location.href = `mailto:shuraimkaweesi@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+// ======================
+// INSTALL APP
+// ======================
+let deferredPrompt;
+const installBtn = document.getElementById("installBtn");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = "block";
+});
+
+installBtn.addEventListener("click", async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt = null;
+});
+
+// ======================
+// AUTO YOUTUBE VIDEOS
+// ======================
+const channelID = "UCeY0bbntWzzVIaj2QGz7x9w"; // Chair Islamic TV
+const youtubeContainer = document.getElementById("youtubeVideos");
+
+fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelID}`)
+    .then(response => response.text())
+    .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+    .then(data => {
+        const entries = data.querySelectorAll("entry");
+        let html = "";
+        for (let i = 0; i < Math.min(entries.length, 3); i++) {
+            const videoID = entries[i].querySelector("yt\\:videoId").textContent;
+            html += `
+                <iframe width="100%" height="315"
+                src="https://www.youtube.com/embed/${videoID}"
+                allowfullscreen></iframe>
+                <br><br>
+            `;
+        }
+        youtubeContainer.innerHTML = html;
+    });
