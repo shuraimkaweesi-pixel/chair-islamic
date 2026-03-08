@@ -1,78 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chair Islamic TV</title>
+
+  <!-- PWA Manifest -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#FFD700">
-  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #000;
+      color: white;
+    }
+
+    header {
+      background: #111;
+      padding: 20px;
+      text-align: center;
+      color: #FFD700;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      background: #222;
+      padding: 10px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    section {
+      padding: 40px;
+      border-bottom: 1px solid #333;
+    }
+
+    button {
+      padding: 10px 15px;
+      background: #FFD700;
+      border: none;
+      cursor: pointer;
+    }
+
+    input,
+    select,
+    textarea {
+      padding: 10px;
+      margin: 5px 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    #quranText {
+      margin-top: 20px;
+      line-height: 2;
+    }
+
+    .ayah {
+      margin-bottom: 15px;
+    }
+
+    .arabic {
+      font-size: 22px;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .translation {
+      color: #9cff9c;
+    }
+
+    #installBtn {
+      display: none;
+      margin: 20px auto;
+      display: block;
+      font-size: 16px;
+    }
+  </style>
 </head>
+
 <body>
 
-<header>
-  <h1>Chair Islamic TV</h1>
-  <p>Authentic Islamic Knowledge</p>
-</header>
+  <header>
+    <h1>Chair Islamic TV</h1>
+    <p>Authentic Islamic Knowledge</p>
+  </header>
 
-<button id="installBtn" style="display:none;">📲 Install Chair Islamic TV App</button>
+  <!-- Install App Button -->
+  <button id="installBtn">📲 Install Chair Islamic TV App</button>
 
-<nav>
-  <a href="#radio">Radio</a>
-  <a href="#youtube">YouTube</a>
-  <a href="#tiktok">TikTok</a>
-  <a href="#prayer">Prayer</a>
-  <a href="#quran">Quran</a>
-</nav>
+  <nav>
+    <a href="#radio">Radio</a>
+    <a href="#youtube">YouTube</a>
+    <a href="#tiktok">TikTok</a>
+    <a href="#prayer">Prayer</a>
+    <a href="#quran">Quran</a>
+  </nav>
 
-<section id="radio">
-  <h2>📻 Islamic Radio</h2>
-  <audio controls style="width:100%">
-    <source src="https://stream.radiojar.com/8s5u5tpdtwzuv" type="audio/mpeg">
-  </audio>
-</section>
+  <section id="radio">
+    <h2>📻 Islamic Radio</h2>
+    <audio controls style="width:100%">
+      <source src="https://stream.radiojar.com/8s5u5tpdtwzuv" type="audio/mpeg">
+    </audio>
+  </section>
 
-<section id="youtube">
-  <h2>📺 Latest YouTube Videos</h2>
-  <div id="youtubeVideos"></div>
-</section>
+  <section id="youtube">
+    <h2>📺 Latest YouTube Videos</h2>
+    <div id="youtubeVideos"></div>
+  </section>
 
-<section id="tiktok">
-  <h2>🎵 TikTok</h2>
-  <a href="https://www.tiktok.com/@chairislamictv" target="_blank">
-    <button>Open TikTok</button>
-  </a>
-</section>
+  <section id="tiktok">
+    <h2>🎵 TikTok</h2>
+    <p>Watch our TikTok channel:</p>
+    <a href="https://www.tiktok.com/@chairislamictv" target="_blank">
+      <button>Open TikTok</button>
+    </a>
+  </section>
 
-<section id="prayer">
-  <h2>🕌 Prayer Times</h2>
-  <input id="cityInput" placeholder="Enter city (e.g Kampala)">
-  <button onclick="getPrayerTimes()">Get Prayer Times</button>
-  <div id="prayerTimes"></div>
-</section>
+  <section id="prayer">
+    <h2>🕌 Prayer Times</h2>
+    <input id="cityInput" placeholder="Enter city (e.g Kampala)">
+    <button onclick="getPrayerTimes()">Get Prayer Times</button>
+    <div id="prayerTimes"></div>
+  </section>
 
-<section id="questions">
-  <h2>❓ Ask a Question</h2>
-  <input id="userName" placeholder="Your Name">
-  <input id="userEmail" placeholder="Your Email">
-  <textarea id="userQuestion" placeholder="Type your question here..." rows="5"></textarea>
-  <button onclick="sendQuestion()">Send Question</button>
-  <p id="questionStatus"></p>
-</section>
+  <section id="questions">
+    <h2>❓ Ask a Question</h2>
+    <p>If you have an Islamic question, send it directly.</p>
+    <input id="userName" placeholder="Your Name">
+    <input id="userEmail" placeholder="Your Email">
+    <textarea id="userQuestion" placeholder="Type your question here..." rows="5"></textarea>
+    <button onclick="sendQuestion()">Send Question</button>
+    <p id="questionStatus"></p>
+  </section>
 
-<section id="quran">
-  <h2>📖 Quran Reader</h2>
-  <select id="surahSelect"><option value="">Select Surah</option></select>
-  <select id="reciterSelect">
-    <option value="afasy">Mishary Al-Afasy</option>
-    <option value="sudais">Abdul Rahman Al-Sudais</option>
-    <option value="ghamdi">Saad Al-Ghamdi</option>
-  </select>
-  <button onclick="loadSurah()">Load Surah</button>
-  <div id="audioPlayer"></div>
-  <div id="quranText"></div>
-</section>
+  <section id="quran">
+    <h2>📖 Quran Reader</h2>
+    <select id="surahSelect">
+      <option value="">Select Surah</option>
+    </select>
+    <select id="reciterSelect">
+      <option value="afasy">Mishary Al-Afasy</option>
+      <option value="sudais">Abdul Rahman Al-Sudais</option>
+      <option value="ghamdi">Saad Al-Ghamdi</option>
+    </select>
+    <button onclick="loadSurah()">Load Surah</button>
+    <div id="audioPlayer"></div>
+    <div id="quranText"></div>
+  </section>
 
-<script src="script.js"></script>
+  <!-- Script -->
+  <script src="script.js"></script>
+
 </body>
+
 </html>
