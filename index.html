@@ -1,188 +1,142 @@
-<!DOCTYPE html>
-<html lang="en">
+// ----------------------
+// script.js - Chair Islamic TV Full Features
+// ----------------------
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chair Islamic TV</title>
+const surahSelect = document.getElementById('surahSelect');
+const reciterSelect = document.getElementById('reciterSelect');
+const audioPlayer = document.getElementById('audioPlayer');
+const quranText = document.getElementById('quranText');
 
-  <!-- PWA Manifest -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#FFD700">
+const reciters = {
+  afasy: "afasy",
+  baset: "baset",
+  ghamdi: "ghamdi"
+};
 
-  <!-- Versioned CSS to avoid caching -->
-  <link rel="stylesheet" href="style.css?v=2">
+// Load Quran JSON
+async function loadSurahList() {
+  try {
+    const res = await fetch('./quran_en.json');
+    const quranData = await res.json();
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #000;
-      color: white;
-    }
+    window.quranData = quranData;
 
-    header {
-      background: #111;
-      padding: 20px;
-      text-align: center;
-      color: #FFD700;
-    }
-
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      background: #222;
-      padding: 10px;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    section {
-      padding: 40px;
-      border-bottom: 1px solid #333;
-    }
-
-    button {
-      padding: 10px 15px;
-      background: #FFD700;
-      border: none;
-      cursor: pointer;
-    }
-
-    input,
-    select,
-    textarea {
-      padding: 10px;
-      margin: 5px 0;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    #quranText {
-      margin-top: 20px;
-      line-height: 2;
-    }
-
-    .ayah {
-      margin-bottom: 15px;
-    }
-
-    .arabic {
-      font-size: 22px;
-      direction: rtl;
-      text-align: right;
-    }
-
-    .translation {
-      color: #9cff9c;
-    }
-
-    #installBtn {
-      display: none;
-      margin: 20px auto;
-      font-size: 16px;
-    }
-  </style>
-</head>
-
-<body>
-
-  <header>
-    <h1>Chair Islamic TV</h1>
-    <p>Authentic Islamic Knowledge</p>
-  </header>
-
-  <!-- Install App Button -->
-  <button id="installBtn">📲 Install Chair Islamic TV App</button>
-
-  <nav>
-    <a href="#radio">Radio</a>
-    <a href="#youtube">YouTube</a>
-    <a href="#tiktok">TikTok</a>
-    <a href="#prayer">Prayer</a>
-    <a href="#quran">Quran</a>
-  </nav>
-
-  <section id="radio">
-    <h2>📻 Islamic Radio</h2>
-    <audio controls style="width:100%">
-      <source src="https://stream.radiojar.com/8s5u5tpdtwzuv" type="audio/mpeg">
-    </audio>
-  </section>
-
-  <section id="youtube">
-    <h2>📺 Latest YouTube Video</h2>
-    <div id="youtubeVideos"></div>
-  </section>
-
-  <section id="tiktok">
-    <h2>🎵 TikTok</h2>
-    <p>Watch our TikTok channel:</p>
-    <a href="https://www.tiktok.com/@chairislamictv" target="_blank">
-      <button>Open TikTok</button>
-    </a>
-  </section>
-
-  <section id="prayer">
-    <h2>🕌 Prayer Times</h2>
-    <input id="cityInput" placeholder="Enter city (e.g Kampala)">
-    <button onclick="getPrayerTimes()">Get Prayer Times</button>
-    <div id="prayerTimes"></div>
-  </section>
-
-  <section id="questions">
-    <h2>❓ Ask a Question</h2>
-    <p>If you have an Islamic question, send it directly.</p>
-    <input id="userName" placeholder="Your Name">
-    <input id="userEmail" placeholder="Your Email">
-    <textarea id="userQuestion" placeholder="Type your question here..." rows="5"></textarea>
-    <button onclick="sendQuestion()">Send Question</button>
-    <p id="questionStatus"></p>
-  </section>
-
-  <section id="quran">
-    <h2>📖 Quran Reader</h2>
-    <select id="surahSelect">
-      <option value="">Select Surah</option>
-    </select>
-    <select id="reciterSelect">
-      <option value="afasy">Mishary Al-Afasy</option>
-      <option value="sudais">Abdul Rahman Al-Sudais</option>
-      <option value="ghamdi">Saad Al-Ghamdi</option>
-    </select>
-    <button onclick="loadSurah()">Load Surah</button>
-    <div id="audioPlayer"></div>
-    <div id="quranText"></div>
-  </section>
-
-  <!-- Versioned JS to avoid caching -->
-  <script src="script.js?v=2"></script>
-
-  <script>
-    // PWA Install prompt
-    let deferredPrompt;
-    const installBtn = document.getElementById('installBtn');
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installBtn.style.display = 'block';
+    quranData.forEach(surah => {
+      const opt = document.createElement('option');
+      opt.value = surah.number;
+      opt.textContent = `${surah.number}. ${surah.name} (${surah.englishName || surah.english})`;
+      surahSelect.appendChild(opt);
     });
+  } catch (err) {
+    console.error("Failed to load Quran JSON:", err);
+    alert("Failed to load quran_en.json — check file path and name.");
+  }
+}
 
-    installBtn.addEventListener('click', async () => {
-      installBtn.style.display = 'none';
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then(() => deferredPrompt = null);
-      }
-    });
-  </script>
+// Display selected Surah
+function loadSurah() {
+  const surahNum = Number(surahSelect.value);
+  const reciter = reciterSelect.value.toLowerCase();
 
-</body>
+  if (!surahNum) return;
+  if (!window.quranData) return alert("Quran data not loaded yet.");
 
-</html>
+  const surah = window.quranData.find(s => s.number === surahNum);
+  if (!surah) return alert("Surah not found.");
+
+  quranText.innerHTML = '';
+
+  surah.ayahs.forEach(a => {
+    const englishText = a.en || a.translation || a.textEn || "";
+    quranText.innerHTML += `
+      <div class="ayah">
+        <div class="ayah-number">(${a.numberInSurah || a.number})</div>
+        <div class="arabic">${a.text}</div>
+        <div class="translation">${englishText}</div>
+      </div>
+    `;
+  });
+
+  // Audio
+  if (reciters[reciter]) {
+    const audioFile = `/audio/${reciter}/${String(surahNum).padStart(3,'0')}.mp3`;
+    audioPlayer.innerHTML = `
+      <audio controls style="width:100%">
+        <source src="${audioFile}" type="audio/mpeg">
+        Your browser does not support audio playback.
+      </audio>
+    `;
+  }
+}
+
+// ----------------------
+// Latest YouTube Video
+// ----------------------
+const youtubeDiv = document.getElementById('youtubeVideos');
+
+async function loadLatestYouTube() {
+  try {
+    const channelId = "UC5_wjk8WksHOOZHflU9heJQ"; // YOUR CHANNEL
+    const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+    const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+    const response = await fetch(proxyUrl);
+    const data = await response.json();
+
+    if (data.items && data.items.length > 0) {
+      const vid = data.items[0].link.split('v=')[1];
+      youtubeDiv.innerHTML = `
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/${vid}" allowfullscreen></iframe>
+      `;
+    }
+  } catch {
+    youtubeDiv.innerHTML = "<p>Unable to load video.</p>";
+  }
+}
+
+// ----------------------
+// Prayer Times
+// ----------------------
+async function getPrayerTimes() {
+  const city = document.getElementById('cityInput').value;
+  if (!city) return;
+
+  try {
+    const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=&method=2`);
+    const data = await res.json();
+    const times = data.data.timings;
+
+    document.getElementById('prayerTimes').innerHTML = `
+      <p>Fajr: ${times.Fajr}</p>
+      <p>Dhuhr: ${times.Dhuhr}</p>
+      <p>Asr: ${times.Asr}</p>
+      <p>Maghrib: ${times.Maghrib}</p>
+      <p>Isha: ${times.Isha}</p>
+    `;
+  } catch {
+    alert("Unable to load prayer times.");
+  }
+}
+
+// ----------------------
+// Ask Question
+// ----------------------
+function sendQuestion() {
+  const name = document.getElementById('userName').value;
+  const email = document.getElementById('userEmail').value;
+  const question = document.getElementById('userQuestion').value;
+
+  if (!name || !email || !question) return;
+
+  window.location.href = `mailto:shuraimkaweesi@gmail.com?subject=Question from ${name}&body=${encodeURIComponent(question + "\n\nEmail: " + email)}`;
+  document.getElementById('questionStatus').textContent = "Opening email…";
+}
+
+// ----------------------
+// Init
+// ----------------------
+document.addEventListener('DOMContentLoaded', () => {
+  loadSurahList();
+  loadLatestYouTube();
+  surahSelect.addEventListener('change', loadSurah);
+  reciterSelect.addEventListener('change', loadSurah);
+});
