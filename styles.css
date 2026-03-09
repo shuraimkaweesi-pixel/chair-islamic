@@ -17,6 +17,23 @@ background-attachment:fixed;
 }
 
 /* =======================
+   HEADER / LOGO
+======================= */
+.header{
+display:flex;
+flex-direction:column;
+align-items:center;
+text-align:center;
+margin-bottom:20px;
+}
+
+.logo{
+width:120px;
+height:auto;
+margin-bottom:10px;
+}
+
+/* =======================
    NAVBAR
 ======================= */
 .navbar{
@@ -184,6 +201,60 @@ background:#e6c200;
 }
 
 /* =======================
+   DONATE BUTTON
+======================= */
+.donate-btn{
+background:#FFD700;
+color:black;
+padding:14px 25px;
+font-size:18px;
+border-radius:8px;
+display:inline-block;
+margin-top:15px;
+box-shadow:0 0 15px rgba(255,215,0,0.6);
+}
+
+.donate-btn:hover{
+background:#e6c200;
+transform:scale(1.05);
+}
+
+/* =======================
+   QURAN READER
+======================= */
+#quranText{
+max-height:500px;
+overflow-y:auto;
+padding-right:10px;
+}
+
+.arabic{
+direction:rtl;
+text-align:right;
+font-size:22px;
+line-height:2;
+color:#ffffff;
+}
+
+.translation{
+direction:ltr;
+text-align:left;
+color:#bfffc1;
+margin-bottom:15px;
+}
+
+/* =======================
+   BIOGRAPHY
+======================= */
+#biography{
+background:#141414;
+padding:15px;
+border-radius:8px;
+line-height:1.6;
+color:#eee;
+}
+
+/* =======================
    FOOTER
 ======================= */
 footer{
@@ -209,8 +280,14 @@ text-decoration:underline;
 ======================= */
 @media(max-width:768px){
 
+.navbar{
+flex-direction:column;
+gap:10px;
+}
+
 .nav-links{
 flex-direction:column;
+align-items:center;
 gap:10px;
 }
 
@@ -227,45 +304,4 @@ width:90%;
 margin-bottom:10px;
 }
 
-}
-#quranText{
-line-height:2;
-font-size:18px;
-direction:rtl;
-text-align:right;
-}
-
-#quranText span{
-display:block;
-direction:ltr;
-text-align:left;
-margin-bottom:20px;
-}
-#biography{
-background:#141414;
-padding:15px;
-border-radius:8px;
-line-height:1.6;
-color:#eee;
-}
-.logo {
-  width: 120px;       /* Adjust size */
-  height: auto;
-  display: block;
-  margin-bottom: 10px;
-}
-.header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-.header {
-  display: flex;
-  flex-direction: column; /* Stack logo on top of title */
-  align-items: center;    /* Center horizontally */
-  text-align: center;     /* Center the text inside h1 */
-  margin-bottom: 20px;    /* Space below header */
-}
-
-.header .logo {
-  margin-bottom: 10px;    /* Space between logo and title */
 }
