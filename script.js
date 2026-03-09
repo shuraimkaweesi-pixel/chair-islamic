@@ -232,7 +232,7 @@ const channelID = "UC5_wjk8WksHOOZHflU9heJQ";
 // YouTube embed URLs for latest 5 videos
 const videoIDs = [
   "ZGwG7UBlFCc",
-  "replace_with_second_video_id",
+  "zGIBIOMA0PQ",
   "replace_with_third_video_id",
   "replace_with_fourth_video_id",
   "replace_with_fifth_video_id"
