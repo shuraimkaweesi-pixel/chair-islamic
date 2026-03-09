@@ -245,9 +245,6 @@ const channelID = "UC5_wjk8WksHOOZHflU9heJQ";
 const videoIDs = [
   "ZGwG7UBlFCc",
   "zGIBIOMA0PQ",
-  "replace_with_third_video_id",
-  "replace_with_fourth_video_id",
-  "replace_with_fifth_video_id"
 ];
 
 // If you want to auto update, you can later fetch via YouTube API key
