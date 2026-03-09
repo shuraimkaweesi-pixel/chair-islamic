@@ -258,3 +258,14 @@ color:#eee;
   text-align: center;
   margin-bottom: 20px;
 }
+.header {
+  display: flex;
+  flex-direction: column; /* Stack logo on top of title */
+  align-items: center;    /* Center horizontally */
+  text-align: center;     /* Center the text inside h1 */
+  margin-bottom: 20px;    /* Space below header */
+}
+
+.header .logo {
+  margin-bottom: 10px;    /* Space between logo and title */
+}
