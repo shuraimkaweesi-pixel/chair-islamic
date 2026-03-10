@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,13 +26,8 @@ body {
   margin:auto;
 }
 
-h1,h2 {
-  color:#FFD700;
-}
-
-p{
-  color:#ddd;
-}
+h1,h2 { color:#FFD700; }
+p { color:#ddd; }
 
 button {
   width:80%;
@@ -48,11 +42,9 @@ button {
   cursor:pointer;
 }
 
-button:hover {
-  opacity:0.9;
-}
+button:hover { opacity:0.9; }
 
-/* Donation section */
+/* Donation Section */
 .donate-section{
   background:#1a1a1a;
   padding:15px;
@@ -73,9 +65,7 @@ button:hover {
   font-weight:bold;
 }
 
-.donate-section a:hover{
-  opacity:0.9;
-}
+.donate-section a:hover{ opacity:0.9; }
 
 /* Bottom Navigation */
 .bottom-nav{
@@ -96,9 +86,7 @@ button:hover {
   flex:1;
   text-align:center;
 }
-.bottom-nav a:hover{
-  color:white;
-}
+.bottom-nav a:hover{ color:white; }
 </style>
 </head>
 
@@ -118,44 +106,8 @@ button:hover {
 </div>
 
 <!-- App Install Button -->
-<button id="installBtn" style="display:none;">
-  Install Chair Islamic TV 📲
-</button>
-  <script>
-let deferredPrompt;
+<button id="installBtn" style="display:none;">Install Chair Islamic TV 📲</button>
 
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault(); 
-  deferredPrompt = e;
-
-  const installBtn = document.getElementById("installBtn");
-  installBtn.style.display = "block"; // Show button
-
-  installBtn.addEventListener("click", () => {
-    installBtn.style.display = "none"; // Hide after click
-    deferredPrompt.prompt();
-
-    deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === "accepted") {
-        console.log("User accepted the install");
-      } else {
-        console.log("User dismissed the install");
-      }
-      deferredPrompt = null;
-    });
-  });
-});
-
-// Register service worker for PWA
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("service-worker.js")
-      .then(reg => console.log("Service Worker Registered"))
-      .catch(err => console.log("Service Worker Failed", err));
-  });
-}
-  </script>
-  
 <!-- Donate Section -->
 <div class="donate-section">
 <h2>Support Chair Islamic TV</h2>
@@ -184,7 +136,7 @@ if ("serviceWorker" in navigator) {
 </div>
 
 <script>
-// PWA Install
+// ===== PWA Install Button =====
 let deferredPrompt;
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
@@ -195,13 +147,11 @@ window.addEventListener("beforeinstallprompt", (e) => {
   installBtn.addEventListener("click", () => {
     installBtn.style.display = "none";
     deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => {
-      deferredPrompt = null;
-    });
+    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
   });
 });
 
-// Service Worker
+// ===== Service Worker Registration =====
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("worker.js")
