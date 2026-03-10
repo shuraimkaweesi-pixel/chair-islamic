@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Hadith | Chair Islamic TV</title>
+<title>Daily Hadith | Chair Islamic TV</title>
 
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FFD700">
@@ -16,7 +16,7 @@
 body{
 background:#0f0f0f;
 color:#FFD700;
-font-family:Arial;
+font-family:Arial, sans-serif;
 margin:0;
 padding:20px;
 padding-bottom:90px;
@@ -28,17 +28,33 @@ max-width:900px;
 margin:auto;
 }
 
-h1,h2{
+h1{
 color:#FFD700;
 }
 
-#hadithBox{
+p{
+color:#ddd;
+}
+
+.hadith-box{
 background:#1a1a1a;
 padding:20px;
 border-radius:8px;
 margin-top:20px;
-color:#eee;
 line-height:1.6;
+}
+
+.arabic{
+font-size:24px;
+direction:rtl;
+text-align:right;
+color:white;
+margin-bottom:20px;
+}
+
+.translation{
+font-size:18px;
+color:#ddd;
 }
 
 /* Bottom Navigation */
@@ -77,12 +93,12 @@ color:white;
 
 <h1>Daily Hadith</h1>
 
-<p>
-Read authentic sayings of Prophet Muhammad ﷺ
-</p>
+<p>Authentic sayings of Prophet Muhammad ﷺ</p>
 
-<div id="hadithBox">
+<div id="hadithBox" class="hadith-box">
+
 Loading Hadith...
+
 </div>
 
 </div>
@@ -105,13 +121,11 @@ Loading Hadith...
 
 <script>
 
-/* Load Random Hadith */
-
 async function loadHadith(){
 
 try{
 
-const response = await fetch("https://api.hadith.sutanlab.id/books/muslim?range=1-20");
+const response = await fetch("https://api.hadith.sutanlab.id/books/muslim?range=1-50");
 
 const data = await response.json();
 
@@ -120,14 +134,22 @@ const hadithList = data.data.hadiths;
 const random = hadithList[Math.floor(Math.random()*hadithList.length)];
 
 document.getElementById("hadithBox").innerHTML = `
-<p>${random.arab}</p>
+
+<div class="arabic">
+${random.arab}
+</div>
+
 <hr>
-<p>${random.id}</p>
+
+<div class="translation">
+${random.id}
+</div>
+
 `;
 
 }catch(error){
 
-document.getElementById("hadithBox").innerHTML="Failed to load hadith.";
+document.getElementById("hadithBox").innerHTML="Could not load hadith.";
 
 }
 
