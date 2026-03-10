@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Quran Reader | Chair Islamic TV</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
+
+<style>
+
+body{
+background:#0f0f0f;
+color:#FFD700;
+font-family:Arial;
+margin:0;
+padding:20px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+h1,h2{
+color:#FFD700;
+text-align:center;
+}
+
+input,select,button{
+width:100%;
+padding:10px;
+margin:5px 0;
+border:none;
+border-radius:6px;
+}
+
+button{
+background:#FFD700;
+color:black;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+opacity:0.9;
+}
+
+.arabic{
+font-size:26px;
+direction:rtl;
+text-align:right;
+color:white;
+}
+
+.translation{
+font-size:18px;
+color:#ddd;
+}
+
+.ayah{
+border-bottom:1px solid #333;
+padding:12px 0;
+}
+
+audio{
+width:100%;
+margin-top:15px;
+}
+
+.back-btn{
+background:#333;
+color:#FFD700;
+margin-bottom:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<button class="back-btn" onclick="goBack()">
+⬅ Back to Home
+</button>
+
+<h1>Quran Reader</h1>
+
+<input
+id="surahSearch"
+placeholder="Search Surah..."
+onkeyup="searchSurah()"
+/>
+
+<select id="surahSelect">
+<option value="">Select Surah</option>
+</select>
+
+<select id="reciterSelect">
+<option value="afasy">Mishary Alafasy</option>
+<option value="baset">Abdul Baset</option>
+<option value="ghamdi">Saad Al-Ghamdi</option>
+</select>
+
+<button onclick="loadSurah()">
+Load Surah
+</button>
+
+<div id="audioPlayer"></div>
+
+<div id="quranText"></div>
+
+</div>
+
+<script src="script.js"></script>
+
+<script>
+
+function goBack(){
+window.location.href="index.html"
+}
+
+</script>
+
+</body>
+
+</html>
