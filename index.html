@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,6 +31,10 @@ h1,h2 {
   color:#FFD700;
 }
 
+p{
+  color:#ddd;
+}
+
 button {
   width:80%;
   padding:15px;
@@ -44,6 +49,31 @@ button {
 }
 
 button:hover {
+  opacity:0.9;
+}
+
+/* Donation section */
+.donate-section{
+  background:#1a1a1a;
+  padding:15px;
+  border-radius:8px;
+  margin:20px auto;
+  text-align:center;
+}
+
+.donate-section a{
+  display:block;
+  background:#FFD700;
+  color:black;
+  padding:10px;
+  margin:10px auto;
+  width:70%;
+  border-radius:6px;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.donate-section a:hover{
   opacity:0.9;
 }
 
@@ -78,15 +108,33 @@ button:hover {
 <h1>Welcome to Chair Islamic TV</h1>
 <p>Read Quran, view Hadith, check Prayer Times, watch Islamic Videos.</p>
 
+<!-- Founder Biography -->
+<h2>Founder Biography</h2>
+<div>
+<p>Welcome to Chair Islamic TV, where faith meets innovation! I'm <b>KAWEESI SHURAIM</b>, the founder of this dynamic platform. Born and raised in <b>Masajja, Kampala</b>, I was inspired by the values of compassion, knowledge, and unity taught by Islam.</p>
+<p>With a passion for media and a desire to share the beauty of Islam, I embarked on this journey to create a hub for authentic Islamic content.</p>
+<p>At Chair Islamic TV, we're committed to spreading the message of peace and love. Our team works tirelessly to bring you engaging programs, insightful lectures, and inspiring stories.</p>
+<p>Join us on this journey as we strive to make a positive impact and uplift communities worldwide. 🌟</p>
+</div>
+
+<!-- App Install Button -->
+<button id="installBtn" style="display:none;">Install Chair Islamic TV 📲</button>
+
+<!-- Donate Section -->
+<div class="donate-section">
+<h2>Support Chair Islamic TV</h2>
+<p>Your donations help us spread Islamic knowledge and maintain this platform.</p>
+<a href="https://www.paypal.com/donate" target="_blank">Donate with PayPal / Card</a>
+<a href="https://flutterwave.com/pay" target="_blank">Donate with Flutterwave</a>
+<a href="tel:+2567541789666">Donate via Airtel / MTN</a>
+</div>
+
 <!-- Feature Buttons -->
 <h2>Features</h2>
 <a href="quran.html"><button>📖 Quran Reader</button></a>
 <a href="hadith.html"><button>📜 Daily Hadith</button></a>
 <a href="prayer.html"><button>🕌 Prayer Times</button></a>
 <a href="videos.html"><button>🎥 Latest Videos</button></a>
-
-<!-- Install Button -->
-<button id="installBtn" style="display:none;">Install Chair Islamic TV 📲</button>
 
 </div>
 
@@ -111,7 +159,7 @@ window.addEventListener("beforeinstallprompt", (e) => {
   installBtn.addEventListener("click", () => {
     installBtn.style.display = "none";
     deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
+    deferredPrompt.userChoice.then(() => {
       deferredPrompt = null;
     });
   });
@@ -126,6 +174,5 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
-
 </body>
 </html>
