@@ -1,5 +1,112 @@
-index.html   → Home
-quran.html   → Quran reader
-hadith.html  → Daily hadith
-prayer.html  → Prayer times
-videos.html  → YouTube videos
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Islamic Videos | Chair Islamic TV</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
+
+<style>
+
+body {
+    background: #0f0f0f;
+    color: #FFD700;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    padding-bottom: 90px;
+    text-align: center;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+h1 {
+    color: #FFD700;
+    margin-bottom: 20px;
+}
+
+iframe {
+    width: 100%;
+    height: 250px;
+    border: none;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #000;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0;
+    border-top: 1px solid #333;
+}
+
+.bottom-nav a {
+    color: #FFD700;
+    text-decoration: none;
+    font-size: 14px;
+    flex: 1;
+    text-align: center;
+}
+
+.bottom-nav a:hover {
+    color: white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Latest Islamic Videos</h1>
+
+<iframe src="https://www.youtube.com/embed/zGIBIOMA0PQ" 
+title="Chair Islamic TV Video 1" allowfullscreen>
+</iframe>
+
+<iframe src="https://www.youtube.com/embed/ZGwG7UBlFCc" 
+title="Chair Islamic TV Video 2" allowfullscreen>
+</iframe>
+
+<iframe src="https://www.youtube.com/embed/replace_with_third_video_id" 
+title="Chair Islamic TV Video 3" allowfullscreen>
+</iframe>
+
+<iframe src="https://www.youtube.com/embed/replace_with_fourth_video_id" 
+title="Chair Islamic TV Video 4" allowfullscreen>
+</iframe>
+
+<iframe src="https://www.youtube.com/embed/replace_with_fifth_video_id" 
+title="Chair Islamic TV Video 5" allowfullscreen>
+</iframe>
+
+</div>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+
+<a href="index.html">🏠 Home</a>
+<a href="quran.html">📖 Quran</a>
+<a href="hadith.html">📜 Hadith</a>
+<a href="prayer.html">🕌 Prayer</a>
+<a href="videos.html">🎥 Videos</a>
+
+</div>
+
+</body>
+</html>
