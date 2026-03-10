@@ -202,39 +202,42 @@ window.location.href=`mailto:shuraimkaweesi@gmail.com?subject=${encodeURICompone
 
 
 // ===============================
-// DAILY HADITH (ENGLISH - DAILY UPDATE)
+// DAILY HADITH (Offline, Auto-update Daily)
 // ===============================
-
 async function loadHadith() {
   try {
-    let today = new Date().toDateString();
-    let storedDate = localStorage.getItem("hadithDate");
-    let storedHadith = localStorage.getItem("hadithContent");
+    const today = new Date().toDateString();
+    const storedDate = localStorage.getItem("hadithDate");
+    const storedHadith = localStorage.getItem("hadithContent");
 
+    // If already loaded today, use cached version
     if (storedDate === today && storedHadith) {
       document.getElementById("hadithBox").innerHTML = storedHadith;
       return;
     }
 
-    let res = await fetch("https://api.hadith.sutanlab.id/books/muslim?range=1-300");
-    if (!res.ok) throw new Error("Failed to fetch Hadith");
+    // Fetch local JSON file
+    const res = await fetch("hadith.json");
+    if (!res.ok) throw new Error("Failed to load local Hadith file");
 
-    let data = await res.json();
-    let hadiths = data.data.hadiths;
+    const data = await res.json();
+    const hadiths = data.hadiths;
 
-    let randomHadith = hadiths[Math.floor(Math.random() * hadiths.length)];
+    // Pick a random Hadith
+    const randomHadith = hadiths[Math.floor(Math.random() * hadiths.length)];
 
-    // Ensure proper fields exist
-    let arabicText = randomHadith.arab || "Arabic not available";
-    let englishText = randomHadith.id || randomHadith.en || "Translation not available";
+    const arabicText = randomHadith.arab || "Arabic not available";
+    const englishText = randomHadith.en || "Translation not available";
 
-    let hadithHTML = `
+    const hadithHTML = `
       <div class="arabic">${arabicText}</div>
       <div class="translation">${englishText}</div>
       <p style="color:#FFD700">Sahih Muslim #${randomHadith.number || "-"}</p>
     `;
 
     document.getElementById("hadithBox").innerHTML = hadithHTML;
+
+    // Save to localStorage so it shows same Hadith for today
     localStorage.setItem("hadithDate", today);
     localStorage.setItem("hadithContent", hadithHTML);
 
