@@ -293,3 +293,37 @@ function loadYouTubeVideos() {
 }
 
 loadYouTubeVideos();
+
+// ===============================
+// PWA INSTALL BUTTON
+// ===============================
+
+let deferredPrompt;
+const installBtn = document.getElementById("installBtn");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+
+  e.preventDefault();
+  deferredPrompt = e;
+
+  installBtn.style.display = "block";
+
+});
+
+installBtn.addEventListener("click", async () => {
+
+  if (!deferredPrompt) return;
+
+  deferredPrompt.prompt();
+
+  const choice = await deferredPrompt.userChoice;
+
+  if (choice.outcome === "accepted") {
+    console.log("User installed the app");
+  } else {
+    console.log("User dismissed install");
+  }
+
+  deferredPrompt = null;
+
+});
