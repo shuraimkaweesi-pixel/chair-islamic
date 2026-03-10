@@ -1,5 +1,80 @@
-index.html   → Home
-quran.html   → Quran reader
-hadith.html  → Daily hadith
-prayer.html  → Prayer times
-videos.html  → YouTube videos
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Prayer Times | Chair Islamic TV</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FFD700">
+
+<style>
+
+body{
+background:#0f0f0f;
+color:#FFD700;
+font-family:Arial, sans-serif;
+margin:0;
+padding:20px;
+padding-bottom:90px;
+text-align:center;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+h1{
+color:#FFD700;
+}
+
+input,button{
+width:100%;
+padding:12px;
+margin:8px 0;
+border:none;
+border-radius:6px;
+}
+
+button{
+background:#FFD700;
+color:black;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+opacity:0.9;
+}
+
+.prayer-box{
+background:#1a1a1a;
+padding:20px;
+border-radius:8px;
+margin-top:20px;
+color:#eee;
+line-height:1.8;
+}
+
+/* Bottom Navigation */
+
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+background:#000;
+display:flex;
+justify-content:space-around;
+padding:12px 0;
+border-top:1px solid #333;
+}
+
+.bottom-nav a{
+color:#FFD700;
+text-decoration:none;
+font-size:14px
