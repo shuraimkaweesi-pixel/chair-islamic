@@ -2,227 +2,116 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Daily Hadith | Chair Islamic TV</title>
 
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FFD700">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="apple-touch-icon" href="logo.png">
 
 <link rel="stylesheet" href="styles.css">
 
 <style>
-
-.hadith-box{
-background:#1a1a1a;
-padding:20px;
-border-radius:10px;
-margin-top:20px;
+/* Additional Hadith styles */
+.arabic {
+  font-size: 24px;
+  text-align: right;
+  direction: rtl;
+  color: #fff;
+  margin-bottom: 20px;
 }
 
-.arabic{
-font-size:22px;
-direction:rtl;
-line-height:1.9;
-margin-bottom:20px;
+.translation {
+  font-size: 18px;
+  color: #ddd;
 }
 
-.english{
-font-size:16px;
-line-height:1.7;
-color:#ddd;
+#hadithBox {
+  background: #1a1a1a;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  line-height: 1.6;
 }
 
-.source{
-margin-top:15px;
-font-size:14px;
-color:#aaa;
+/* Bottom Navigation */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #000;
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 0;
+  border-top: 1px solid #333;
 }
 
-.hadith-buttons{
-margin-top:20px;
+.bottom-nav a {
+  color: #FFD700;
+  text-decoration: none;
+  font-size: 14px;
+  flex: 1;
+  text-align: center;
 }
 
-.hadith-buttons button{
-width:45%;
-margin:5px;
+.bottom-nav a:hover {
+  color: white;
 }
-
-.favorite{
-background:#222;
-padding:10px;
-border-radius:8px;
-margin-top:20px;
-}
-
 </style>
-
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>📜 Hadith of the Day</h1>
-
+<h1>Daily Hadith</h1>
 <p>Authentic sayings of Prophet Muhammad ﷺ</p>
 
-<div id="hadithBox" class="hadith-box">
-Loading Hadith...
-</div>
-
-<div class="hadith-buttons">
-
-<button onclick="loadRandomHadith()">🔄 New Hadith</button>
-
-<button onclick="saveHadith()">❤️ Save Hadith</button>
+<div id="hadithBox">Loading Hadith...</div>
 
 </div>
-
-<div id="favoriteBox" class="favorite">
-<h3>Saved Hadith</h3>
-<p id="savedHadith">No saved hadith yet.</p>
-</div>
-
-</div>
-
 
 <!-- Bottom Navigation -->
-
 <div class="bottom-nav">
-
-<a href="index.html">🏠 Home</a>
-
-<a href="quran.html">📖 Quran</a>
-
-<a href="hadith.html">📜 Hadith</a>
-
-<a href="prayer.html">🕌 Prayer</a>
-
-<a href="videos.html">🎥 Videos</a>
-
+  <a href="index.html">🏠 Home</a>
+  <a href="quran.html">📖 Quran</a>
+  <a href="hadith.html">📜 Hadith</a>
+  <a href="prayer.html">🕌 Prayer</a>
+  <a href="videos.html">🎥 Videos</a>
 </div>
 
-
 <script>
+// =======================
+// Load Random Hadith
+// =======================
+async function loadHadith() {
+  try {
+    // Load local JSON file (hadiths.json)
+    const response = await fetch("hadiths.json");
+    const data = await response.json();
 
-let currentHadith = ""
+    // Pick a random Hadith
+    const random = data[Math.floor(Math.random() * data.length)];
 
-/* =========================
-   HADITH OF THE DAY
-========================= */
-
-async function loadDailyHadith(){
-
-const today = new Date().toDateString()
-
-const storedDate = localStorage.getItem("hadithDate")
-
-if(storedDate === today){
-
-document.getElementById("hadithBox").innerHTML =
-localStorage.getItem("dailyHadith")
-
-return
-
+    // Display
+    document.getElementById("hadithBox").innerHTML = `
+      <div class="arabic">${random.arab}</div>
+      <hr>
+      <div class="translation">${random.en}</div>
+    `;
+  } catch (error) {
+    document.getElementById("hadithBox").innerHTML = "Could not load Hadith.";
+    console.error("Hadith load error:", error);
+  }
 }
 
-loadRandomHadith(true)
-
-}
-
-
-/* =========================
-   LOAD RANDOM HADITH
-========================= */
-
-async function loadRandomHadith(saveDaily=false){
-
-const hadithBox = document.getElementById("hadithBox")
-
-hadithBox.innerHTML = "Loading Hadith..."
-
-try{
-
-const random = Math.floor(Math.random()*20)+1
-
-const response = await fetch(
-`https://api.hadith.sutanlab.id/books/muslim?range=1-20`
-)
-
-const data = await response.json()
-
-const hadithList = data.data.hadiths
-
-const hadith = hadithList[Math.floor(Math.random()*hadithList.length)]
-
-currentHadith = `
-<div class="arabic">${hadith.arab}</div>
-<div class="english">${hadith.id}</div>
-<div class="source">Source: Sahih Muslim</div>
-`
-
-hadithBox.innerHTML = currentHadith
-
-if(saveDaily){
-
-localStorage.setItem("dailyHadith", currentHadith)
-
-localStorage.setItem("hadithDate", new Date().toDateString())
-
-}
-
-}catch(error){
-
-hadithBox.innerHTML = "Couldn't load hadith."
-
-}
-
-}
-
-
-/* =========================
-   SAVE FAVORITE HADITH
-========================= */
-
-function saveHadith(){
-
-if(!currentHadith) return
-
-localStorage.setItem("favoriteHadith", currentHadith)
-
-document.getElementById("savedHadith").innerHTML = currentHadith
-
-}
-
-
-/* =========================
-   LOAD SAVED HADITH
-========================= */
-
-function loadSavedHadith(){
-
-const saved = localStorage.getItem("favoriteHadith")
-
-if(saved){
-
-document.getElementById("savedHadith").innerHTML = saved
-
-}
-
-}
-
-
-/* Start */
-
-loadDailyHadith()
-
-loadSavedHadith()
-
+// Load Hadith on page load
+loadHadith();
 </script>
 
 </body>
-
 </html>
