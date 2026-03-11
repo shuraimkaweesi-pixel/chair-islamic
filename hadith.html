@@ -87,16 +87,13 @@ Loading Hadith...
 </div>
 
 <script>
-// ===== Load Hadith from local JSON =====
+// Load random Hadith from small JSON
 async function loadHadith() {
   try {
     const response = await fetch("/hadiths.json");
-    if(!response.ok) throw new Error("Failed to fetch JSON");
     const data = await response.json();
-    
-    // Pick a random Hadith
     const random = data[Math.floor(Math.random() * data.length)];
-    
+
     document.getElementById("hadithBox").innerHTML = `
       <div class="arabic">${random.arab}</div>
       <hr>
@@ -104,7 +101,6 @@ async function loadHadith() {
       <div class="source">${random.book || ""}</div>
     `;
   } catch (error) {
-    console.error(error);
     document.getElementById("hadithBox").innerText = "Could not load Hadith.";
   }
 }
