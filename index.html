@@ -5,16 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chair Islamic TV - Home</title>
 
-<!-- Manifest -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FFD700">
-
-<!-- Apple Support -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="apple-touch-icon" href="logo.png">
-
-<!-- Main CSS -->
 <link rel="stylesheet" href="styles.css">
 
 </head>
@@ -29,9 +24,8 @@
 <h2>Founder Biography</h2>
 <div class="content-box">
 <p>Welcome to Chair Islamic TV, where faith meets innovation! I'm <b>KAWEESI SHURAIM</b>, the founder of this platform.</p>
-<p>Born and raised in <b>Masajja, Kampala</b>, I was inspired by the values of compassion, knowledge, and unity taught by Islam.</p>
-<p>With a passion for media and a desire to share the beauty of Islam, I created this platform to provide authentic Islamic content.</p>
-<p>At Chair Islamic TV, we are committed to spreading the message of peace and knowledge through digital media.</p>
+<p>Born and raised in <b>Masajja, Kampala</b>, I was inspired by Islamic values of compassion, knowledge, and unity.</p>
+<p>With a passion for media, I created this platform to provide authentic Islamic content.</p>
 <p>Join us on this journey as we uplift communities worldwide. 🌙</p>
 </div>
 
@@ -42,8 +36,8 @@
 <div class="donate-section">
 <h2>Support Chair Islamic TV</h2>
 <p>Your donations help us spread Islamic knowledge and maintain this platform.</p>
-<a href="https://www.paypal.com/donate" target="_blank">Donate with PayPal / Card</a>
-<a href="https://flutterwave.com/pay" target="_blank">Donate with Flutterwave</a>
+<a href="https://www.paypal.com/donate" target="_blank">Donate with PayPal / Card</a><br>
+<a href="https://flutterwave.com/pay" target="_blank">Donate with Flutterwave</a><br>
 <a href="tel:+2567541789666">Donate via Airtel / MTN</a>
 </div>
 
@@ -76,19 +70,28 @@ window.addEventListener("beforeinstallprompt", (e) => {
   installBtn.style.display = "block";
 });
 
-installBtn.addEventListener("click", () => {
+installBtn.addEventListener("click", async () => {
   if(!deferredPrompt) return;
-  installBtn.style.display = "none";
   deferredPrompt.prompt();
-  deferredPrompt.userChoice.then((choice) => {
-    if(choice.outcome === 'accepted'){
-      console.log("User accepted the install");
-    } else {
-      console.log("User dismissed the install");
-    }
-    deferredPrompt = null;
-  });
+  const choice = await deferredPrompt.userChoice;
+  if(choice.outcome === "accepted") console.log("User installed the app");
+  else console.log("User dismissed install");
+  deferredPrompt = null;
 });
+
+// ===== YouTube Videos (Home Page) =====
+const youtubeContainer = document.getElementById("youtubeVideos");
+const videoIDs = ["ZGwG7UBlFCc", "zGIBIOMA0PQ"];
+function loadYouTubeVideos() {
+  let html = "";
+  videoIDs.forEach(id=>{
+    html += `<iframe width="100%" height="315" src="https://www.youtube.com/embed/${id}" 
+      title="YouTube video player" frameborder="0" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><br><br>`;
+  });
+  youtubeContainer.innerHTML = html;
+}
+loadYouTubeVideos();
 </script>
 
 </body>
