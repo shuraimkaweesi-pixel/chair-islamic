@@ -3,13 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chair Islamic TV - Home</title>
+<title>Quran Reader | Chair Islamic TV</title>
 
-<!-- Manifest -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FFD700">
-
-<!-- Apple Support -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="apple-touch-icon" href="logo.png">
@@ -17,50 +14,99 @@
 <!-- Main CSS -->
 <link rel="stylesheet" href="styles.css">
 
+<style>
+/* Quran Section */
+.container {
+  max-width:900px;
+  margin:20px auto;
+  padding:15px;
+}
+select,input,button{
+  padding:10px;
+  margin:5px 0;
+  border-radius:6px;
+  border:none;
+}
+button{
+  background:#FFD700;
+  font-weight:bold;
+  cursor:pointer;
+}
+.ayah{
+  margin-bottom:15px;
+}
+.arabic{
+  font-size:24px;
+  direction:rtl;
+  text-align:right;
+  color:#fff;
+}
+.translation{
+  font-size:18px;
+  text-align:left;
+  color:#ddd;
+}
+#quranResults{
+  margin-top:15px;
+  background:#1a1a1a;
+  padding:15px;
+  border-radius:6px;
+  color:#ddd;
+  white-space:pre-wrap;
+}
+
+/* Bottom Navigation */
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:#000;
+  display:flex;
+  justify-content:space-around;
+  padding:14px 0;
+  border-top:1px solid #333;
+}
+.bottom-nav a{
+  color:#FFD700;
+  text-decoration:none;
+  font-size:16px;
+  flex:1;
+  text-align:center;
+}
+.bottom-nav a:hover{ color:white; }
+</style>
 </head>
 <body>
 
 <div class="container">
+<h1>📖 Quran Reader</h1>
 
-<h1>Welcome to Chair Islamic TV</h1>
-<p>Read Quran, view Hadith, check Prayer Times, and watch Islamic Videos.</p>
+<!-- Surah Selection -->
+<label for="surahSelect">Select Surah:</label>
+<select id="surahSelect">
+  <option value="">--Choose Surah--</option>
+</select>
 
-<!-- Founder Biography -->
-<h2>Founder Biography</h2>
-<div class="content-box">
-<p>Welcome to Chair Islamic TV, where faith meets innovation! I'm <b>KAWEESI SHURAIM</b>, the founder of this dynamic platform.</p>
-<p>Born and raised in <b>Masajja, Kampala</b>, I was inspired by the values of compassion, knowledge, and unity taught by Islam.</p>
-<p>With a passion for media and a desire to share the beauty of Islam, I created this platform to provide authentic Islamic content.</p>
-<p>At Chair Islamic TV, we are committed to spreading the message of peace and knowledge through digital media.</p>
-<p>Join us on this journey as we uplift communities worldwide. 🌙</p>
-</div>
+<input id="surahSearch" placeholder="Search Surah..." onkeyup="searchSurah()">
+<button onclick="loadSurah()">Load Surah</button>
 
-<!-- Install App Button -->
-<button id="installBtn" style="display:none;">Install Chair Islamic TV 📲</button>
+<select id="reciterSelect">
+  <option value="afasy">Al Afasy</option>
+  <option value="baset">Baset</option>
+  <option value="ghamdi">Ghamdi</option>
+</select>
 
-<!-- Donation Section -->
-<div class="donate-section">
-<h2>Support Chair Islamic TV</h2>
-<p>Your donations help us spread Islamic knowledge and maintain this platform.</p>
-<a href="https://www.paypal.com/donate" target="_blank">Donate with PayPal / Card</a>
-<a href="https://flutterwave.com/pay" target="_blank">Donate with Flutterwave</a>
-<a href="tel:+2567541789666">Donate via Airtel / MTN</a>
-</div>
+<div id="audioPlayer"></div>
 
-<!-- Feature Buttons -->
-<h2>Explore</h2>
-<a href="quran.html"><button>📖 Quran Reader</button></a>
-<a href="hadith.html"><button>📜 Daily Hadith</button></a>
-<a href="prayer.html"><button>🕌 Prayer Times</button></a>
-<a href="videos.html"><button>🎥 Latest Videos</button></a>
+<!-- Quran Text -->
+<div id="quranText" style="margin-top:20px;"></div>
 
-<!-- AI Chat Section -->
-<div class="ai-chat" style="margin-top:30px;">
-<h2>🤖 Ask Islamic AI</h2>
-<input id="aiQuestion" placeholder="Ask a question about Islam..." style="width:80%; padding:10px; margin:10px 0;">
-<button onclick="askAI()" style="padding:10px 20px; background:#FFD700; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">Ask</button>
-<div id="aiAnswer" style="margin-top:15px; color:#fff;"></div>
-</div>
+<!-- AI Search -->
+<h2>🤖 Ask Quran AI</h2>
+<input id="quranSearch" placeholder="Search or ask about a verse...">
+<button onclick="searchQuranAI()">Search AI</button>
+<div id="quranResults">Your AI result will appear here...</div>
 
 </div>
 
@@ -74,72 +120,105 @@
 </div>
 
 <script>
-// ===== PWA Install Button =====
-let deferredPrompt;
-const installBtn = document.getElementById("installBtn");
+// ===============================
+// SURAH LIST
+// ===============================
+const surahNames = [
+"Al-Fatiha","Al-Baqarah","Aal-Imran","An-Nisa","Al-Ma'idah","Al-An'am","Al-A'raf","Al-Anfal","At-Tawbah","Yunus",
+"Hud","Yusuf","Ar-Ra'd","Ibrahim","Al-Hijr","An-Nahl","Al-Isra","Al-Kahf","Maryam","Ta-Ha",
+"Al-Anbiya","Al-Hajj","Al-Mu’minun","An-Nur","Al-Furqan","Ash-Shu'ara","An-Naml","Al-Qasas","Al-Ankabut","Ar-Rum",
+"Luqman","As-Sajdah","Al-Ahzab","Saba","Fatir","Ya-Sin","As-Saffat","Sad","Az-Zumar","Ghafir",
+"Fussilat","Ash-Shura","Az-Zukhruf","Ad-Dukhan","Al-Jathiyah","Al-Ahqaf","Muhammad","Al-Fath","Al-Hujurat","Qaf",
+"Adh-Dhariyat","At-Tur","An-Najm","Al-Qamar","Ar-Rahman","Al-Waqi'ah","Al-Hadid","Al-Mujadila","Al-Hashr","Al-Mumtahanah",
+"As-Saff","Al-Jumu’ah","Al-Munafiqun","At-Taghabun","At-Talaq","At-Tahrim","Al-Mulk","Al-Qalam","Al-Haqqah","Al-Ma'arij",
+"Nuh","Al-Jinn","Al-Muzzammil","Al-Muddathir","Al-Qiyamah","Al-Insan","Al-Mursalat","An-Naba","An-Nazi'at","Abasa",
+"At-Takwir","Al-Infitar","Al-Mutaffifin","Al-Inshiqaq","Al-Buruj","At-Tariq","Al-A'la","Al-Ghashiyah","Al-Fajr","Al-Balad",
+"Ash-Shams","Al-Layl","Ad-Duha","Ash-Sharh","At-Tin","Al-Alaq","Al-Qadr","Al-Bayyinah","Az-Zalzalah","Al-Adiyat",
+"Al-Qari'ah","At-Takathur","Al-Asr","Al-Humazah","Al-Fil","Quraysh","Al-Ma'un","Al-Kawthar","Al-Kafirun","An-Nasr",
+"Al-Masad","Al-Ikhlas","Al-Falaq","An-Nas"
+];
 
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.style.display = "block";
+// Populate dropdown
+const surahSelect = document.getElementById("surahSelect");
+surahNames.forEach((name,i)=>{
+  let option=document.createElement("option");
+  option.value=i+1;
+  option.textContent=(i+1)+" - "+name;
+  surahSelect.appendChild(option);
 });
 
-installBtn.addEventListener("click", () => {
-  if(!deferredPrompt) return;
-  installBtn.style.display = "none";
-  deferredPrompt.prompt();
-  deferredPrompt.userChoice.then((choice) => {
-    if(choice.outcome === 'accepted'){
-      console.log("User accepted the install");
-    } else {
-      console.log("User dismissed the install");
-    }
-    deferredPrompt = null;
-  });
-});
-
-// ===== Optional Service Worker Registration =====
-if('serviceWorker' in navigator){
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('worker.js')
-      .then(reg => console.log('Service Worker Registered'))
-      .catch(err => console.log('Service Worker Failed', err));
-  });
+// Surah search
+function searchSurah(){
+  const input = document.getElementById("surahSearch").value.toLowerCase();
+  for(let i=0;i<surahSelect.options.length;i++){
+    let txt = surahSelect.options[i].text.toLowerCase();
+    surahSelect.options[i].style.display = txt.includes(input) ? "block":"none";
+  }
 }
 
-// ===== AI Chat Function =====
-async function askAI() {
-  const question = document.getElementById("aiQuestion").value;
-  const aiAnswerDiv = document.getElementById("aiAnswer");
+// Load Surah
+async function loadSurah() {
+  const surahNumber = parseInt(document.getElementById("surahSelect").value);
+  if(!surahNumber){ alert("Please select a Surah"); return; }
 
-  if (!question) {
-    aiAnswerDiv.innerText = "Please type a question.";
-    return;
-  }
+  try{
+    const arabicRes = await fetch("quran.json");
+    const englishRes = await fetch("quran_en.json");
+    const arabicData = await arabicRes.json();
+    const englishData = await englishRes.json();
 
-  aiAnswerDiv.innerText = "Thinking...";
+    const arabicSurah = arabicData[surahNumber-1]?.ayahs || arabicData.data?.surahs?.[surahNumber-1]?.ayahs;
+    const englishSurah = englishData[surahNumber-1]?.ayahs || englishData.data?.surahs?.[surahNumber-1]?.ayahs;
 
-  try {
-    const res = await fetch("/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: question }) // matches chat.js API
+    let html="";
+    arabicSurah.forEach((ayah,i)=>{
+      const eng = englishSurah[i]?.text || englishSurah[i]?.translation || "Translation unavailable";
+      html+=`<div class="ayah">
+        <div class="arabic">${i+1}. ${ayah.text}</div>
+        <div class="translation">${i+1}. ${eng}</div>
+      </div>`;
     });
+    document.getElementById("quranText").innerHTML = html;
 
-    const data = await res.json();
-
-    if (data.reply) {
-      aiAnswerDiv.innerText = data.reply;
-    } else {
-      aiAnswerDiv.innerText = "AI did not return a reply.";
-    }
-
-  } catch (err) {
+    // Audio
+    const reciter = document.getElementById("reciterSelect").value;
+    const reciters = {
+      afasy: "https://server8.mp3quran.net/afs/",
+      baset: "https://server8.mp3quran.net/bas/",
+      ghamdi: "https://server7.mp3quran.net/s_gmd/"
+    };
+    const audioURL = reciters[reciter] + String(surahNumber).padStart(3,"0") + ".mp3";
+    document.getElementById("audioPlayer").innerHTML=`<audio controls><source src="${audioURL}" type="audio/mpeg"></audio>`;
+  } catch(err){
     console.error(err);
-    aiAnswerDiv.innerText = "AI could not respond.";
+    document.getElementById("quranText").innerHTML="<p style='color:red'>Failed to load Surah.</p>";
+  }
+}
+
+// ===============================
+// Quran AI Search
+// ===============================
+async function searchQuranAI(){
+  const topic = document.getElementById("quranSearch").value.trim();
+  const resultsDiv = document.getElementById("quranResults");
+
+  if(!topic){ resultsDiv.innerText="Please enter a query."; return; }
+
+  resultsDiv.innerText="Searching...";
+
+  try{
+    const res = await fetch("/api/quran-search",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({topic})
+    });
+    const data = await res.json();
+    resultsDiv.innerText = data.result || "No answer from AI.";
+  } catch(err){
+    console.error(err);
+    resultsDiv.innerText="AI could not respond.";
   }
 }
 </script>
-
 </body>
 </html>
