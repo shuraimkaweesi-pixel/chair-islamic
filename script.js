@@ -111,65 +111,92 @@ loadHadith();
 // ===============================
 // QURAN PAGE FUNCTIONS
 // ===============================
+
 const surahSelect = document.getElementById("surahSelect");
-if(surahSelect){
-  const surahNames = [
-    "Al-Fatiha","Al-Baqarah","Aal-Imran","An-Nisa","Al-Ma'idah","Al-An'am","Al-A'raf","Al-Anfal","At-Tawbah","Yunus",
-    "Hud","Yusuf","Ar-Ra'd","Ibrahim","Al-Hijr","An-Nahl","Al-Isra","Al-Kahf","Maryam","Ta-Ha",
-    "Al-Anbiya","Al-Hajj","Al-Mu’minun","An-Nur","Al-Furqan","Ash-Shu'ara","An-Naml","Al-Qasas","Al-Ankabut","Ar-Rum",
-    "Luqman","As-Sajdah","Al-Ahzab","Saba","Fatir","Ya-Sin","As-Saffat","Sad","Az-Zumar","Ghafir",
-    "Fussilat","Ash-Shura","Az-Zukhruf","Ad-Dukhan","Al-Jathiyah","Al-Ahqaf","Muhammad","Al-Fath","Al-Hujurat","Qaf",
-    "Adh-Dhariyat","At-Tur","An-Najm","Al-Qamar","Ar-Rahman","Al-Waqi'ah","Al-Hadid","Al-Mujadila","Al-Hashr","Al-Mumtahanah",
-    "As-Saff","Al-Jumu’ah","Al-Munafiqun","At-Taghabun","At-Talaq","At-Tahrim","Al-Mulk","Al-Qalam","Al-Haqqah","Al-Ma'arij",
-    "Nuh","Al-Jinn","Al-Muzzammil","Al-Muddathir","Al-Qiyamah","Al-Insan","Al-Mursalat","An-Naba","An-Nazi'at","Abasa",
-    "At-Takwir","Al-Infitar","Al-Mutaffifin","Al-Inshiqaq","Al-Buruj","At-Tariq","Al-A'la","Al-Ghashiyah","Al-Fajr","Al-Balad",
-    "Ash-Shams","Al-Layl","Ad-Duha","Ash-Sharh","At-Tin","Al-Alaq","Al-Qadr","Al-Bayyinah","Az-Zalzalah","Al-Adiyat",
-    "Al-Qari'ah","At-Takathur","Al-Asr","Al-Humazah","Al-Fil","Quraysh","Al-Ma'un","Al-Kawthar","Al-Kafirun","An-Nasr",
-    "Al-Masad","Al-Ikhlas","Al-Falaq","An-Nas"
-  ];
 
-  surahNames.forEach((name,i)=>{
-    const option = document.createElement("option");
-    option.value = i+1;
-    option.textContent = (i+1) + " - " + name;
-    surahSelect.appendChild(option);
-  });
+if (surahSelect) {
 
-  // SEARCH
-  window.searchSurah = function(){
-    const input = document.getElementById("surahSearch").value.toLowerCase();
-    for(let i=0;i<surahSelect.options.length;i++){
-      const txt = surahSelect.options[i].text.toLowerCase();
-      surahSelect.options[i].style.display = txt.includes(input) ? "block" : "none";
-    }
-  }
+const surahNames = [
+"Al-Fatiha","Al-Baqarah","Aal-Imran","An-Nisa","Al-Ma'idah","Al-An'am","Al-A'raf","Al-Anfal","At-Tawbah","Yunus",
+"Hud","Yusuf","Ar-Ra'd","Ibrahim","Al-Hijr","An-Nahl","Al-Isra","Al-Kahf","Maryam","Ta-Ha",
+"Al-Anbiya","Al-Hajj","Al-Mu’minun","An-Nur","Al-Furqan","Ash-Shu'ara","An-Naml","Al-Qasas","Al-Ankabut","Ar-Rum",
+"Luqman","As-Sajdah","Al-Ahzab","Saba","Fatir","Ya-Sin","As-Saffat","Sad","Az-Zumar","Ghafir",
+"Fussilat","Ash-Shura","Az-Zukhruf","Ad-Dukhan","Al-Jathiyah","Al-Ahqaf","Muhammad","Al-Fath","Al-Hujurat","Qaf",
+"Adh-Dhariyat","At-Tur","An-Najm","Al-Qamar","Ar-Rahman","Al-Waqi'ah","Al-Hadid","Al-Mujadila","Al-Hashr","Al-Mumtahanah",
+"As-Saff","Al-Jumu’ah","Al-Munafiqun","At-Taghabun","At-Talaq","At-Tahrim","Al-Mulk","Al-Qalam","Al-Haqqah","Al-Ma'arij",
+"Nuh","Al-Jinn","Al-Muzzammil","Al-Muddathir","Al-Qiyamah","Al-Insan","Al-Mursalat","An-Naba","An-Nazi'at","Abasa",
+"At-Takwir","Al-Infitar","Al-Mutaffifin","Al-Inshiqaq","Al-Buruj","At-Tariq","Al-A'la","Al-Ghashiyah","Al-Fajr","Al-Balad",
+"Ash-Shams","Al-Layl","Ad-Duha","Ash-Sharh","At-Tin","Al-Alaq","Al-Qadr","Al-Bayyinah","Az-Zalzalah","Al-Adiyat",
+"Al-Qari'ah","At-Takathur","Al-Asr","Al-Humazah","Al-Fil","Quraysh","Al-Ma'un","Al-Kawthar","Al-Kafirun","An-Nasr",
+"Al-Masad","Al-Ikhlas","Al-Falaq","An-Nas"
+];
 
-  // LOAD SURAH
-  async function loadSurah(){
+// populate dropdown
+surahNames.forEach((name,i)=>{
+const option = document.createElement("option");
+option.value = i+1;
+option.textContent = (i+1) + " - " + name;
+surahSelect.appendChild(option);
+});
+
+}
+
+// SEARCH
+window.searchSurah = function(){
+
+const input = document.getElementById("surahSearch").value.toLowerCase();
+const select = document.getElementById("surahSelect");
+
+for(let i=0;i<select.options.length;i++){
+
+const txt = select.options[i].text.toLowerCase();
+
+select.options[i].style.display = txt.includes(input) ? "block" : "none";
+
+}
+
+}
+
+
+// LOAD SURAH
+async function loadSurah(){
 
 const surahNumber = parseInt(document.getElementById("surahSelect").value);
-if(!surahNumber) return alert("Select a Surah");
+
+if(!surahNumber){
+alert("Select a Surah");
+return;
+}
 
 try{
 
 const arabicRes = await fetch("quran.json");
 const englishRes = await fetch("quran_en.json");
 
+if(!arabicRes.ok || !englishRes.ok){
+throw new Error("Quran JSON not found");
+}
+
 const arabicData = await arabicRes.json();
 const englishData = await englishRes.json();
 
-// your JSON is an ARRAY of surahs
+// JSON is array of surahs
 const arabicSurah = arabicData[surahNumber-1];
 const englishSurah = englishData[surahNumber-1];
+
+if(!arabicSurah){
+throw new Error("Surah not found");
+}
 
 let html = "";
 
 for(let i=0;i<arabicSurah.verses.length;i++){
 
-const ar = arabicSurah.verses[i].text;
-const en = englishSurah.verses[i].text;
+const ar = arabicSurah.verses[i]?.text || "";
+const en = englishSurah?.verses[i]?.text || "";
 
 html += `
+
 <div class="ayah">
 
 <div class="arabic">
@@ -181,19 +208,24 @@ ${i+1}. ${en}
 </div>
 
 </div>
+
 `;
 
 }
 
 document.getElementById("quranText").innerHTML = html;
 
-// AUDIO PLAYER
+
+// ================= AUDIO =================
+
 const reciter = document.getElementById("reciterSelect").value;
 
 const reciters = {
+
 afasy:"https://server8.mp3quran.net/afs/",
 baset:"https://server8.mp3quran.net/bas/",
 ghamdi:"https://server7.mp3quran.net/s_gmd/"
+
 };
 
 const surahCode = String(surahNumber).padStart(3,"0");
@@ -201,7 +233,7 @@ const surahCode = String(surahNumber).padStart(3,"0");
 const audioURL = reciters[reciter] + surahCode + ".mp3";
 
 document.getElementById("audioPlayer").innerHTML =
-`<audio controls src="${audioURL}"></audio>`;
+`<audio controls style="width:100%" src="${audioURL}"></audio>`;
 
 }catch(err){
 
@@ -212,4 +244,7 @@ document.getElementById("quranText").innerHTML =
 
 }
 
-  
+}
+
+// make button able to call function
+window.loadSurah = loadSurah;
