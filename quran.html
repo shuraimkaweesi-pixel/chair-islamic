@@ -1,140 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chair Islamic TV - Home</title>
 
-<title>Quran Reader | Chair Islamic TV</title>
-
+<!-- Manifest -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FFD700">
 
-<style>
+<!-- Apple Support -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="apple-touch-icon" href="logo.png">
 
-body{
-background:#0f0f0f;
-color:#FFD700;
-font-family:Arial;
-margin:0;
-padding:20px;
-}
-
-.container{
-max-width:900px;
-margin:auto;
-}
-
-h1,h2{
-color:#FFD700;
-text-align:center;
-}
-
-input,select,button{
-width:100%;
-padding:10px;
-margin:5px 0;
-border:none;
-border-radius:6px;
-}
-
-button{
-background:#FFD700;
-color:black;
-font-weight:bold;
-cursor:pointer;
-}
-
-button:hover{
-opacity:0.9;
-}
-
-.arabic{
-font-size:26px;
-direction:rtl;
-text-align:right;
-color:white;
-}
-
-.translation{
-font-size:18px;
-color:#ddd;
-}
-
-.ayah{
-border-bottom:1px solid #333;
-padding:12px 0;
-}
-
-audio{
-width:100%;
-margin-top:15px;
-}
-
-.back-btn{
-background:#333;
-color:#FFD700;
-margin-bottom:20px;
-}
-
-</style>
+<!-- Main CSS -->
+<link rel="stylesheet" href="styles.css">
 
 </head>
-
 <body>
 
 <div class="container">
 
-<button class="back-btn" onclick="goBack()">
-⬅ Back to Home
-</button>
+<h1>Welcome to Chair Islamic TV</h1>
+<p>Read Quran, view Hadith, check Prayer Times, and watch Islamic Videos.</p>
 
-<h1>Quran Reader</h1>
+<!-- Founder Biography -->
+<h2>Founder Biography</h2>
+<div class="content-box">
+<p>Welcome to Chair Islamic TV, where faith meets innovation! I'm <b>KAWEESI SHURAIM</b>, the founder of this dynamic platform.</p>
+<p>Born and raised in <b>Masajja, Kampala</b>, I was inspired by the values of compassion, knowledge, and unity taught by Islam.</p>
+<p>With a passion for media and a desire to share the beauty of Islam, I created this platform to provide authentic Islamic content.</p>
+<p>At Chair Islamic TV, we are committed to spreading the message of peace and knowledge through digital media.</p>
+<p>Join us on this journey as we uplift communities worldwide. 🌙</p>
+</div>
 
-<input
-id="surahSearch"
-placeholder="Search Surah..."
-onkeyup="searchSurah()"
-/>
+<!-- Install App Button -->
+<button id="installBtn" style="display:none;">Install Chair Islamic TV 📲</button>
 
-<select id="surahSelect">
-<option value="">Select Surah</option>
-</select>
+<!-- Donation Section -->
+<div class="donate-section">
+<h2>Support Chair Islamic TV</h2>
+<p>Your donations help us spread Islamic knowledge and maintain this platform.</p>
+<a href="https://www.paypal.com/donate" target="_blank">Donate with PayPal / Card</a>
+<a href="https://flutterwave.com/pay" target="_blank">Donate with Flutterwave</a>
+<a href="tel:+2567541789666">Donate via Airtel / MTN</a>
+</div>
 
-<select id="reciterSelect">
-<option value="afasy">Mishary Alafasy</option>
-<option value="baset">Abdul Baset</option>
-<option value="ghamdi">Saad Al-Ghamdi</option>
-</select>
+<!-- Feature Buttons -->
+<h2>Explore</h2>
+<a href="quran.html"><button>📖 Quran Reader</button></a>
+<a href="hadith.html"><button>📜 Daily Hadith</button></a>
+<a href="prayer.html"><button>🕌 Prayer Times</button></a>
+<a href="videos.html"><button>🎥 Latest Videos</button></a>
 
-<button onclick="loadSurah()">
-Load Surah
-</button>
-
-<div id="audioPlayer"></div>
-
-<div id="quranText"></div>
+<!-- AI Chat Section -->
+<div class="ai-chat" style="margin-top:30px;">
+<h2>🤖 Ask Islamic AI</h2>
+<input id="aiQuestion" placeholder="Ask a question about Islam..." style="width:80%; padding:10px; margin:10px 0;">
+<button onclick="askAI()" style="padding:10px 20px; background:#FFD700; border:none; border-radius:6px; font-weight:bold; cursor:pointer;">Ask</button>
+<div id="aiAnswer" style="margin-top:15px; color:#fff;"></div>
+</div>
 
 </div>
 
-<script src="script.js"></script>
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+<a href="index.html">🏠 Home</a>
+<a href="quran.html">📖 Quran</a>
+<a href="hadith.html">📜 Hadith</a>
+<a href="prayer.html">🕌 Prayer</a>
+<a href="videos.html">🎥 Videos</a>
+</div>
 
 <script>
+// ===== PWA Install Button =====
+let deferredPrompt;
+const installBtn = document.getElementById("installBtn");
 
-function goBack(){
-window.location.href="index.html"
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = "block";
+});
+
+installBtn.addEventListener("click", () => {
+  if(!deferredPrompt) return;
+  installBtn.style.display = "none";
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then((choice) => {
+    if(choice.outcome === 'accepted'){
+      console.log("User accepted the install");
+    } else {
+      console.log("User dismissed the install");
+    }
+    deferredPrompt = null;
+  });
+});
+
+// ===== Optional Service Worker Registration =====
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('worker.js')
+      .then(reg => console.log('Service Worker Registered'))
+      .catch(err => console.log('Service Worker Failed', err));
+  });
 }
 
-<h2>🔎 AI Quran Search</h2>
+// ===== AI Chat Function =====
+async function askAI() {
+  const question = document.getElementById("aiQuestion").value;
+  const aiAnswerDiv = document.getElementById("aiAnswer");
 
-<input id="quranSearch" placeholder="Search Quran topic...">
+  if (!question) {
+    aiAnswerDiv.innerText = "Please type a question.";
+    return;
+  }
 
-<button onclick="searchQuran()">Search</button>
+  aiAnswerDiv.innerText = "Thinking...";
 
-<div id="quranResults"></div>
+  try {
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: question }) // matches chat.js API
+    });
+
+    const data = await res.json();
+
+    if (data.reply) {
+      aiAnswerDiv.innerText = data.reply;
+    } else {
+      aiAnswerDiv.innerText = "AI did not return a reply.";
+    }
+
+  } catch (err) {
+    console.error(err);
+    aiAnswerDiv.innerText = "AI could not respond.";
+  }
+}
 </script>
 
 </body>
-
 </html>
