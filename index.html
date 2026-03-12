@@ -17,6 +17,41 @@
 <!-- Main CSS -->
 <link rel="stylesheet" href="styles.css">
 
+<style>
+
+/* AI Chat */
+.ai-chat{
+background:#111;
+padding:20px;
+margin:20px;
+border-radius:8px;
+color:white;
+}
+
+.ai-chat input{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:6px;
+border:none;
+}
+
+.ai-chat button{
+margin-top:10px;
+background:#FFD700;
+border:none;
+padding:10px 15px;
+border-radius:6px;
+cursor:pointer;
+}
+
+#aiAnswer{
+margin-top:15px;
+line-height:1.6;
+}
+
+</style>
+
 </head>
 <body>
 
@@ -56,6 +91,9 @@
 
 </div>
 
+
+<!-- AI Chat Section -->
+
 <div class="ai-chat">
 
 <h2>🤖 Ask Islamic AI</h2>
@@ -64,9 +102,10 @@
 
 <button onclick="askAI()">Ask</button>
 
-<div id="aiAnswer"></div>
+<div id="aiAnswer">AI answer will appear here...</div>
 
-</div>  
+</div>
+
 
 <!-- Bottom Navigation -->
 <div class="bottom-nav">
@@ -77,39 +116,93 @@
 <a href="videos.html">🎥 Videos</a>
 </div>
 
+
 <script>
+
+// ===== AI CHAT FUNCTION =====
+
+async function askAI(){
+
+const question = document.getElementById("aiQuestion").value;
+
+if(!question){
+document.getElementById("aiAnswer").innerText="Please type a question.";
+return;
+}
+
+document.getElementById("aiAnswer").innerText="Thinking...";
+
+try{
+
+const res = await fetch("/api/ask-ai",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({question})
+});
+
+const data = await res.json();
+
+document.getElementById("aiAnswer").innerText=data.answer;
+
+}catch(err){
+
+document.getElementById("aiAnswer").innerText="AI could not respond.";
+
+}
+
+}
+
+
 // ===== PWA Install Button =====
+
 let deferredPrompt;
 const installBtn = document.getElementById("installBtn");
 
 window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.style.display = "block";
+e.preventDefault();
+deferredPrompt = e;
+installBtn.style.display = "block";
 });
 
 installBtn.addEventListener("click", () => {
-  if(!deferredPrompt) return;
-  installBtn.style.display = "none";
-  deferredPrompt.prompt();
-  deferredPrompt.userChoice.then((choice) => {
-    if(choice.outcome === 'accepted'){
-      console.log("User accepted the install");
-    } else {
-      console.log("User dismissed the install");
-    }
-    deferredPrompt = null;
-  });
+
+if(!deferredPrompt) return;
+
+installBtn.style.display = "none";
+
+deferredPrompt.prompt();
+
+deferredPrompt.userChoice.then((choice) => {
+
+if(choice.outcome === 'accepted'){
+console.log("User accepted install");
+}else{
+console.log("User dismissed install");
+}
+
+deferredPrompt = null;
+
 });
 
-// ===== Optional Service Worker Registration =====
+});
+
+
+// ===== Service Worker =====
+
 if('serviceWorker' in navigator){
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('worker.js')
-      .then(reg => console.log('Service Worker Registered'))
-      .catch(err => console.log('Service Worker Failed', err));
-  });
+
+window.addEventListener('load', () => {
+
+navigator.serviceWorker.register('worker.js')
+.then(reg => console.log('Service Worker Registered'))
+.catch(err => console.log('Service Worker Failed', err));
+
+});
+
 }
+
 </script>
 
 </body>
