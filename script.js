@@ -107,14 +107,14 @@ async function loadHadith(){
   }
 }
 loadHadith();
-
+}
 // ===============================
 // QURAN PAGE FUNCTIONS
 // ===============================
 
 const surahSelect = document.getElementById("surahSelect");
 
-if (surahSelect) {
+if(surahSelect){
 
 const surahNames = [
 "Al-Fatiha","Al-Baqarah","Aal-Imran","An-Nisa","Al-Ma'idah","Al-An'am","Al-A'raf","Al-Anfal","At-Tawbah","Yunus",
@@ -141,8 +141,9 @@ surahSelect.appendChild(option);
 
 }
 
+
 // SEARCH
-window.searchSurah = function(){
+function searchSurah(){
 
 const input = document.getElementById("surahSearch").value.toLowerCase();
 const select = document.getElementById("surahSelect");
@@ -151,7 +152,8 @@ for(let i=0;i<select.options.length;i++){
 
 const txt = select.options[i].text.toLowerCase();
 
-select.options[i].style.display = txt.includes(input) ? "block" : "none";
+select.options[i].style.display =
+txt.includes(input) ? "block" : "none";
 
 }
 
@@ -173,30 +175,21 @@ try{
 const arabicRes = await fetch("quran.json");
 const englishRes = await fetch("quran_en.json");
 
-if(!arabicRes.ok || !englishRes.ok){
-throw new Error("Quran JSON not found");
-}
-
 const arabicData = await arabicRes.json();
 const englishData = await englishRes.json();
 
-// JSON is array of surahs
+// get selected surah
 const arabicSurah = arabicData[surahNumber-1];
 const englishSurah = englishData[surahNumber-1];
-
-if(!arabicSurah){
-throw new Error("Surah not found");
-}
 
 let html = "";
 
 for(let i=0;i<arabicSurah.verses.length;i++){
 
-const ar = arabicSurah.verses[i]?.text || "";
-const en = englishSurah?.verses[i]?.text || "";
+const ar = arabicSurah.verses[i].text;
+const en = englishSurah.verses[i].text;
 
 html += `
-
 <div class="ayah">
 
 <div class="arabic">
@@ -208,7 +201,6 @@ ${i+1}. ${en}
 </div>
 
 </div>
-
 `;
 
 }
@@ -216,16 +208,13 @@ ${i+1}. ${en}
 document.getElementById("quranText").innerHTML = html;
 
 
-// ================= AUDIO =================
-
+// AUDIO
 const reciter = document.getElementById("reciterSelect").value;
 
 const reciters = {
-
 afasy:"https://server8.mp3quran.net/afs/",
 baset:"https://server8.mp3quran.net/bas/",
 ghamdi:"https://server7.mp3quran.net/s_gmd/"
-
 };
 
 const surahCode = String(surahNumber).padStart(3,"0");
@@ -246,5 +235,6 @@ document.getElementById("quranText").innerHTML =
 
 }
 
-// make button able to call function
+// make button access function
 window.loadSurah = loadSurah;
+window.searchSurah = searchSurah;
