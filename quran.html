@@ -34,62 +34,19 @@
 <h1>Quran Reader</h1>
 
 <div id="quranControls">
- <select id="surahSelect"></select>
-<select id="reciterSelect">
-  <option value="afasy">Alafasy</option>
-  <option value="baset">Baset</option>
-  <option value="ghamdi">Ghamdi</option>
-</select>
-<button onclick="loadSurah()">Load Surah</button>
+  <select id="surahSelect"></select>
+  <select id="reciterSelect">
+    <option value="afasy">Alafasy</option>
+    <option value="baset">Baset</option>
+    <option value="ghamdi">Ghamdi</option>
+  </select>
+  <button onclick="loadSurah()">Load Surah</button>
+</div>
+
 <div id="quranText"></div>
 <div id="audioPlayer"></div>
 
 <script>
-let quranData = [];
-
-fetch('quran.json')
-  .then(r => r.json())
-  .then(data => {
-    quranData = data;
-    const select = document.getElementById('surahSelect');
-    quranData.forEach(s => {
-      const option = document.createElement('option');
-      option.value = s.id;
-      option.textContent = `${s.id} - ${s.transliteration} (${s.translation})`;
-      select.appendChild(option);
-    });
-  });
-
-function loadSurah(){
-  const surahId = parseInt(document.getElementById('surahSelect').value);
-  if(!surahId) return alert("Select a Surah");
-  
-  const surah = quranData.find(s => s.id === surahId);
-  if(!surah) return alert("Surah not found");
-
-  let html = '';
-  surah.verses.forEach((v,i)=>{
-    html += `
-      <div class="ayah">
-        <div class="arabic">${i+1}. ${v.text}</div>
-        <div class="translation">${i+1}. ${v.translation || ''}</div>
-      </div>
-    `;
-  });
-  document.getElementById('quranText').innerHTML = html;
-
-  const reciter = document.getElementById('reciterSelect').value;
-  const reciters = {
-    afasy:"https://server8.mp3quran.net/afs/",
-    baset:"https://server8.mp3quran.net/bas/",
-    ghamdi:"https://server7.mp3quran.net/s_gmd/"
-  };
-  const surahCode = String(surahId).padStart(3,'0');
-  document.getElementById('audioPlayer').innerHTML = `<audio controls style="width:100%" src="${reciters[reciter]+surahCode}.mp3"></audio>`;
-}
-  
-</script>
-  
 let quranData = [];
 
 // Load local JSON file (Arabic + translation inside)
@@ -111,14 +68,6 @@ function populateSurahSelect(){
     option.value = s.id;
     option.textContent = `${s.id} - ${s.transliteration} (${s.translation})`;
     select.appendChild(option);
-  });
-}
-
-function searchSurah(){
-  const input = document.getElementById('surahSearch').value.toLowerCase();
-  const select = document.getElementById('surahSelect');
-  Array.from(select.options).forEach(opt => {
-    opt.style.display = opt.textContent.toLowerCase().includes(input) ? 'block' : 'none';
   });
 }
 
