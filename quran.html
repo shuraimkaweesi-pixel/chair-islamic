@@ -48,23 +48,26 @@ select,input,button { padding:8px; font-size:16px; border-radius:5px; border:1px
 <div id="audioPlayer"></div>
 
 <script>
-// ================== Load Quran JSON ==================
-let quranData = [];
-fetch('quran.json') // make sure quran.json is in the same folder
-  .then(r => r.json())
-  .then(data => {
-    quranData = data;
-    populateSurahSelect();
-  })
-  .catch(err => {
-    console.error('Failed to load Quran JSON', err);
-    document.getElementById('quranText').innerText = 'Failed to load Quran JSON';
-  });
+// Load both local JSON files
+let quranArabic = [];
+let quranEnglish = [];
 
-// ================== Populate Surah Dropdown ==================
-function populateSurahSelect() {
+Promise.all([
+  fetch('quran.json').then(r=>r.json()),
+  fetch('quran_en.json').then(r=>r.json())
+]).then(([arabic,en])=>{
+  quranArabic = arabic;
+  quranEnglish = en;
+  populateSurahSelect();
+}).catch(err=>{
+  console.error("Failed to load Quran files",err);
+  document.getElementById('quranText').innerText = "Failed to load Quran files";
+});
+
+// Populate dropdown
+function populateSurahSelect(){
   const select = document.getElementById('surahSelect');
-  quranData.forEach(surah => {
+  quranArabic.forEach((surah,i)=>{
     const option = document.createElement('option');
     option.value = surah.id;
     option.textContent = `${surah.id} - ${surah.transliteration} (${surah.name})`;
@@ -72,26 +75,29 @@ function populateSurahSelect() {
   });
 }
 
-// ================== Load Surah ==================
-function loadSurah() {
+// Load selected Surah
+function loadSurah(){
   const surahId = parseInt(document.getElementById('surahSelect').value);
-  if(!surahId) { alert('Select a Surah'); return; }
+  if(!surahId){ alert("Select a Surah"); return; }
 
-  const surah = quranData.find(s => s.id === surahId);
-  if(!surah) { alert('Surah not found'); return; }
+  const surahAr = quranArabic.find(s=>s.id===surahId);
+  const surahEn = quranEnglish.find(s=>s.id===surahId);
+
+  if(!surahAr){ alert("Surah not found"); return; }
 
   let html = '';
-  surah.verses.forEach((v,i) => {
+  surahAr.verses.forEach((v,i)=>{
+    const enText = surahEn?.verses[i]?.text || '';
     html += `
       <div class="ayah">
         <div class="arabic">${i+1}. ${v.text}</div>
-        ${v.en ? `<div class="translation">${i+1}. ${v.en}</div>` : ''}
+        <div class="translation">${i+1}. ${enText}</div>
       </div>
     `;
   });
   document.getElementById('quranText').innerHTML = html;
 
-  // ================== Audio ==================
+  // Floating audio
   const reciter = document.getElementById('reciterSelect').value;
   const reciters = {
     afasy:"https://server8.mp3quran.net/afs/",
@@ -99,11 +105,10 @@ function loadSurah() {
     ghamdi:"https://server7.mp3quran.net/s_gmd/"
   };
   const surahCode = String(surahId).padStart(3,'0');
-  const audioURL = reciters[reciter] + surahCode + '.mp3';
-  document.getElementById('audioPlayer').innerHTML = `
-    <audio controls style="width:100%" src="${audioURL}"></audio>
-  `;
+  const audioURL = reciters[reciter] + surahCode + ".mp3";
+  document.getElementById('audioPlayer').innerHTML = `<audio controls style="width:100%" src="${audioURL}"></audio>`;
 }
+  
 </script>
 </body>
 </html>
