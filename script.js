@@ -239,7 +239,7 @@ for(let i=0;i<arabicSurah.verses.length;i++){
 
 const ar=arabicSurah.verses[i].text;
 
-const en=englishSurah.verses[i].text;
+const en = englishSurah.verses[i].translation;
 
 html+=`
 
