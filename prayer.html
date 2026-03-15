@@ -48,11 +48,56 @@ h1, h2 {
   text-align: center;
 }
 
+#compassContainer {
+  position: relative;
+  width: 350px;
+  height: 350px;
+  margin: 30px auto;
+}
+
 #compass {
-  font-size: 60px;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, #fff 70%, #FFD700 100%);
+  border: 4px solid #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 120px;
+  transform: rotate(0deg);
+  transition: transform 0.2s linear;
+}
+
+#qiblaArrow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 90px solid red;
+  transform-origin: bottom center;
+  transform: translate(-50%, -50%) rotate(0deg);
+  transition: transform 0.2s linear;
+}
+
+#qiblaLabel {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: red;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+#qiblaResult {
   text-align: center;
-  margin-top: 20px;
-  transition: transform 0.5s ease;
+  font-weight: bold;
+  color: #FFD700;
+  margin-top: 15px;
 }
 
 /* Countdown timer */
@@ -99,7 +144,6 @@ button {
 <body>
 
 <div class="container">
-
   <h1>Prayer Times</h1>
   <p id="location">Detecting location...</p>
   <div class="date" id="date"></div>
@@ -107,93 +151,17 @@ button {
   <div id="countdown">Next prayer in: --:--:--</div>
 
   <!-- Qibla Section -->
-<<h2 style="text-align:center;">Live Qibla Compass</h2>
+  <h2>Live Qibla Compass</h2>
 
-<div id="compassContainer" style="position: relative; width: 300px; height: 300px; margin: 30px auto;">
-    <!-- Compass circle -->
-    <div id="compass" style="
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        background: radial-gradient(circle at center, #fff 70%, #FFD700 100%);
-        border: 4px solid #333;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 120px;
-        transform: rotate(0deg);
-        transition: transform 0.2s linear;
-    ">🧭</div>
+  <div id="compassContainer">
+      <div id="compass">🧭</div>
+      <div id="qiblaArrow"></div>
+      <div id="qiblaLabel">Qibla</div>
+      <p id="qiblaResult">Press "Find Qibla" to detect direction</p>
+  </div>
 
-    <!-- Qibla arrow -->
-    <div id="qiblaArrow" style="
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        border-left: 15px solid transparent;
-        border-right: 15px solid transparent;
-        border-bottom: 70px solid red;
-        transform-origin: bottom center;
-        transform: translate(-50%, -50%) rotate(0deg);
-        transition: transform 0.2s linear;
-    "></div>
-
-    <!-- Qibla label -->
-    <div id="qiblaLabel" style="
-        position: absolute;
-        top: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        color: red;
-        font-weight: bold;
-        font-size: 18px;
-    ">Qibla</div>
+  <button onclick="findQibla()">Find Qibla</button>
 </div>
-
-<script>
-let userLat, userLon, qiblaAngle;
-
-// Calculate Qibla angle
-function calcQibla(lat, lon){
-    const kaabaLat = 21.4225;
-    const kaabaLon = 39.8262;
-
-    const lat1 = lat * Math.PI/180;
-    const lat2 = kaabaLat * Math.PI/180;
-    const dLon = (kaabaLon - lon) * Math.PI/180;
-
-    const y = Math.sin(dLon) * Math.cos(lat2);
-    const x = Math.cos(lat1)*Math.sin(lat2) - Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
-
-    let qibla = Math.atan2(y, x) * 180/Math.PI;
-    qibla = (qibla + 360) % 360;
-    return qibla;
-}
-
-// Get user location
-if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(pos=>{
-        userLat = pos.coords.latitude;
-        userLon = pos.coords.longitude;
-        qiblaAngle = calcQibla(userLat, userLon);
-        // Initially rotate the Qibla arrow
-        document.getElementById("qiblaArrow").style.transform = `translate(-50%, -50%) rotate(${qiblaAngle}deg)`;
-    });
-}
-
-// Listen to device orientation
-if(window.DeviceOrientationEvent){
-    window.addEventListener("deviceorientationabsolute", function(e){
-        const compassHeading = e.alpha !== null ? e.alpha : 0;
-        document.getElementById("compass").style.transform = `rotate(${-compassHeading}deg)`;
-        document.getElementById("qiblaArrow").style.transform = `translate(-50%, -50%) rotate(${qiblaAngle}deg)`;
-    }, true);
-} else {
-    alert("Device orientation not supported on this device.");
-}
-</script>
 
 <!-- Bottom Navigation -->
 <div class="bottom-nav">
@@ -222,8 +190,7 @@ function getNextPrayer(timings) {
     prayerTime.setHours(time[0], time[1], 0, 0);
     if (prayerTime > now) { next = p; break; }
   }
-  // If all prayers passed, next is Fajr tomorrow
-  if (!next) next = "Fajr";
+  if (!next) next = "Fajr"; // tomorrow
   return next;
 }
 
@@ -285,7 +252,6 @@ function startCountdown() {
     let prayerTime = new Date();
     prayerTime.setHours(parts[0], parts[1], 0, 0);
 
-    // If next prayer is Fajr and passed, set to tomorrow
     if (nextPrayerName === "Fajr" && prayerTime < now) {
       prayerTime.setDate(prayerTime.getDate() + 1);
     }
@@ -306,6 +272,9 @@ function startCountdown() {
 // =====================
 // QIBLA LOGIC
 // =====================
+let qiblaAngle = null;
+const qiblaArrow = document.getElementById("qiblaArrow");
+
 function findQibla() {
   if(!navigator.geolocation){
     alert("Geolocation not supported");
@@ -326,27 +295,23 @@ function findQibla() {
     const y = Math.sin(dLon) * Math.cos(lat2);
     const x = Math.cos(lat1)*Math.sin(lat2) - Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
 
-    let qibla = Math.atan2(y,x) * 180/Math.PI;
-    qibla = (qibla + 360) % 360;
+    qiblaAngle = (Math.atan2(y,x) * 180/Math.PI + 360) % 360;
 
     document.getElementById("qiblaResult").innerHTML =
-      "Qibla Direction: " + qibla.toFixed(2) + "° from North";
-
-    document.getElementById("compass").style.transform =
-      "rotate("+qibla+"deg)";
+      "Qibla Direction: " + qiblaAngle.toFixed(2) + "° from North";
   });
 }
 
-// Optional: Live device orientation for compass
+// Live device orientation
 if (window.DeviceOrientationEvent) {
   window.addEventListener('deviceorientation', function(event) {
-    const compass = document.getElementById("compass");
-    if(compass) {
-      const alpha = event.alpha; // 0-360 rotation around z-axis
-      compass.style.transform = `rotate(${alpha}deg)`;
-    }
+    if(!qiblaAngle) return;
+    const alpha = event.alpha || 0;
+    const rotation = qiblaAngle - alpha;
+    qiblaArrow.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
   }, true);
 }
 </script>
+
 </body>
 </html>
