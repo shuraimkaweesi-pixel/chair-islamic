@@ -243,14 +243,15 @@ const en = englishSurah.verses[i].translation;
 
 html+=`
 
-<div class="ayah">
+html+=`
+
+<div class="ayah" onclick="playAyah(${surahNumber},${i+1},this)">
 
 <div class="arabic">${i+1}. ${ar}</div>
 
 <div class="translation">${i+1}. ${en}</div>
 
 </div>
-
 `;
 
 }
