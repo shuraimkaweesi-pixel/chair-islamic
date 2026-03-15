@@ -175,15 +175,34 @@ const surahNames = [
 
 surahNames.forEach((name,i)=>{
 
-const option = document.createElement("option");
+const option=document.createElement("option");
 
-option.value = i+1;
+option.value=i+1;
 
-option.textContent = (i+1)+" - "+name;
+option.textContent=(i+1)+" - "+name;
 
 surahSelect.appendChild(option);
 
 });
+
+}
+
+// ===============================
+// SEARCH SURAH
+// ===============================
+
+function searchSurah(){
+
+const input=document.getElementById("surahSearch").value.toLowerCase();
+
+for(let i=0;i<surahSelect.options.length;i++){
+
+const txt=surahSelect.options[i].text.toLowerCase();
+
+surahSelect.options[i].style.display =
+txt.includes(input) ? "block" : "none";
+
+}
 
 }
 
@@ -193,76 +212,86 @@ surahSelect.appendChild(option);
 
 async function loadSurah(){
 
-  const surahNumber = parseInt(document.getElementById("surahSelect").value);
+const surahNumber=parseInt(document.getElementById("surahSelect").value);
 
-  if(!surahNumber){
-    alert("Please select a Surah");
-    return;
-  }
+if(!surahNumber){
+alert("Select a Surah");
+return;
+}
 
-  try{
+try{
 
-    // Load Arabic Quran
-    const arabicRes = await fetch("quran.json");
+const arabicRes=await fetch("quran.json");
 
-    // Load English Quran
-    const englishRes = await fetch("quran_en.json");
+const englishRes=await fetch("quran_en.json");
 
-    if(!arabicRes.ok || !englishRes.ok){
-      throw new Error("Quran files not found");
-    }
+const arabicData=await arabicRes.json();
 
-    const arabicData = await arabicRes.json();
-    const englishData = await englishRes.json();
+const englishData=await englishRes.json();
 
-    const arabicSurah = arabicData[surahNumber-1];
-    const englishSurah = englishData[surahNumber-1];
+const arabicSurah=arabicData[surahNumber-1];
 
-    let html = "";
+const englishSurah=englishData[surahNumber-1];
 
-    for(let i=0;i<arabicSurah.verses.length;i++){
+let html="";
 
-      const ar = arabicSurah.verses[i]?.text || "";
-      const en = englishSurah.verses[i]?.text || "Translation unavailable";
+for(let i=0;i<arabicSurah.verses.length;i++){
 
-      html += `
-      <div class="ayah">
-        <div class="arabic">${i+1}. ${ar}</div>
-        <div class="translation">${i+1}. ${en}</div>
-      </div>
-      `;
-    }
+const ar=arabicSurah.verses[i].text;
 
-    document.getElementById("quranText").innerHTML = html;
+const en=englishSurah.verses[i].text;
 
-    // ===============================
-    // AUDIO
-    // ===============================
+html+=`
 
-    const reciter = document.getElementById("reciterSelect").value;
+<div class="ayah">
 
-    const reciters = {
-      afasy:"https://server8.mp3quran.net/afs/",
-      baset:"https://server8.mp3quran.net/bas/",
-      ghamdi:"https://server7.mp3quran.net/s_gmd/"
-    };
+<div class="arabic">${i+1}. ${ar}</div>
 
-    const surahCode = String(surahNumber).padStart(3,"0");
+<div class="translation">${i+1}. ${en}</div>
 
-    const audioURL = reciters[reciter] + surahCode + ".mp3";
+</div>
 
-    document.getElementById("audioPlayer").innerHTML =
-    `<audio controls style="width:100%" src="${audioURL}"></audio>`;
+`;
 
-  }
+}
 
-  catch(err){
+document.getElementById("quranText").innerHTML=html;
 
-    console.error(err);
 
-    document.getElementById("quranText").innerHTML =
-    "<p style='color:red'>Failed to load Surah</p>";
+// ===============================
+// AUDIO
+// ===============================
 
-  }
+const reciter=document.getElementById("reciterSelect").value;
+
+const reciters={
+
+afasy:"https://server8.mp3quran.net/afs/",
+
+baset:"https://server8.mp3quran.net/bas/",
+
+ghamdi:"https://server7.mp3quran.net/s_gmd/"
+
+};
+
+const surahCode=String(surahNumber).padStart(3,"0");
+
+const audioURL=reciters[reciter]+surahCode+".mp3";
+
+document.getElementById("audioPlayer").innerHTML=
+
+`<audio controls style="width:100%" src="${audioURL}"></audio>`;
+
+}
+
+catch(err){
+
+console.error(err);
+
+document.getElementById("quranText").innerHTML=
+
+"<p style='color:red'>Failed to load Surah</p>";
+
+}
 
 }
