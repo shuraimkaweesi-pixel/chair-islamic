@@ -278,7 +278,7 @@ document.getElementById("quranText").innerHTML =
 
 let currentAudio;
 
-function playAyah(surah,ayah,element){
+function playAyah(surah, ayah, element){
 
 document.querySelectorAll(".ayah").forEach(a=>{
 a.classList.remove("playing");
@@ -286,20 +286,22 @@ a.classList.remove("playing");
 
 element.classList.add("playing");
 
-const surahCode=String(surah).padStart(3,"0");
-const ayahCode=String(ayah).padStart(3,"0");
+const surahCode = String(surah).padStart(3,"0");
+const ayahCode = String(ayah).padStart(3,"0");
 
-const audioURL=
-"https://verses.quran.com/Alafasy/mp3/"+surahCode+ayahCode+".mp3";
+const audioURL =
+"https://everyayah.com/data/Alafasy_128kbps/" +
+surahCode + ayahCode + ".mp3";
 
 if(currentAudio){
 currentAudio.pause();
 }
 
-currentAudio=new Audio(audioURL);
+currentAudio = new Audio(audioURL);
+
 currentAudio.play();
 
-document.getElementById("audioPlayer").innerHTML=
+document.getElementById("audioPlayer").innerHTML =
 `<audio controls autoplay style="width:100%" src="${audioURL}"></audio>`;
 
 }
