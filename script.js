@@ -154,9 +154,11 @@ loadHadith();
 // QURAN PAGE
 // ===============================
 
+document.addEventListener("DOMContentLoaded", function(){
+
 const surahSelect = document.getElementById("surahSelect");
 
-if(surahSelect){
+if(!surahSelect) return;
 
 const surahNames = [
 "Al-Fatiha","Al-Baqarah","Aal-Imran","An-Nisa","Al-Ma'idah","Al-An'am","Al-A'raf","Al-Anfal","At-Tawbah","Yunus",
@@ -185,7 +187,7 @@ surahSelect.appendChild(option);
 
 });
 
-}
+});
 
 // ===============================
 // SEARCH SURAH
