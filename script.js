@@ -333,3 +333,49 @@ playAyah(currentSurah, nextAyah, nextElement);
 };
 
 }
+
+function findQibla(){
+
+if(!navigator.geolocation){
+alert("Geolocation not supported");
+return;
+}
+
+navigator.geolocation.getCurrentPosition(function(position){
+
+const userLat = position.coords.latitude;
+const userLon = position.coords.longitude;
+
+const kaabaLat = 21.4225;
+const kaabaLon = 39.8262;
+
+const lat1 = userLat * Math.PI/180;
+const lat2 = kaabaLat * Math.PI/180;
+const dLon = (kaabaLon - userLon) * Math.PI/180;
+
+const y = Math.sin(dLon) * Math.cos(lat2);
+
+const x =
+Math.cos(lat1)*Math.sin(lat2) -
+Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
+
+let qibla = Math.atan2(y,x) * 180/Math.PI;
+
+qibla = (qibla + 360) % 360;
+
+document.getElementById("qiblaResult").innerHTML =
+"Qibla Direction: " + qibla.toFixed(2) + "° from North";
+
+rotateCompass(qibla);
+
+});
+
+}
+
+function rotateCompass(deg){
+
+const compass = document.getElementById("compass");
+
+compass.style.transform = "rotate("+deg+"deg)";
+
+}
