@@ -4,320 +4,319 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prayer Times | Chair Islamic TV</title>
+
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FFD700">
 
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f5f5f5;
-  margin: 20px;
+
+body{
+font-family:Arial;
+background:#f5f5f5;
+margin:0;
+padding:20px;
 }
 
-h1, h2 {
-  text-align: center;
+h1{
+text-align:center;
+color:#FFD700;
+text-shadow:1px 1px 3px #000;
 }
 
-.prayer-box {
-  background: #1a1a1a;
-  padding: 20px;
-  border-radius: 10px;
-  margin-top: 20px;
-  color: white;
-  font-size: 18px;
+#location{
+text-align:center;
 }
 
-.prayer {
-  display: flex;
-  justify-content: space-between;
-  padding: 12px;
-  border-bottom: 1px solid #333;
+.prayer-box{
+background:#1a1a1a;
+padding:20px;
+border-radius:12px;
+margin-top:20px;
+color:white;
+font-size:20px;
+box-shadow:0 4px 10px rgba(0,0,0,0.3);
 }
 
-.next {
-  background: #FFD700;
-  color: black;
-  font-weight: bold;
-  border-radius: 6px;
+.prayer{
+display:flex;
+justify-content:space-between;
+padding:14px;
+border-bottom:1px solid #333;
 }
 
-.date {
-  margin-top: 10px;
-  font-size: 16px;
-  color: #FFD700;
-  text-align: center;
+.prayer:last-child{
+border-bottom:none;
 }
 
-#countdown {
-  text-align: center;
-  font-size: 20px;
-  margin-top: 10px;
-  color: #FFD700;
+.next{
+background:#FFD700;
+color:black;
+font-weight:bold;
+border-radius:8px;
 }
 
-/* Compass */
-#compassContainer {
-  position: relative;
-  width: 300px;
-  height: 300px;
-  margin: 30px auto;
+.date{
+margin-top:10px;
+font-size:18px;
+color:#FFD700;
+text-align:center;
+font-weight:bold;
 }
 
-#compass {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: radial-gradient(circle at center, #fff 70%, #FFD700 100%);
-  border: 4px solid #333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 120px;
-  transform: rotate(0deg);
-  transition: transform 0.2s linear;
+#countdown{
+text-align:center;
+font-size:26px;
+margin-top:20px;
+color:#FFD700;
+font-weight:bold;
 }
 
-#qiblaArrow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-  border-bottom: 70px solid red;
-  transform-origin: bottom center;
-  transform: translate(-50%, -50%) rotate(0deg);
-  transition: transform 0.2s linear;
+/* Bottom Navigation */
+
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+background:#000;
+display:flex;
+justify-content:space-around;
+padding:15px 0;
+border-top:1px solid #333;
 }
 
-#qiblaLabel {
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  color: red;
-  font-weight: bold;
-  font-size: 18px;
+.bottom-nav a{
+color:#FFD700;
+text-decoration:none;
+font-size:18px;
+flex:1;
+text-align:center;
 }
 
-.bottom-nav {
-  position: fixed;
-  bottom: 20px;
-  left: 0;
-  width: 100%;
-  background: #000;
-  display: flex;
-  justify-content: space-around;
-  padding: 15px 0;
-  border-top: 1px solid #333;
-}
-
-.bottom-nav a {
-  color: #FFD700;
-  text-decoration: none;
-  font-size: 18px;
-  flex: 1;
-  text-align: center;
-}
-
-button {
-  display: block;
-  margin: 10px auto;
-  padding: 10px 15px;
-  font-size: 16px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background: #FFD700;
-  cursor: pointer;
-}
 </style>
 </head>
+
 <body>
 
-<div class="container">
+<h1>Prayer Times</h1>
 
-  <h1>Prayer Times</h1>
-  <p id="location">Detecting location...</p>
-  <div class="date" id="date"></div>
-  <div id="prayerBox" class="prayer-box">Loading prayer times...</div>
-  <div id="countdown">Next prayer in: --:--:--</div>
+<p id="location">Detecting location...</p>
 
-  <h2>Live Qibla Compass</h2>
-  <div id="compassContainer">
-    <div id="compass">🧭</div>
-    <div id="qiblaArrow"></div>
-    <div id="qiblaLabel">Qibla</div>
-  </div>
-  <p id="qiblaResult" style="text-align:center; font-weight:bold; margin-top:10px;">Press button to detect Qibla</p>
-  <button onclick="enableCompass()">Enable Compass</button>
+<div class="date" id="date"></div>
+
+<div id="prayerBox" class="prayer-box">
+Loading prayer times...
 </div>
 
+<div id="countdown">
+Next prayer in: --:--:--
+</div>
+
+<!-- Navigation -->
+
 <div class="bottom-nav">
-  <a href="index.html">🏠 Home</a>
-  <a href="quran.html">📖 Quran</a>
-  <a href="hadith.html">📜 Hadith</a>
-  <a href="prayer.html">🕌 Prayer</a>
-  <a href="videos.html">🎥 Videos</a>
+
+<a href="index.html">🏠 Home</a>
+<a href="quran.html">📖 Quran</a>
+<a href="hadith.html">📜 Hadith</a>
+<a href="prayer.html">🕌 Prayer</a>
+<a href="videos.html">🎥 Videos</a>
+
 </div>
 
 <script>
+
 // =====================
-// PRAYER TIMES LOGIC
+// PRAYER VARIABLES
 // =====================
+
 let prayerTimings = null;
 let nextPrayerName = "";
 let countdownInterval = null;
 
-function getNextPrayer(timings) {
-  const prayers = ["Fajr","Dhuhr","Asr","Maghrib","Isha"];
-  const now = new Date();
-  let next = null;
-  for (let p of prayers) {
-    const time = timings[p].split(":");
-    const prayerTime = new Date();
-    prayerTime.setHours(time[0], time[1], 0, 0);
-    if (prayerTime > now) { next = p; break; }
-  }
-  if (!next) next = "Fajr";
-  return next;
-}
-
-function displayPrayerTimes(data) {
-  prayerTimings = data.data.timings;
-  const date = data.data.date;
-  nextPrayerName = getNextPrayer(prayerTimings);
-
-  document.getElementById("date").innerHTML =
-    `${date.gregorian.date} | ${date.hijri.date} ${date.hijri.month.en}`;
-
-  const prayers = ["Fajr","Dhuhr","Asr","Maghrib","Isha"];
-  let html = "";
-  prayers.forEach(p => {
-    const cls = p === nextPrayerName ? "prayer next" : "prayer";
-    html += `<div class="${cls}"><span>${p}</span><span>${prayerTimings[p]}</span></div>`;
-  });
-  document.getElementById("prayerBox").innerHTML = html;
-
-  startCountdown();
-}
-
-function loadPrayerTimes(lat, lon) {
-  fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=2`)
-    .then(res => res.json())
-    .then(data => displayPrayerTimes(data))
-    .catch(() => {
-      document.getElementById("prayerBox").innerHTML = "Could not load prayer times.";
-    });
-}
-
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(position => {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
-    document.getElementById("location").innerHTML = "Your location detected";
-    loadPrayerTimes(lat, lon);
-  }, () => {
-    document.getElementById("location").innerHTML = "Using default location Kampala";
-    loadPrayerTimes(0.3476, 32.5825);
-  });
-} else {
-  loadPrayerTimes(0.3476, 32.5825);
-}
-
-function startCountdown() {
-  if (countdownInterval) clearInterval(countdownInterval);
-  countdownInterval = setInterval(() => {
-    if (!prayerTimings) return;
-    let timeStr = prayerTimings[nextPrayerName];
-    let parts = timeStr.split(":");
-    let now = new Date();
-    let prayerTime = new Date();
-    prayerTime.setHours(parts[0], parts[1], 0, 0);
-    if (nextPrayerName === "Fajr" && prayerTime < now) {
-      prayerTime.setDate(prayerTime.getDate() + 1);
-    }
-    let diff = prayerTime - now;
-    if (diff < 0) { nextPrayerName = getNextPrayer(prayerTimings); return; }
-    let hours = Math.floor(diff / 1000 / 3600);
-    let minutes = Math.floor((diff / 1000 % 3600) / 60);
-    let seconds = Math.floor((diff / 1000) % 60);
-    document.getElementById("countdown").innerHTML =
-      `Next prayer (${nextPrayerName}) in: ${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
-  }, 1000);
-}
 
 // =====================
-// QIBLA COMPASS LOGIC
+// GET NEXT PRAYER
 // =====================
-let qiblaArrowEl = document.getElementById("qiblaArrow");
 
-let qiblaAngle = null;
-let userLat = null;
-let userLon = null;
+function getNextPrayer(timings){
 
-function calcQibla(lat, lon) {
-  const kaabaLat = 21.4225;
-  const kaabaLon = 39.8262;
-  const lat1 = lat * Math.PI/180;
-  const lat2 = kaabaLat * Math.PI/180;
-  const dLon = (kaabaLon - lon) * Math.PI/180;
-  const y = Math.sin(dLon) * Math.cos(lat2);
-  const x = Math.cos(lat1)*Math.sin(lat2) - Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
-  let q = Math.atan2(y,x) * 180/Math.PI;
-  return (q + 360) % 360;
+const prayers = ["Fajr","Dhuhr","Asr","Maghrib","Isha"];
+
+const now = new Date();
+
+let next = null;
+
+for(let p of prayers){
+
+const time = timings[p].split(":");
+
+const prayerTime = new Date();
+
+prayerTime.setHours(time[0], time[1], 0, 0);
+
+if(prayerTime > now){
+
+next = p;
+
+break;
+
 }
 
-function getUserLocationQibla() {
-  if(!navigator.geolocation){
-      alert("Geolocation not supported");
-      return;
-  }
-  navigator.geolocation.getCurrentPosition(pos => {
-      userLat = pos.coords.latitude;
-      userLon = pos.coords.longitude;
-      qiblaAngle = calcQibla(userLat, userLon);
-      document.getElementById("qiblaResult").innerText =
-          "Qibla Direction: " + qiblaAngle.toFixed(2) + "° from North";
-  }, err => {
-      alert("Unable to detect location. Using default Kampala.");
-      userLat = 0.3476;
-      userLon = 32.5825;
-      qiblaAngle = calcQibla(userLat, userLon);
-      document.getElementById("qiblaResult").innerText =
-          "Qibla Direction: " + qiblaAngle.toFixed(2) + "° from North";
-  });
 }
 
-function enableCompass() {
-  if (!qiblaAngle) {
-      alert("Wait until location is detected!");
-      return;
-  }
-  if (typeof DeviceOrientationEvent !== 'undefined' &&
-      typeof DeviceOrientationEvent.requestPermission === 'function') {
-      DeviceOrientationEvent.requestPermission()
-          .then(response => {
-              if (response === 'granted') startCompass();
-              else alert("Permission denied for compass.");
-          })
-          .catch(console.error);
-  } else {
-      startCompass();
-  }
+if(!next) next = "Fajr";
+
+return next;
+
 }
 
-function startCompass() {
-  window.addEventListener('deviceorientationabsolute', function(event) {
-      const alpha = event.alpha || 0;
-      const rotation = qiblaAngle - alpha;
-      qiblaArrowEl.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
-      document.getElementById("compass").style.transform = `rotate(${-alpha}deg)`;
-  }, true);
+
+// =====================
+// DISPLAY PRAYERS
+// =====================
+
+function displayPrayerTimes(data){
+
+prayerTimings = data.data.timings;
+
+const date = data.data.date;
+
+nextPrayerName = getNextPrayer(prayerTimings);
+
+document.getElementById("date").innerHTML =
+`${date.gregorian.date} | ${date.hijri.date} ${date.hijri.month.en}`;
+
+
+const prayers = ["Fajr","Dhuhr","Asr","Maghrib","Isha"];
+
+let html = "";
+
+prayers.forEach(p=>{
+
+const cls = p === nextPrayerName ? "prayer next" : "prayer";
+
+html += `<div class="${cls}">
+<span>${p}</span>
+<span>${prayerTimings[p]}</span>
+</div>`;
+
+});
+
+document.getElementById("prayerBox").innerHTML = html;
+
+startCountdown();
+
 }
 
-// Initialize Qibla detection
-getUserLocationQibla();
+
+// =====================
+// LOAD PRAYER TIMES
+// =====================
+
+function loadPrayerTimes(lat,lon){
+
+fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=2`)
+
+.then(res=>res.json())
+
+.then(data=>{
+
+displayPrayerTimes(data);
+
+})
+
+.catch(()=>{
+
+document.getElementById("prayerBox").innerHTML="Could not load prayer times.";
+
+});
+
+}
+
+
+// =====================
+// GET USER LOCATION
+// =====================
+
+if(navigator.geolocation){
+
+navigator.geolocation.getCurrentPosition(position=>{
+
+const lat = position.coords.latitude;
+
+const lon = position.coords.longitude;
+
+document.getElementById("location").innerHTML = "Your location detected";
+
+loadPrayerTimes(lat,lon);
+
+},()=>{
+
+document.getElementById("location").innerHTML="Using default location Kampala";
+
+loadPrayerTimes(0.3476,32.5825);
+
+});
+
+}else{
+
+loadPrayerTimes(0.3476,32.5825);
+
+}
+
+
+// =====================
+// COUNTDOWN TIMER
+// =====================
+
+function startCountdown(){
+
+if(countdownInterval) clearInterval(countdownInterval);
+
+countdownInterval = setInterval(()=>{
+
+if(!prayerTimings) return;
+
+let timeStr = prayerTimings[nextPrayerName];
+
+let parts = timeStr.split(":");
+
+let now = new Date();
+
+let prayerTime = new Date();
+
+prayerTime.setHours(parts[0], parts[1], 0, 0);
+
+if(nextPrayerName === "Fajr" && prayerTime < now){
+
+prayerTime.setDate(prayerTime.getDate()+1);
+
+}
+
+let diff = prayerTime - now;
+
+if(diff < 0){
+
+nextPrayerName = getNextPrayer(prayerTimings);
+
+return;
+
+}
+
+let hours = Math.floor(diff/1000/3600);
+
+let minutes = Math.floor((diff/1000%3600)/60);
+
+let seconds = Math.floor((diff/1000)%60);
+
+document.getElementById("countdown").innerHTML =
+`Next prayer (${nextPrayerName}) in: ${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
+
+},1000);
+
+}
+
 </script>
 
 </body>
