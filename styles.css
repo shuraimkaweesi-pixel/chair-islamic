@@ -3,69 +3,81 @@ CHAIR ISLAMIC TV DARK THEME
 ========================= */
 
 body{
+
 background:#0d0d0d;
 color:#FFD700;
-font-family:Arial, sans-serif;
+font-family:Arial;
 margin:0;
-padding:20px;
+padding:0;
+
 }
 
-/* HEADINGS */
+/* HEADER */
 
-h1,h2,h3{
-color:#FFD700;
+.app-header{
+
+background:#000;
+padding:15px;
 text-align:center;
-text-shadow:0 0 5px #000;
-}
-
-/* BOX SECTIONS */
-
-.container,
-.prayer-box,
-.card,
-.box{
-
-background:#1a1a1a;
-border-radius:12px;
-padding:20px;
-margin-top:20px;
-box-shadow:0 0 15px rgba(0,0,0,0.6);
+border-bottom:2px solid #FFD700;
 
 }
 
-/* BUTTONS */
+.logo{
 
-button{
+font-size:22px;
+font-weight:bold;
+margin-bottom:10px;
+
+}
+
+/* TOP NAV */
+
+.top-nav{
+
+display:flex;
+justify-content:space-around;
+flex-wrap:wrap;
+
+}
+
+.top-nav a{
+
+color:#FFD700;
+text-decoration:none;
+font-size:16px;
+padding:8px;
+
+}
+
+.top-nav a:hover{
 
 background:#FFD700;
 color:#000;
-border:none;
-padding:10px 18px;
 border-radius:6px;
-font-size:16px;
-cursor:pointer;
 
 }
 
-button:hover{
-background:#e6c200;
-}
+/* MAIN CONTAINER */
 
-/* INPUTS */
+.container{
 
-input,select{
-
-width:100%;
-padding:10px;
-border-radius:6px;
-border:none;
-margin-top:10px;
-background:#262626;
-color:#FFD700;
+padding:20px;
 
 }
 
-/* PRAYER TIMES */
+/* CARDS */
+
+.card{
+
+background:#1a1a1a;
+padding:20px;
+margin-top:20px;
+border-radius:12px;
+
+}
+
+/* PRAYER */
 
 .prayer{
 
@@ -109,23 +121,50 @@ border-left:5px solid #FFD700;
 
 }
 
-/* ARABIC TEXT */
-
 .arabic{
 
 font-size:26px;
 text-align:right;
 direction:rtl;
-margin-bottom:10px;
 
 }
 
-/* TRANSLATION */
-
 .translation{
 
-font-size:16px;
 color:#ccc;
+
+}
+
+/* BUTTON */
+
+button{
+
+background:#FFD700;
+color:#000;
+border:none;
+padding:10px 16px;
+border-radius:6px;
+cursor:pointer;
+
+}
+
+button:hover{
+
+background:#e6c200;
+
+}
+
+/* INPUT */
+
+input,select{
+
+width:100%;
+padding:10px;
+border:none;
+border-radius:6px;
+margin-top:10px;
+background:#262626;
+color:#FFD700;
 
 }
 
@@ -136,18 +175,6 @@ color:#ccc;
 background:#1a1a1a;
 padding:20px;
 border-radius:12px;
-margin-top:20px;
-
-}
-
-/* COUNTDOWN */
-
-#countdown{
-
-text-align:center;
-font-size:26px;
-font-weight:bold;
-margin-top:20px;
 
 }
 
@@ -159,7 +186,17 @@ border-radius:10px;
 
 }
 
-/* BOTTOM NAVIGATION */
+/* COUNTDOWN */
+
+#countdown{
+
+text-align:center;
+font-size:26px;
+margin-top:20px;
+
+}
+
+/* BOTTOM NAV */
 
 .bottom-nav{
 
@@ -170,7 +207,7 @@ width:100%;
 background:#000;
 display:flex;
 justify-content:space-around;
-padding:15px 0;
+padding:12px 0;
 border-top:1px solid #333;
 
 }
@@ -178,9 +215,7 @@ border-top:1px solid #333;
 .bottom-nav a{
 
 color:#FFD700;
+font-size:20px;
 text-decoration:none;
-font-size:18px;
-flex:1;
-text-align:center;
 
 }
