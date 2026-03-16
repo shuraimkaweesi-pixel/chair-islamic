@@ -444,3 +444,50 @@ window.location.href =
 "tel:"+encodeURIComponent(ussd);
 
 }
+const express = require("express");
+const fetch = require("node-fetch");
+const app = express();
+app.use(express.json());
+
+const MERCHANT_CODE = "7037856";
+const AIRTEL_API_URL = "https://sandbox.africapayments.com/airtel"; // replace with live API
+const CALLBACK_URL = "https://your-website.com/donation-callback";
+
+app.post("/api/airtel-donate", async (req, res) => {
+  const { amount } = req.body;
+
+  if(!amount || amount < 1000){
+    return res.json({ status:"error", message:"Invalid amount" });
+  }
+
+  try {
+    const payload = {
+      merchantCode: MERCHANT_CODE,
+      amount: amount,
+      callbackUrl: CALLBACK_URL
+    };
+
+    const apiRes = await fetch(`${AIRtel_API_URL}/collect`, {
+      method: "POST",
+      headers: {
+        "Content-Type":"application/json",
+        "Authorization":"Bearer YOUR_API_TOKEN"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await apiRes.json();
+
+    if(data.status === "success"){
+      res.json({ status:"success", message:"Payment initiated" });
+    } else {
+      res.json({ status:"error", message:data.message });
+    }
+
+  } catch(err){
+    console.error(err);
+    res.json({ status:"error", message:"Failed to contact Airtel API" });
+  }
+});
+
+app.listen(3000, () => console.log("Server running on port 3000"));
