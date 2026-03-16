@@ -81,7 +81,9 @@ Isha: ${t.Isha}
 });
 
 }
-
+<audio id="adhanAudio">
+<source src="https://cdn.islamic.network/audio/adhan/1.mp3" type="audio/mpeg">
+</audio>
 // ===============================
 // SEND QUESTION
 // ===============================
