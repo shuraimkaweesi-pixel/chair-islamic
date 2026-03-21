@@ -148,24 +148,52 @@ Install App 📲
 </div>
 
 <script>
+<script>
 // ===============================
-// PWA INSTALL
+// SERVICE WORKER REGISTER
+// ===============================
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js")
+      .then(() => console.log("Service Worker Registered"))
+      .catch(err => console.log("SW failed", err));
+  });
+}
+
+// ===============================
+// INSTALL BUTTON FIX
 // ===============================
 let deferredPrompt;
+const installBtn = document.getElementById("installBtn");
 
-window.addEventListener("beforeinstallprompt", (e)=>{
-e.preventDefault();
-deferredPrompt = e;
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
 
-const btn = document.getElementById("installBtn");
-btn.style.display = "block";
-
-btn.onclick = async ()=>{
-deferredPrompt.prompt();
-await deferredPrompt.userChoice;
-deferredPrompt = null;
-};
+  if (installBtn) {
+    installBtn.style.display = "block";
+  }
 });
+
+installBtn?.addEventListener("click", async () => {
+  if (!deferredPrompt) {
+    alert("Install not available yet. Open site again or use Chrome menu.");
+    return;
+  }
+
+  deferredPrompt.prompt();
+
+  const choice = await deferredPrompt.userChoice;
+
+  if (choice.outcome === "accepted") {
+    console.log("App Installed");
+  } else {
+    console.log("Install dismissed");
+  }
+
+  deferredPrompt = null;
+});
+</script>
 
 // ===============================
 // YOUTUBE
