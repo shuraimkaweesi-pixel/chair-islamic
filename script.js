@@ -165,18 +165,19 @@ lastNotifiedPrayer = name;
 // ===============================
 function triggerAdhan(prayer){
 
-// Notification
-if(Notification.permission === "granted"){
-new Notification("🕌 Prayer Time", {
-body: `It's time for ${prayer}`
-});
+// Send to Service Worker (background notification)
+if(navigator.serviceWorker && navigator.serviceWorker.controller){
+  navigator.serviceWorker.controller.postMessage({
+    type: "PRAYER_ALERT",
+    prayer: prayer
+  });
 }
 
-// Play Adhan
+// Play sound (only if app open)
 const audio = new Audio("https://cdn.islamic.network/audio/adhan/1.mp3");
-audio.play();
+audio.play().catch(()=>{});
 
-console.log("Adhan triggered for", prayer);
+console.log("Adhan triggered:", prayer);
 
 }
 
