@@ -279,3 +279,17 @@ function downloadSurah() {
   a.download = "Surah_" + surahCode + ".mp3";
   a.click();
   }
+function showNotification(title, body){
+if(Notification.permission === "granted"){
+new Notification(title,{body});
+}
+}
+
+if(Notification.permission !== "granted"){
+Notification.requestPermission();
+}
+
+// Example test
+setTimeout(()=>{
+showNotification("Prayer Time","It's time for Salah 🕌");
+},5000);
