@@ -105,12 +105,20 @@ color:#FFD700;
    ========================= */
 
 .content-box{
-background:#1a1a1a;
+background: linear-gradient(145deg,#1a1a1a,#111);
 padding:20px;
-border-radius:8px;
+border-radius:15px;
 margin-top:20px;
-color:#eee;
-line-height:1.7;
+box-shadow:0 0 10px rgba(255,215,0,0.2);
+}
+
+button{
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+box-shadow:0 0 10px gold;
 }
 
 /* =========================
