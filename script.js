@@ -285,36 +285,98 @@ document.getElementById("quranText").innerHTML =
 // ===============================
 // PLAY AYAH (NO DOUBLE AUDIO)
 // ===============================
-let currentAudio;
-let fullSurahAudio;
+let currentAudio = null;
+let currentAyahKey = "";
 
 function playAyah(surah, ayah, element){
 
+const ayahKey = surah + "-" + ayah;
+
+// STOP full surah
 if(fullSurahAudio){
 fullSurahAudio.pause();
+isSurahPlaying = false;
 }
 
-document.querySelectorAll(".ayah").forEach(a=>a.classList.remove("playing"));
+// SAME AYAH = TOGGLE PAUSE
+if(currentAudio && currentAyahKey === ayahKey){
+
+if(!currentAudio.paused){
+currentAudio.pause();
+return;
+}else{
+currentAudio.play();
+return;
+}
+
+}
+
+// REMOVE highlight
+document.querySelectorAll(".ayah").forEach(a=>{
+a.classList.remove("playing");
+});
+
 element.classList.add("playing");
 
 const surahCode = String(surah).padStart(3,"0");
 const ayahCode = String(ayah).padStart(3,"0");
 
-const url =
+const audioURL =
 "https://everyayah.com/data/Alafasy_128kbps/" +
 surahCode + ayahCode + ".mp3";
 
+// STOP previous ayah
 if(currentAudio){
 currentAudio.pause();
 }
 
-currentAudio = new Audio(url);
+// NEW AUDIO
+currentAudio = new Audio(audioURL);
 currentAudio.play();
+currentAyahKey = ayahKey;
 
+// UI player
 document.getElementById("audioPlayer").innerHTML =
-`<audio controls autoplay src="${url}" style="width:100%"></audio>`;
+`<audio controls autoplay style="width:100%" src="${audioURL}"></audio>`;
+
+}
+let fullSurahAudio = null;
+let isSurahPlaying = false;
+
+function playFullSurah(){
+
+const surahNumber = parseInt(document.getElementById("surahSelect").value);
+
+if(!surahNumber){
+alert("Select a Surah first");
+return;
 }
 
+const surahCode = String(surahNumber).padStart(3,"0");
+const audioURL = "https://server8.mp3quran.net/afs/" + surahCode + ".mp3";
+
+// STOP ayah audio
+if(currentAudio){
+currentAudio.pause();
+}
+
+// TOGGLE PLAY / PAUSE
+if(fullSurahAudio && isSurahPlaying){
+fullSurahAudio.pause();
+isSurahPlaying = false;
+return;
+}
+
+// CREATE or PLAY
+fullSurahAudio = new Audio(audioURL);
+fullSurahAudio.play();
+isSurahPlaying = true;
+
+// UI player
+document.getElementById("audioPlayer").innerHTML =
+`<audio controls autoplay style="width:100%" src="${audioURL}"></audio>`;
+
+}
 // ===============================
 // DOWNLOAD
 // ===============================
