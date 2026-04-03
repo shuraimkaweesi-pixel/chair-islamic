@@ -2,12 +2,13 @@
 // CHAIR ISLAMIC TV MAIN SCRIPT
 // ===============================
 
+// Run after page loads
 document.addEventListener("DOMContentLoaded", () => {
   initPWA();
   loadYoutubeVideos();
   loadHadith();
   initSurahList();
-  startAdhanSystem(); // start adhan
+  startAdhanSystem(); // ✅ start once
 });
 
 // ===============================
@@ -47,6 +48,7 @@ function initPWA() {
 // YOUTUBE VIDEOS
 // ===============================
 function loadYoutubeVideos() {
+
   const youtubeContainer = document.getElementById("youtubeVideos");
   if (!youtubeContainer) return;
 
@@ -54,9 +56,8 @@ function loadYoutubeVideos() {
 
   youtubeContainer.innerHTML = videoIDs.map(id => `
     <iframe width="100%" height="315"
-      src="https://www.youtube.com/embed/${id}"
-      allowfullscreen>
-    </iframe><br><br>
+    src="https://www.youtube.com/embed/${id}"
+    allowfullscreen></iframe><br><br>
   `).join("");
 }
 
@@ -93,17 +94,18 @@ function getPrayerTimes() {
 // 🔊 REAL ADHAN SYSTEM (FIXED)
 // ===============================
 
-let prayerTimesCache = {};
+let prayerTimes = {};
 let lastNotifiedPrayer = "";
 
-// ask permission once
+// Ask permission once
 if ("Notification" in window && Notification.permission !== "granted") {
   Notification.requestPermission();
 }
 
-async function startAdhanSystem() {
+async function startAdhanSystem(){
 
   try {
+
     const res = await fetch(
       `https://api.aladhan.com/v1/timingsByCity?city=Kampala&country=Uganda&method=2`
     );
@@ -111,8 +113,7 @@ async function startAdhanSystem() {
     const data = await res.json();
     const t = data.data.timings;
 
-    // clean times
-    prayerTimesCache = {
+    prayerTimes = {
       Fajr: t.Fajr.slice(0,5),
       Dhuhr: t.Dhuhr.slice(0,5),
       Asr: t.Asr.slice(0,5),
@@ -120,58 +121,58 @@ async function startAdhanSystem() {
       Isha: t.Isha.slice(0,5)
     };
 
-    console.log("Adhan Times Loaded:", prayerTimesCache);
+    console.log("Adhan Times:", prayerTimes);
 
-    // check every 15 seconds
+    // check every 15 sec
     setInterval(checkPrayerTime, 15000);
 
   } catch (err) {
-    console.log("Adhan fetch error", err);
+    console.log("Adhan error", err);
   }
 }
 
-function checkPrayerTime() {
+function checkPrayerTime(){
 
   const now = new Date();
+
   const currentTime =
-    now.getHours().toString().padStart(2, "0") + ":" +
-    now.getMinutes().toString().padStart(2, "0");
+    now.getHours().toString().padStart(2,"0") + ":" +
+    now.getMinutes().toString().padStart(2,"0");
 
-  for (let name in prayerTimesCache) {
+  for(let name in prayerTimes){
 
-    if (
-      prayerTimesCache[name] === currentTime &&
-      lastNotifiedPrayer !== name
-    ) {
+    if(prayerTimes[name] === currentTime && lastNotifiedPrayer !== name){
+
       triggerAdhan(name);
       lastNotifiedPrayer = name;
+
     }
   }
 }
 
 // ===============================
-// 🔊 TRIGGER ADHAN
+// 🔔 TRIGGER ADHAN
 // ===============================
-function triggerAdhan(prayer) {
+function triggerAdhan(prayer){
 
   console.log("Adhan:", prayer);
 
-  // 🔔 PUSH TO SERVICE WORKER (BACKGROUND)
-  if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+  // send to service worker
+  if(navigator.serviceWorker && navigator.serviceWorker.controller){
     navigator.serviceWorker.controller.postMessage({
-      type: "PLAY_ADHAN",
+      type: "PRAYER_ALERT",
       prayer: prayer
     });
   }
 
-  // 🔊 Play sound if app is open
+  // play sound if app open
   const audio = new Audio("https://cdn.islamic.network/audio/adhan/1.mp3");
-  audio.play().catch(() => {});
+  audio.play().catch(()=>{});
 
-  // 🔔 Notification
-  if (Notification.permission === "granted") {
+  // notification
+  if(Notification.permission === "granted"){
     new Notification("🕌 Prayer Time", {
-      body: `It's time for ${prayer}`
+      body: "It's time for " + prayer
     });
   }
 }
@@ -180,6 +181,7 @@ function triggerAdhan(prayer) {
 // DONATION
 // ===============================
 function donateAirtel() {
+
   const amount = document.getElementById("donationAmount")?.value;
 
   if (!amount) {
@@ -188,6 +190,7 @@ function donateAirtel() {
   }
 
   const ussd = `*185*9*7037856*${amount}#`;
+
   window.location.href = "tel:" + encodeURIComponent(ussd);
 }
 
@@ -200,68 +203,136 @@ async function loadHadith() {
   if (!box) return;
 
   try {
+
     const res = await fetch("hadith.json");
     const data = await res.json();
 
-    const random =
-      data.hadiths[Math.floor(Math.random() * data.hadiths.length)];
+    const random = data.hadiths[Math.floor(Math.random()*data.hadiths.length)];
 
     box.innerHTML = `
       <div class="arabic">${random.arab}</div>
       <div class="translation">${random.en}</div>
     `;
+
   } catch {
     box.innerText = "Could not load Hadith";
   }
 }
 
 // ===============================
-// QURAN AUDIO FIX (NO DOUBLE PLAY)
+// QURAN SETUP
+// ===============================
+function initSurahList() {
+
+  const surahSelect = document.getElementById("surahSelect");
+  if (!surahSelect) return;
+
+  const surahNames = ["Al-Fatiha","Al-Baqarah","Aal-Imran","An-Nisa","Al-Ma'idah","Al-An'am","Al-A'raf","Al-Anfal","At-Tawbah","Yunus","Hud","Yusuf","Ar-Ra'd","Ibrahim","Al-Hijr","An-Nahl","Al-Isra","Al-Kahf","Maryam","Ta-Ha","Al-Anbiya","Al-Hajj","Al-Mu’minun","An-Nur","Al-Furqan","Ash-Shu'ara","An-Naml","Al-Qasas","Al-Ankabut","Ar-Rum","Luqman","As-Sajdah","Al-Ahzab","Saba","Fatir","Ya-Sin","As-Saffat","Sad","Az-Zumar","Ghafir","Fussilat","Ash-Shura","Az-Zukhruf","Ad-Dukhan","Al-Jathiyah","Al-Ahqaf","Muhammad","Al-Fath","Al-Hujurat","Qaf","Adh-Dhariyat","At-Tur","An-Najm","Al-Qamar","Ar-Rahman","Al-Waqi'ah","Al-Hadid","Al-Mujadila","Al-Hashr","Al-Mumtahanah","As-Saff","Al-Jumu’ah","Al-Munafiqun","At-Taghabun","At-Talaq","At-Tahrim","Al-Mulk","Al-Qalam","Al-Haqqah","Al-Ma'arij","Nuh","Al-Jinn","Al-Muzzammil","Al-Muddathir","Al-Qiyamah","Al-Insan","Al-Mursalat","An-Naba","An-Nazi'at","Abasa","At-Takwir","Al-Infitar","Al-Mutaffifin","Al-Inshiqaq","Al-Buruj","At-Tariq","Al-A'la","Al-Ghashiyah","Al-Fajr","Al-Balad","Ash-Shams","Al-Layl","Ad-Duha","Ash-Sharh","At-Tin","Al-Alaq","Al-Qadr","Al-Bayyinah","Az-Zalzalah","Al-Adiyat","Al-Qari'ah","At-Takathur","Al-Asr","Al-Humazah","Al-Fil","Quraysh","Al-Ma'un","Al-Kawthar","Al-Kafirun","An-Nasr","Al-Masad","Al-Ikhlas","Al-Falaq","An-Nas"];
+
+  surahNames.forEach((name,i)=>{
+    const option = document.createElement("option");
+    option.value = i+1;
+    option.textContent = (i+1)+" - "+name;
+    surahSelect.appendChild(option);
+  });
+}
+
+// ===============================
+// LOAD SURAH (JSON SAFE VERSION)
+// ===============================
+async function loadSurah(){
+
+const surahNumber = parseInt(document.getElementById("surahSelect").value);
+
+if(!surahNumber){
+alert("Select a Surah");
+return;
+}
+
+try{
+
+const arabicRes = await fetch("quran.json");
+const englishRes = await fetch("quran_en.json");
+
+const arabicData = await arabicRes.json();
+const englishData = await englishRes.json();
+
+const arabicSurah = arabicData[surahNumber-1];
+const englishSurah = englishData[surahNumber-1];
+
+let html = "";
+
+for(let i=0;i<arabicSurah.verses.length;i++){
+
+html += `
+<div class="ayah" onclick="playAyah(${surahNumber},${i+1},this)">
+<div class="arabic">${i+1}. ${arabicSurah.verses[i].text}</div>
+<div class="translation">${i+1}. ${englishSurah.verses[i]?.translation}</div>
+</div>`;
+}
+
+document.getElementById("quranText").innerHTML = html;
+
+}catch(err){
+
+console.error(err);
+document.getElementById("quranText").innerHTML =
+"<p style='color:red'>Failed to load Surah</p>";
+
+}
+}
+
+// ===============================
+// PLAY AYAH (NO DOUBLE AUDIO)
 // ===============================
 let currentAudio;
 let fullSurahAudio;
 
-function playAyah(surah, ayah, element) {
+function playAyah(surah, ayah, element){
 
-  // STOP FULL SURAH
-  if (fullSurahAudio) fullSurahAudio.pause();
+if(fullSurahAudio){
+fullSurahAudio.pause();
+}
 
-  document.querySelectorAll(".ayah").forEach(a => a.classList.remove("playing"));
-  element.classList.add("playing");
+document.querySelectorAll(".ayah").forEach(a=>a.classList.remove("playing"));
+element.classList.add("playing");
 
-  const surahCode = String(surah).padStart(3, "0");
-  const ayahCode = String(ayah).padStart(3, "0");
+const surahCode = String(surah).padStart(3,"0");
+const ayahCode = String(ayah).padStart(3,"0");
 
-  const url =
-    "https://everyayah.com/data/Alafasy_128kbps/" +
-    surahCode + ayahCode + ".mp3";
+const url =
+"https://everyayah.com/data/Alafasy_128kbps/" +
+surahCode + ayahCode + ".mp3";
 
-  if (currentAudio) currentAudio.pause();
+if(currentAudio){
+currentAudio.pause();
+}
 
-  currentAudio = new Audio(url);
-  currentAudio.play();
+currentAudio = new Audio(url);
+currentAudio.play();
 
-  document.getElementById("audioPlayer").innerHTML =
-    `<audio controls autoplay src="${url}" style="width:100%"></audio>`;
+document.getElementById("audioPlayer").innerHTML =
+`<audio controls autoplay src="${url}" style="width:100%"></audio>`;
 }
 
 // ===============================
 // DOWNLOAD
 // ===============================
-function downloadSurah() {
+function downloadSurah(){
 
-  const surahNumber = parseInt(document.getElementById("surahSelect").value);
+const surahNumber = parseInt(document.getElementById("surahSelect").value);
 
-  if (!surahNumber) {
-    alert("Select a Surah first");
-    return;
-  }
+if(!surahNumber){
+alert("Select a Surah first");
+return;
+}
 
-  const code = String(surahNumber).padStart(3, "0");
-  const url = "https://server8.mp3quran.net/afs/" + code + ".mp3";
+const code = String(surahNumber).padStart(3,"0");
+const url = "https://server8.mp3quran.net/afs/" + code + ".mp3";
 
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "Surah_" + code + ".mp3";
-  a.click();
+const a = document.createElement("a");
+a.href = url;
+a.download = "Surah_" + code + ".mp3";
+a.click();
+
 }
