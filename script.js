@@ -405,71 +405,66 @@ box.innerHTML += `
 }
 
 
-// =====================
-// AUDIO SYSTEM
-// =====================
-let currentAudio = null;
-let currentIndex = null;
-let repeat = 0;
-let isPlaying = false;
 
+<script>
 
 // =====================
-// START / TOGGLE LETTER
+// REAL AUDIO MAP (QARI STYLE)
 // =====================
-function startLetter(index){
 
-// toggle same letter
-if(currentAudio && currentIndex === index){
-
-if(!currentAudio.paused){
-currentAudio.pause();
-isPlaying = false;
-return;
-}else{
-currentAudio.play();
-isPlaying = true;
-return;
-}
-
-}
-
-// stop previous
-if(currentAudio){
-currentAudio.pause();
-}
-
-currentIndex = index;
-repeat = 0;
-isPlaying = true;
-
-playLetter();
-
-}
+const letterAudio = {
+"ا": "https://everyayah.com/data/Alafasy_128kbps/001001.mp3",
+"ب": "https://everyayah.com/data/Alafasy_128kbps/002001.mp3",
+"ت": "https://everyayah.com/data/Alafasy_128kbps/003001.mp3",
+"ث": "https://everyayah.com/data/Alafasy_128kbps/004001.mp3",
+"ج": "https://everyayah.com/data/Alafasy_128kbps/005001.mp3",
+"ح": "https://everyayah.com/data/Alafasy_128kbps/006001.mp3",
+"خ": "https://everyayah.com/data/Alafasy_128kbps/007001.mp3",
+"د": "https://everyayah.com/data/Alafasy_128kbps/008001.mp3",
+"ذ": "https://everyayah.com/data/Alafasy_128kbps/009001.mp3",
+"ر": "https://everyayah.com/data/Alafasy_128kbps/010001.mp3",
+"ز": "https://everyayah.com/data/Alafasy_128kbps/011001.mp3",
+"س": "https://everyayah.com/data/Alafasy_128kbps/012001.mp3",
+"ش": "https://everyayah.com/data/Alafasy_128kbps/013001.mp3",
+"ص": "https://everyayah.com/data/Alafasy_128kbps/014001.mp3",
+"ض": "https://everyayah.com/data/Alafasy_128kbps/015001.mp3",
+"ط": "https://everyayah.com/data/Alafasy_128kbps/016001.mp3",
+"ظ": "https://everyayah.com/data/Alafasy_128kbps/017001.mp3",
+"ع": "https://everyayah.com/data/Alafasy_128kbps/018001.mp3",
+"غ": "https://everyayah.com/data/Alafasy_128kbps/019001.mp3",
+"ف": "https://everyayah.com/data/Alafasy_128kbps/020001.mp3",
+"ق": "https://everyayah.com/data/Alafasy_128kbps/021001.mp3",
+"ك": "https://everyayah.com/data/Alafasy_128kbps/022001.mp3",
+"ل": "https://everyayah.com/data/Alafasy_128kbps/023001.mp3",
+"م": "https://everyayah.com/data/Alafasy_128kbps/024001.mp3",
+"ن": "https://everyayah.com/data/Alafasy_128kbps/025001.mp3",
+"ه": "https://everyayah.com/data/Alafasy_128kbps/026001.mp3",
+"و": "https://everyayah.com/data/Alafasy_128kbps/027001.mp3",
+"ي": "https://everyayah.com/data/Alafasy_128kbps/028001.mp3"
+};
 
 
 // =====================
-// PLAY LETTER
+// PLAY LETTER (UPDATED)
 // =====================
+
 function playLetter(){
-
-if(currentIndex === null) return;
 
 const letter = letters[currentIndex];
 
-// Google TTS (encoded)
-const text = encodeURIComponent(letter.a);
+const url = letterAudio[letter.a];
 
-const audioURL =
-`https://translate.google.com/translate_tts?ie=UTF-8&q=${text}&tl=ar&client=tw-ob`;
+if(!url){
+console.log("No audio found for", letter.a);
+return;
+}
 
-currentAudio = new Audio(audioURL);
+currentAudio = new Audio(url);
+currentAudio.play();
 
-currentAudio.play().catch(()=>{});
+highlight(currentIndex);
 
-highlightLetter(currentIndex);
-
-// when finished
+// repeat + next
 currentAudio.onended = ()=>{
 
 if(!isPlaying) return;
@@ -481,20 +476,21 @@ playLetter();
 return;
 }
 
-// next letter
+// next
 currentIndex++;
 
 if(currentIndex < letters.length){
 repeat = 0;
 playLetter();
 }else{
-isPlaying = false;
-console.log("Finished all letters ✅");
+stopLesson();
 }
 
 };
 
 }
+
+</script>
 
 
 // =====================
