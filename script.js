@@ -195,19 +195,67 @@ playAyah(surah,next,ayahElements[next-1]);
 }
 
 // =====================
-// 🔊 ADHAN SYSTEM (REAL TIME)
+// =====================
+// 🔊 ADHAN SYSTEM (FIXED & WORKING)
 // =====================
 
+let prayerTimings = {};
 let lastAdhanPlayed = "";
 
-// ask notification permission
+// ask permission once
 if ("Notification" in window && Notification.permission !== "granted") {
   Notification.requestPermission();
 }
 
-function startAdhanWatcher(){
+// 🔓 unlock audio (VERY IMPORTANT for phones)
+document.addEventListener("click", () => {
+  const a = new Audio("https://cdn.islamic.network/audio/adhan/1.mp3");
+  a.play().then(()=> {
+    a.pause();
+    a.currentTime = 0;
+  }).catch(()=>{});
+}, { once: true });
 
-setInterval(()=>{
+
+// =====================
+// GET PRAYER TIMES (AUTO)
+// =====================
+async function startAdhanSystem(){
+
+try{
+
+const res = await fetch(
+`https://api.aladhan.com/v1/timingsByCity?city=Kampala&country=Uganda&method=2`
+);
+
+const data = await res.json();
+const t = data.data.timings;
+
+// clean times
+prayerTimings = {
+Fajr: t.Fajr.slice(0,5),
+Dhuhr: t.Dhuhr.slice(0,5),
+Asr: t.Asr.slice(0,5),
+Maghrib: t.Maghrib.slice(0,5),
+Isha: t.Isha.slice(0,5)
+};
+
+console.log("Prayer Times Loaded:", prayerTimings);
+
+// start watcher
+setInterval(checkAdhanTime, 15000);
+
+}catch(err){
+console.log("Adhan error:", err);
+}
+
+}
+
+
+// =====================
+// CHECK TIME
+// =====================
+function checkAdhanTime(){
 
 if(!prayerTimings) return;
 
@@ -217,25 +265,44 @@ const currentTime =
 now.getHours().toString().padStart(2,"0") + ":" +
 now.getMinutes().toString().padStart(2,"0");
 
-const prayers = ["Fajr","Dhuhr","Asr","Maghrib","Isha"];
+for(let prayer in prayerTimings){
 
-prayers.forEach(p=>{
+if(currentTime === prayerTimings[prayer] && lastAdhanPlayed !== prayer){
 
-let prayerTime = prayerTimings[p].slice(0,5);
-
-// MATCH TIME + prevent repeat
-if(currentTime === prayerTime && lastAdhanPlayed !== p){
-
-playAdhan(p);
-lastAdhanPlayed = p;
+triggerAdhan(prayer);
+lastAdhanPlayed = prayer;
 
 }
 
+}
+
+}
+
+
+// =====================
+// PLAY ADHAN
+// =====================
+function triggerAdhan(prayer){
+
+console.log("🕌 Adhan:", prayer);
+
+// 🔊 play sound
+const audio = new Audio("https://cdn.islamic.network/audio/adhan/1.mp3");
+audio.play().catch(()=>{});
+
+// 🔔 notification
+if(Notification.permission === "granted"){
+new Notification("🕌 Prayer Time", {
+body: "It's time for " + prayer
 });
+}
 
-},15000); // check every 15 sec
+// 📳 vibrate (if supported)
+if(navigator.vibrate){
+navigator.vibrate([500,300,500]);
+}
 
-   }
+}
 
 // ===============================
 // DONATION
