@@ -1,115 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yasarnah Teach | Chair Islamic TV</title>
-
-<style>
-
-body{
-background:#0f0f0f;
-color:#FFD700;
-font-family:Arial;
-padding:20px;
-text-align:center;
-}
-
-h1{
-margin-bottom:10px;
-}
-
-.lesson{
-background:#1a1a1a;
-padding:20px;
-border-radius:12px;
-margin-top:20px;
-}
-
-.arabic{
-font-size:28px;
-direction:rtl;
-margin:10px 0;
-}
-
-.translit{
-color:#ccc;
-margin-bottom:10px;
-}
-
-.meaning{
-color:#aaa;
-}
-
-button{
-margin-top:15px;
-padding:12px;
-width:80%;
-background:#FFD700;
-color:black;
-border:none;
-border-radius:8px;
-font-weight:bold;
-}
-
-.playing{
-background:#333;
-}
-
-</style>
-</head>
-
-<body>
-
-<h1>📘 Yasarnah Teach</h1>
-<p>Learn Quran step by step with audio</p>
-
-<div id="lessonBox"></div>
-
 <script>
 
 // =====================
-// LESSON DATA (START SIMPLE)
+// ARABIC LETTERS (ALIF → YAA)
 // =====================
 
-const lessons = [
-{
-title: "Surah Al-Fatiha - Ayah 1",
-arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
-translit: "Bismillahi rahmani raheem",
-meaning: "In the name of Allah, the Most Gracious, the Most Merciful",
-audio: "https://everyayah.com/data/Alafasy_128kbps/001001.mp3"
-},
-{
-title: "Surah Al-Fatiha - Ayah 2",
-arabic: "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
-translit: "Alhamdu lillahi rabbil aalameen",
-meaning: "All praise is due to Allah, Lord of the worlds",
-audio: "https://everyayah.com/data/Alafasy_128kbps/001002.mp3"
-}
+const letters = [
+{a:"ا", name:"Alif", sound:"a"},
+{a:"ب", name:"Ba", sound:"ba"},
+{a:"ت", name:"Ta", sound:"ta"},
+{a:"ث", name:"Tha", sound:"tha"},
+{a:"ج", name:"Jeem", sound:"ja"},
+{a:"ح", name:"Ha", sound:"ha"},
+{a:"خ", name:"Kha", sound:"kha"},
+{a:"د", name:"Dal", sound:"da"},
+{a:"ذ", name:"Dhal", sound:"dha"},
+{a:"ر", name:"Ra", sound:"ra"},
+{a:"ز", name:"Zay", sound:"za"},
+{a:"س", name:"Seen", sound:"sa"},
+{a:"ش", name:"Sheen", sound:"sha"},
+{a:"ص", name:"Sad", sound:"sa"},
+{a:"ض", name:"Dad", sound:"da"},
+{a:"ط", name:"Taa", sound:"ta"},
+{a:"ظ", name:"Zaa", sound:"za"},
+{a:"ع", name:"Ain", sound:"aa"},
+{a:"غ", name:"Ghain", sound:"gha"},
+{a:"ف", name:"Fa", sound:"fa"},
+{a:"ق", name:"Qaf", sound:"qa"},
+{a:"ك", name:"Kaf", sound:"ka"},
+{a:"ل", name:"Lam", sound:"la"},
+{a:"م", name:"Meem", sound:"ma"},
+{a:"ن", name:"Noon", sound:"na"},
+{a:"ه", name:"Ha", sound:"ha"},
+{a:"و", name:"Waw", sound:"wa"},
+{a:"ي", name:"Yaa", sound:"ya"}
 ];
 
 
 // =====================
-// LOAD LESSONS
+// SETTINGS
+// =====================
+
+let repeatCount = 3;
+
+
+// =====================
+// LOAD UI
 // =====================
 
 const box = document.getElementById("lessonBox");
 
-lessons.forEach((l,i)=>{
+letters.forEach((l,i)=>{
 
 box.innerHTML += `
 <div class="lesson">
 
-<h3>${l.title}</h3>
+<h2 style="font-size:40px">${l.a}</h2>
 
-<div class="arabic">${l.arabic}</div>
+<p>${l.name}</p>
+<p style="color:#aaa">${l.sound}</p>
 
-<div class="translit">${l.translit}</div>
-
-<div class="meaning">${l.meaning}</div>
-
-<button onclick="playLesson(${i}, this)">▶ Play</button>
+<button onclick="startLetter(${i})">▶ Start</button>
 
 </div>
 `;
@@ -118,31 +68,83 @@ box.innerHTML += `
 
 
 // =====================
-// AUDIO CONTROL
+// AUDIO SYSTEM
 // =====================
 
 let currentAudio = null;
+let currentIndex = null;
+let repeat = 0;
 
-function playLesson(index, btn){
 
-const lesson = lessons[index];
+// =====================
+// START LETTER
+// =====================
 
-// stop old
-if(currentAudio){
-currentAudio.pause();
+function startLetter(index){
+
+if(currentAudio) currentAudio.pause();
+
+currentIndex = index;
+repeat = 0;
+
+playLetter();
+
 }
 
-// play new
-currentAudio = new Audio(lesson.audio);
+
+// =====================
+// PLAY LETTER
+// =====================
+
+function playLetter(){
+
+const letter = letters[currentIndex];
+
+// 👉 using Google TTS (works online)
+const audioURL =
+`https://translate.google.com/translate_tts?ie=UTF-8&q=${letter.a}&tl=ar&client=tw-ob`;
+
+currentAudio = new Audio(audioURL);
 currentAudio.play();
 
-// UI feedback
-document.querySelectorAll("button").forEach(b=>b.classList.remove("playing"));
-btn.classList.add("playing");
+// highlight
+highlightLetter(currentIndex);
+
+// when finished
+currentAudio.onended = ()=>{
+
+repeat++;
+
+if(repeat < repeatCount){
+playLetter();
+return;
+}
+
+// next letter
+currentIndex++;
+
+if(currentIndex < letters.length){
+repeat = 0;
+playLetter();
+}else{
+console.log("Finished all letters ✅");
+}
+
+};
+
+}
+
+
+// =====================
+// HIGHLIGHT
+// =====================
+
+function highlightLetter(index){
+
+document.querySelectorAll(".lesson").forEach((l,i)=>{
+l.style.border = (i === index) ? "2px solid gold" : "none";
+});
 
 }
 
 </script>
-
-</body>
-</html>
