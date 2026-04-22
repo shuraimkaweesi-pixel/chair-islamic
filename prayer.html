@@ -101,7 +101,7 @@ text-align:center;
 <body>
 
 <h1>Prayer Times</h1>
-<p id="location">Detecting location...</p>
+<p id="location">Loading Kampala times...</p>
 <div class="date" id="date"></div>
 
 <div id="prayerBox" class="prayer-box">
@@ -139,6 +139,32 @@ let adhanCheckInterval = null;
 let lastAdhanPlayed = ""; // e.g. "Fajr"
 let lastAdhanDate = ""; // e.g. "Thu Apr 23 2026"
 let audioUnlocked = false;
+
+const KAMPALA_LAT = 0.3476;
+const KAMPALA_LON = 32.5825;
+
+// =====================
+// CACHE HELPERS
+// =====================
+function getTodayKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+}
+
+function saveToCache(data) {
+  localStorage.setItem('prayerData', JSON.stringify({
+    date: getTodayKey(),
+    data: data
+  }));
+}
+
+function loadFromCache() {
+  const cached = localStorage.getItem('prayerData');
+  if (!cached) return null;
+  const parsed = JSON.parse(cached);
+  if (parsed.date === getTodayKey()) return parsed.data;
+  return null;
+}
 
 // =====================
 // UNLOCK AUDIO FOR AUTOPLAY
@@ -195,4 +221,174 @@ function displayPrayerTimes(data){
 
   prayers.forEach(p=>{
     const cls = p === nextPrayerName? "prayer next" : "prayer";
-    html += `<div
+    html += `<div class="${cls}">
+      <span>${p}</span>
+      <span>${prayerTimings[p]}</span>
+    </div>`;
+  });
+
+  document.getElementById("prayerBox").innerHTML = html;
+  startCountdown();
+  startAdhanChecker();
+}
+
+// =====================
+// COUNTDOWN TIMER
+// =====================
+function startCountdown(){
+  if(countdownInterval) clearInterval(countdownInterval);
+
+  countdownInterval = setInterval(()=>{
+    if(!prayerTimings) return;
+
+    let timeStr = prayerTimings[nextPrayerName];
+    let parts = timeStr.split(":");
+    let now = new Date();
+    let prayerTime = new Date();
+    prayerTime.setHours(parts[0], parts[1], 0, 0);
+
+    // If it's past today's prayer time, target tomorrow's Fajr
+    if(nextPrayerName === "Fajr" && prayerTime < now){
+      prayerTime.setDate(prayerTime.getDate()+1);
+    }
+
+    let diff = prayerTime - now;
+
+    // If time passed, recalculate next prayer
+    if(diff < 0){
+      nextPrayerName = getNextPrayer(prayerTimings);
+      // Re-render the prayer list to highlight new "next" prayer
+      const prayers = ["Fajr","Dhuhr","Asr","Maghrib","Isha"];
+      let html = "";
+      prayers.forEach(p=>{
+        const cls = p === nextPrayerName? "prayer next" : "prayer";
+        html += `<div class="${cls}">
+          <span>${p}</span>
+          <span>${prayerTimings[p]}</span>
+        </div>`;
+      });
+      document.getElementById("prayerBox").innerHTML = html;
+      return;
+    }
+
+    let hours = Math.floor(diff/1000/3600);
+    let minutes = Math.floor((diff/1000%3600)/60);
+    let seconds = Math.floor((diff/1000)%60);
+
+    document.getElementById("countdown").innerHTML =
+    `Next prayer (${nextPrayerName}) in: ${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
+
+  },1000);
+}
+
+// =====================
+// ADHAN CHECKER
+// =====================
+function startAdhanChecker(){
+  if(adhanCheckInterval) clearInterval(adhanCheckInterval);
+
+  adhanCheckInterval = setInterval(()=>{
+    if(!prayerTimings) return;
+
+    const now = new Date();
+    const today = now.toDateString();
+    const currentTime = now.getHours().toString().padStart(2,"0")+":"+now.getMinutes().toString().padStart(2,"0");
+
+    // Reset at midnight so Adhan can play again tomorrow
+    if(lastAdhanDate!== today){
+      lastAdhanPlayed = "";
+      lastAdhanDate = today;
+    }
+
+    // Check if current time matches any prayer time
+    for(let p in prayerTimings){
+      if(currentTime === prayerTimings[p].slice(0,5) && lastAdhanPlayed!== p){
+        triggerAdhan(p);
+        lastAdhanPlayed = p;
+      }
+    }
+  }, 15000); // Check every 15 seconds
+}
+
+function triggerAdhan(prayer){
+  const adhanAudio = document.getElementById("adhanAudio");
+
+  if(audioUnlocked){
+    adhanAudio.currentTime = 0;
+    adhanAudio.play().catch(e => console.log("Adhan play blocked:", e));
+  } else {
+    console.log("Adhan time but audio not unlocked yet. User must tap screen first.");
+  }
+
+  // Notification
+  if("Notification" in window && Notification.permission === "granted"){
+    new Notification("🕌 Prayer Time",{body:"It's time for "+prayer, icon:"logo.png"});
+  } else if("Notification" in window && Notification.permission!== "denied"){
+    Notification.requestPermission();
+  }
+
+  // Vibrate
+  if(navigator.vibrate){
+    navigator.vibrate([500,300,500]);
+  }
+}
+
+// =====================
+// LOAD PRAYER TIMES - FAST VERSION
+// =====================
+function loadPrayerTimes(lat, lon, isDefault = false){
+  // 1. Try cache first for instant load
+  const cached = loadFromCache();
+  if (cached && isDefault) {
+    displayPrayerTimes(cached);
+    document.getElementById("location").innerHTML = "Kampala, Uganda";
+  }
+
+  // 2. Fetch fresh data anyway
+  fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=2`)
+   .then(res=>res.json())
+   .then(data=>{
+      displayPrayerTimes(data);
+      saveToCache(data);
+      if (!isDefault) {
+        document.getElementById("location").innerHTML = "Your location detected";
+      } else {
+        document.getElementById("location").innerHTML = "Kampala, Uganda";
+      }
+    })
+   .catch(()=>{
+      if (!cached) {
+        document.getElementById("prayerBox").innerHTML="Could not load prayer times.";
+      }
+    });
+}
+
+// =====================
+// START EVERYTHING
+// =====================
+// 1. Load Kampala immediately so page is usable in <300ms
+loadPrayerTimes(KAMPALA_LAT, KAMPALA_LON, true);
+
+// 2. Try to get precise GPS in background. If it works, update times.
+if(navigator.geolocation){
+  navigator.geolocation.getCurrentPosition(position=>{
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+    // Only reload if user is >50km from Kampala
+    const distance = Math.abs(lat - KAMPALA_LAT) + Math.abs(lon - KAMPALA_LON);
+    if (distance > 0.5) {
+      loadPrayerTimes(lat, lon, false);
+    }
+  },
+  ()=>{}, // If GPS fails, we already have Kampala loaded
+  {timeout: 5000});
+}
+
+// Request notification permission on load
+if("Notification" in window && Notification.permission === "default"){
+  Notification.requestPermission();
+}
+</script>
+
+</body>
+</html>
