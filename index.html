@@ -198,23 +198,14 @@ html += `<iframe src="https://www.youtube.com/embed/${v}" allowfullscreen></ifra
 });
 container.innerHTML = html;
 
-// ===============================
-// AIRTEL DONATION (AUTO USSD)
-// ===============================
-function donate(){
+  <button onclick="copyMerchant()">📋 Copy 7037856</button>
 
-const amount = document.getElementById("amount").value;
+<input type="number" id="amount" placeholder="Enter amount">
 
-if(!amount || amount < 1000){
-alert("Enter valid amount (minimum 1000 UGX)");
-return;
-}
-
-const ussd = `*185*1*${amount}#`;
-
-window.location.href = "tel:" + encodeURIComponent(ussd);
-
-}
+<button id="donateBtn" onclick="donate()" style="display:none;">
+  💛 Donate
+</button>
+  
 </script>
 
 </body>
