@@ -1,5 +1,5 @@
 // ===============================
-// CHAIR ISLAMIC TV MAIN SCRIPT - V2
+// CHAIR ISLAMIC TV MAIN SCRIPT - V2.1
 // ===============================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initSurahList();
   startAdhanSystem(); // Runs on all pages now
   initLetters();
-  unlockAudio();
+  initAudioUnlock();
 });
 
 // ===============================
@@ -84,7 +84,6 @@ function donate() {
   }
 
   const ussd = `*185*9*7037856*${amount}#`;
-  // This method works better on Android WebView + WhatsApp
   const a = document.createElement('a');
   a.href = "tel:" + encodeURIComponent(ussd);
   a.click();
@@ -212,7 +211,7 @@ function playAyah(surah, ayah, el) {
 }
 
 // ===============================
-// ADHAN SYSTEM - FAST + CACHED
+// ADHAN SYSTEM - FIXED FOR ANDROID
 // ===============================
 let prayerTimings = {};
 let lastAdhanPlayed = "";
@@ -247,37 +246,65 @@ if ("Notification" in window && Notification.permission === "default") {
   Notification.requestPermission();
 }
 
+// ===============================
+// AUDIO UNLOCK - ANDROID PROOF
+// ===============================
 function unlockAudio() {
-  const handler = () => {
-    if (!adhanAudio) {
-      adhanAudio = new Audio("https://cdn.islamic.network/audio/adhan/1.mp3");
-      adhanAudio.preload = "auto";
-    }
-    adhanAudio.play().then(() => {
+  if (audioUnlocked) return true;
+  if (!adhanAudio) {
+    adhanAudio = new Audio("https://cdn.islamic.network/audio/adhan/1.mp3");
+    adhanAudio.preload = "auto";
+  }
+
+  const originalVolume = adhanAudio.volume;
+  adhanAudio.volume = 0; // Silent unlock
+
+  const playPromise = adhanAudio.play();
+  if (playPromise!== undefined) {
+    return playPromise.then(() => {
       adhanAudio.pause();
       adhanAudio.currentTime = 0;
+      adhanAudio.volume = originalVolume;
       audioUnlocked = true;
       const msg = document.getElementById("unlockMsg");
       if (msg) msg.style.display = "none";
-    }).catch(e => console.log("Unlock failed:", e));
+      console.log("Adhan audio unlocked");
+      return true;
+    }).catch(e => {
+      console.log("Unlock attempt failed:", e);
+      adhanAudio.volume = originalVolume;
+      return false;
+    });
+  }
+  return Promise.resolve(false);
+}
 
-    document.body.removeEventListener("click", handler);
-    document.body.removeEventListener("touchstart", handler);
-  };
+function initAudioUnlock() {
+  // Try unlock on any interaction, keeps retrying until it works
+  const tryUnlock = () => { unlockAudio(); };
+  document.body.addEventListener("click", tryUnlock);
+  document.body.addEventListener("touchstart", tryUnlock);
+}
 
-  document.body.addEventListener("click", handler, { once: true });
-  document.body.addEventListener("touchstart", handler, { once: true });
+// ===============================
+// TEST ADHAN - FORCES UNLOCK FIRST
+// ===============================
+async function testAdhan() {
+  const unlocked = await unlockAudio();
+  if (!unlocked &&!audioUnlocked) {
+    alert("Browser blocked audio. Tap the screen anywhere first, then press Test Adhan again.");
+    return;
+  }
+  triggerAdhan("Test");
 }
 
 async function startAdhanSystem() {
-  // 1. Load from cache first for instant Adhan checking
   const cached = loadAdhanCache();
   if (cached) {
     prayerTimings = cached;
     if (!adhanCheckInterval) setInterval(checkAdhanTime, 15000);
   }
 
-  // 2. Fetch fresh data
   try {
     const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=Kampala&country=Uganda&method=2`);
     if (!res.ok) throw new Error("HTTP " + res.status);
@@ -299,16 +326,15 @@ async function startAdhanSystem() {
     console.log("Adhan error:", err);
   }
 
-  // 3. Optional: Try GPS in background to update if user not in Kampala
   if (navigator.geolocation &&!cached) {
     navigator.geolocation.getCurrentPosition(pos => {
       const lat = pos.coords.latitude;
       const lon = pos.coords.longitude;
       const distance = Math.abs(lat - KAMPALA_LAT) + Math.abs(lon - KAMPALA_LON);
-      if (distance > 0.5) { // >50km from Kampala
+      if (distance > 0.5) {
         fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=2`)
-         .then(r => r.json())
-         .then(d => {
+        .then(r => r.json())
+        .then(d => {
             const t = d.data.timings;
             prayerTimings = {
               Fajr: t.Fajr.slice(0, 5),
@@ -349,9 +375,13 @@ function triggerAdhan(prayer) {
 
   if (adhanAudio && audioUnlocked) {
     adhanAudio.currentTime = 0;
-    adhanAudio.play().catch(e => console.log("Adhan blocked:", e));
+    adhanAudio.play().catch(e => {
+      console.log("Adhan blocked:", e);
+      alert("Adhan time but browser blocked audio. Keep the page open and tap Test Adhan once to enable.");
+    });
   } else {
-    console.log("Adhan time but audio not unlocked. Tap screen first.");
+    console.log("Adhan time but audio not unlocked yet.");
+    alert("It's time for " + prayer + " but audio is blocked. Tap the page then use Test Adhan button.");
   }
 
   if (Notification.permission === "granted") {
@@ -461,4 +491,4 @@ function highlightLetter(i) {
   document.querySelectorAll(".lesson").forEach((el, index) => {
     el.style.border = index === i? "2px solid gold" : "none";
   });
-                                               }
+    }
