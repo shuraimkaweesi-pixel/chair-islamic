@@ -197,14 +197,22 @@ videos.forEach(v=>{
 html += `<iframe src="https://www.youtube.com/embed/${v}" allowfullscreen></iframe>`;
 });
 container.innerHTML = html;
+  
 
-  <button onclick="copyMerchant()">📋 Copy 7037856</button>
+<div class="content-box">
+<h2>Support Chair Islamic TV</h2>
 
-<input type="number" id="amount" placeholder="Enter amount">
+<p>📋 First copy the merchant number</p>
+
+<button onclick="copyMerchant()">Copy 7037856</button>
+
+<input type="number" id="amount" placeholder="Enter amount (UGX)">
 
 <button id="donateBtn" onclick="donate()" style="display:none;">
-  💛 Donate
+💛 Donate via Airtel Money
 </button>
+
+</div>
   
 </script>
 
