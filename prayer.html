@@ -9,23 +9,22 @@
 <meta name="theme-color" content="#FFD700">
 
 <style>
-
 body{
 font-family:Arial;
-background:#f5f5f5;
+background:#0f0f0f;
+color:#FFD700;
 margin:0;
 padding:20px;
+padding-bottom:90px;
+text-align:center;
 }
 
 h1{
-text-align:center;
 color:#FFD700;
 text-shadow:1px 1px 3px #000;
 }
 
-#location{
-text-align:center;
-}
+#location{text-align:center;color:#ddd;}
 
 .prayer-box{
 background:#1a1a1a;
@@ -35,6 +34,7 @@ margin-top:20px;
 color:white;
 font-size:20px;
 box-shadow:0 4px 10px rgba(0,0,0,0.3);
+text-align:left;
 }
 
 .prayer{
@@ -44,9 +44,7 @@ padding:14px;
 border-bottom:1px solid #333;
 }
 
-.prayer:last-child{
-border-bottom:none;
-}
+.prayer:last-child{border-bottom:none;}
 
 .next{
 background:#FFD700;
@@ -71,8 +69,13 @@ color:#FFD700;
 font-weight:bold;
 }
 
-/* Bottom Navigation */
+#unlockMsg{
+font-size:14px;
+color:#999;
+margin-top:10px;
+}
 
+/* Bottom Navigation */
 .bottom-nav{
 position:fixed;
 bottom:0;
@@ -92,20 +95,13 @@ font-size:18px;
 flex:1;
 text-align:center;
 }
-
 </style>
 </head>
-<audio id="adhanAudio">
-<source src="https://cdn.islamic.network/audio/adhan/1.mp3" type="audio/mpeg">
-</audio>
-
 
 <body>
 
 <h1>Prayer Times</h1>
-
 <p id="location">Detecting location...</p>
-
 <div class="date" id="date"></div>
 
 <div id="prayerBox" class="prayer-box">
@@ -116,212 +112,87 @@ Loading prayer times...
 Next prayer in: --:--:--
 </div>
 
+<p id="unlockMsg">Tap anywhere once to enable Adhan audio</p>
+
+<!-- Adhan Audio - hidden -->
+<audio id="adhanAudio" preload="auto">
+<source src="https://cdn.islamic.network/audio/adhan/1.mp3" type="audio/mpeg">
+</audio>
+
 <!-- Navigation -->
-
 <div class="bottom-nav">
-
 <a href="index.html">🏠 Home</a>
 <a href="quran.html">📖 Quran</a>
 <a href="hadith.html">📜 Hadith</a>
 <a href="prayer.html">🕌 Prayer</a>
 <a href="videos.html">🎥 Videos</a>
-
 </div>
 
 <script>
-
 // =====================
 // PRAYER VARIABLES
 // =====================
-
 let prayerTimings = null;
 let nextPrayerName = "";
 let countdownInterval = null;
+let adhanCheckInterval = null;
+let lastAdhanPlayed = ""; // e.g. "Fajr"
+let lastAdhanDate = ""; // e.g. "Thu Apr 23 2026"
+let audioUnlocked = false;
 
+// =====================
+// UNLOCK AUDIO FOR AUTOPLAY
+// =====================
+function unlockAudio() {
+  if (audioUnlocked) return;
+  const adhanAudio = document.getElementById("adhanAudio");
+  adhanAudio.play().then(() => {
+    adhanAudio.pause();
+    adhanAudio.currentTime = 0;
+    audioUnlocked = true;
+    document.getElementById("unlockMsg").style.display = "none";
+    console.log("Adhan audio unlocked");
+  }).catch(e => console.log("Unlock failed:", e));
+}
+// First tap anywhere unlocks audio
+document.body.addEventListener("click", unlockAudio, { once: true });
+document.body.addEventListener("touchstart", unlockAudio, { once: true });
 
 // =====================
 // GET NEXT PRAYER
 // =====================
-
 function getNextPrayer(timings){
+  const prayers = ["Fajr","Dhuhr","Asr","Maghrib","Isha"];
+  const now = new Date();
+  let next = null;
 
-const prayers = ["Fajr","Dhuhr","Asr","Maghrib","Isha"];
-
-const now = new Date();
-
-let next = null;
-
-for(let p of prayers){
-
-const time = timings[p].split(":");
-
-const prayerTime = new Date();
-
-prayerTime.setHours(time[0], time[1], 0, 0);
-
-if(prayerTime > now){
-
-next = p;
-
-break;
-
+  for(let p of prayers){
+    const time = timings[p].split(":");
+    const prayerTime = new Date();
+    prayerTime.setHours(time[0], time[1], 0, 0);
+    if(prayerTime > now){
+      next = p;
+      break;
+    }
+  }
+  if(!next) next = "Fajr"; // After Isha, next is tomorrow's Fajr
+  return next;
 }
-
-}
-
-if(!next) next = "Fajr";
-
-return next;
-
-}
-
 
 // =====================
 // DISPLAY PRAYERS
 // =====================
-
 function displayPrayerTimes(data){
-
-prayerTimings = data.data.timings;
-
-const date = data.data.date;
-
-nextPrayerName = getNextPrayer(prayerTimings);
-
-document.getElementById("date").innerHTML =
-`${date.gregorian.date} | ${date.hijri.date} ${date.hijri.month.en}`;
-
-
-const prayers = ["Fajr","Dhuhr","Asr","Maghrib","Isha"];
-
-let html = "";
-
-prayers.forEach(p=>{
-
-const cls = p === nextPrayerName ? "prayer next" : "prayer";
-
-html += `<div class="${cls}">
-<span>${p}</span>
-<span>${prayerTimings[p]}</span>
-</div>`;
-
-});
-
-document.getElementById("prayerBox").innerHTML = html;
-
-startCountdown();
-
-}
-
-
-// =====================
-// LOAD PRAYER TIMES
-// =====================
-
-function loadPrayerTimes(lat,lon){
-
-fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=2`)
-
-.then(res=>res.json())
-
-.then(data=>{
-
-displayPrayerTimes(data);
-
-})
-
-.catch(()=>{
-
-document.getElementById("prayerBox").innerHTML="Could not load prayer times.";
-
-});
-
-}
-
-
-// =====================
-// GET USER LOCATION
-// =====================
-
-if(navigator.geolocation){
-
-navigator.geolocation.getCurrentPosition(position=>{
-
-const lat = position.coords.latitude;
-
-const lon = position.coords.longitude;
-
-document.getElementById("location").innerHTML = "Your location detected";
-
-loadPrayerTimes(lat,lon);
-
-},()=>{
-
-document.getElementById("location").innerHTML="Using default location Kampala";
-
-loadPrayerTimes(0.3476,32.5825);
-
-});
-
-}else{
-
-loadPrayerTimes(0.3476,32.5825);
-
-}
-
-
-// =====================
-// COUNTDOWN TIMER
-// =====================
-
-function startCountdown(){
-
-if(countdownInterval) clearInterval(countdownInterval);
-
-countdownInterval = setInterval(()=>{
-
-if(!prayerTimings) return;
-
-let timeStr = prayerTimings[nextPrayerName];
-
-let parts = timeStr.split(":");
-
-let now = new Date();
-
-let prayerTime = new Date();
-
-prayerTime.setHours(parts[0], parts[1], 0, 0);
-
-if(nextPrayerName === "Fajr" && prayerTime < now){
-
-prayerTime.setDate(prayerTime.getDate()+1);
-
-}
-
-let diff = prayerTime - now;
-
-if(diff < 0){
-
-nextPrayerName = getNextPrayer(prayerTimings);
-
-return;
-
-}
-
-let hours = Math.floor(diff/1000/3600);
-
-let minutes = Math.floor((diff/1000%3600)/60);
-
-let seconds = Math.floor((diff/1000)%60);
-
-document.getElementById("countdown").innerHTML =
-`Next prayer (${nextPrayerName}) in: ${hours.toString().padStart(2,"0")}:${minutes.toString().padStart(2,"0")}:${seconds.toString().padStart(2,"0")}`;
-
-},1000);
-
-}
-
-</script>
-
-</body>
-</html>
+  prayerTimings = data.data.timings;
+  const date = data.data.date;
+  nextPrayerName = getNextPrayer(prayerTimings);
+
+  document.getElementById("date").innerHTML =
+  `${date.gregorian.date} | ${date.hijri.date} ${date.hijri.month.en}`;
+
+  const prayers = ["Fajr","Dhuhr","Asr","Maghrib","Isha"];
+  let html = "";
+
+  prayers.forEach(p=>{
+    const cls = p === nextPrayerName? "prayer next" : "prayer";
+    html += `<div
