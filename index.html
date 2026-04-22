@@ -199,19 +199,16 @@ html += `<iframe src="https://www.youtube.com/embed/${v}" allowfullscreen></ifra
 container.innerHTML = html;
   
 
-<div class="content-box">
-<h2>Support Chair Islamic TV</h2>
-
-<p>📋 First copy the merchant number</p>
-
-<button onclick="copyMerchant()">Copy 7037856</button>
-
-<input type="number" id="amount" placeholder="Enter amount (UGX)">
-
-<button id="donateBtn" onclick="donate()" style="display:none;">
-💛 Donate via Airtel Money
-</button>
-
+<!-- Donation Section -->
+<div class="donation-section">
+  <h3>Support Chair Islamic TV</h3>
+  
+  <p>Step 1: Copy our merchant number</p>
+  <button onclick="copyMerchant()">Copy 7037856</button>
+  
+  <p>Step 2: Enter amount and donate</p>
+  <input type="number" id="amount" placeholder="Enter amount (min 1000)" min="1000">
+  <button id="donateBtn" onclick="donate()" style="display:none;">Donate via Airtel</button>
 </div>
   
 </script>
