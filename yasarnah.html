@@ -1,113 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chair Islamic TV</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
-</head>
-<body>
-  <div class="container">
-    <h1>📖 Chair Islamic TV</h1>
+<!-- =========================
+     YASARNAH BOOK SECTION
+     ========================= -->
+<div id="yasarnahSection" class="content-box">
+  <h2>📚 Yasarnah - Qaida Nooraniyah</h2>
 
-    <!-- =========================
-         QURAN SECTION
-         ========================= -->
-    <div class="content-box">
-      <h2>🕋 Quran Reader</h2>
-      <div id="quranControls">
-        <input id="surahSearch" placeholder="Search: 36 or Yasin" oninput="filterSurahs()">
-        <select id="surahSelect"></select>
-        <select id="reciterSelect">
-          <option value="Alafasy_128kbps">Mishary Alafasy</option>
-          <option value="Abdul_Basit_Murattal_192kbps">Abdul Basit</option>
-          <option value="Ghamadi_40kbps">Saad Al-Ghamidi</option>
-          <option value="Minshawy_Murattal_128kbps">Minshawi</option>
-        </select>
-        <button onclick="loadSurah()">Load Surah</button>
-        <button onclick="stopAllAudio()">⏹ Stop</button>
-      </div>
-      <div id="quranText"></div>
-    </div>
+  <div id="darsTitle">Dars 1: Single Letters</div>
+  <div id="darsInfo">Alif to Khaa</div>
 
-    <!-- =========================
-         YASARNAH BOOK SECTION
-         ========================= -->
-    <div id="yasarnahSection" class="content-box">
-      <h2>📚 Yasarnah - Qaida Nooraniyah</h2>
-
-      <div id="darsTitle">Dars 1: Single Letters</div>
-      <div id="darsInfo">Alif to Khaa</div>
-
-      <div class="controls">
-        <button onclick="prevDars()">⬅️ Previous</button>
-        <button id="letterPlayBtn" onclick="toggleLetterSequence()">▶ Play Dars</button>
-        <button onclick="stopLetterLesson()">⏹ Stop</button>
-        <button onclick="nextDars()">Next ➡️</button>
-        <select onchange="letterRepeatCount = parseInt(this.value)">
-          <option value="1">Repeat 1x</option>
-          <option value="3" selected>Repeat 3x</option>
-          <option value="5">Repeat 5x</option>
-        </select>
-      </div>
-
-      <div id="letterProgress">Tap any letter to start</div>
-      <div id="lessonBox"></div>
-      <div id="darsCounter">Page 1 / 12</div>
-    </div>
-
-    <!-- =========================
-         HADITH SECTION
-         ========================= -->
-    <div class="content-box">
-      <h2>📜 Hadith of the Day</h2>
-      <div id="hadithBox">Loading...</div>
-    </div>
-
-    <!-- =========================
-         YOUTUBE SECTION
-         ========================= -->
-    <div class="content-box">
-      <h2>🎥 Videos</h2>
-      <div id="youtubeVideos"></div>
-    </div>
-
-    <!-- =========================
-         ADHAN TEST
-         ========================= -->
-    <div class="content-box">
-      <h2>🕌 Adhan</h2>
-      <button onclick="testAdhan()">🔊 Test Adhan</button>
-      <div id="unlockMsg">Tap anywhere to enable audio</div>
-    </div>
-
-    <!-- =========================
-         DONATION
-         ========================= -->
-    <div class="donate-card">
-      <h2>💝 Donate</h2>
-      <label>Enter Amount (UGX):</label>
-      <input type="number" id="amount" placeholder="Min 1000" min="1000">
-      <button onclick="copyMerchant()">Copy Merchant: 7037856</button>
-      <button id="donateBtn" onclick="donate()" style="display:none;">📱 Donate via Mobile Money</button>
-    </div>
-
+  <div class="controls">
+    <button onclick="prevDars()">⬅️ Previous</button>
+    <button id="letterPlayBtn" onclick="toggleLetterSequence()">▶ Play Dars</button>
+    <button onclick="stopLetterLesson()">⏹ Stop</button>
+    <button onclick="nextDars()">Next ➡️</button>
+    <select onchange="letterRepeatCount = parseInt(this.value)">
+      <option value="1">Repeat 1x</option>
+      <option value="3" selected>Repeat 3x</option>
+      <option value="5">Repeat 5x</option>
+    </select>
   </div>
 
-  <!-- Bottom Navigation -->
-  <div class="bottom-nav">
-    <a href="#quranControls">🕋<span>Quran</span></a>
-    <a href="#yasarnahSection">📚<span>Yasarnah</span></a>
-    <a href="#hadithBox">📜<span>Hadith</span></a>
-    <a href="#youtubeVideos">🎥<span>Videos</span></a>
-  </div>
-
-  <!-- Install Button -->
-  <button id="installBtn" style="display:none; position:fixed; top:20px; right:20px; width:auto; z-index:1001;">📱 Install App</button>
-
-  <!-- IMPORTANT: Script must be LAST -->
-  <script src="script.js"></script>
-</body>
-</html>
+  <div id="letterProgress">Tap any letter to start</div>
+  <div id="lessonBox"></div>
+  <div id="darsCounter">Page 1 / 12</div>
+</div>
