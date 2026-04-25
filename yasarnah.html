@@ -1,9 +1,15 @@
+<!-- Yasarnah Book Section -->
 <div id="yasarnahSection">
-  <h2>📖 Yasarnah - Alif to Yaa</h2>
+  <h2>📖 Yasarnah - Qaida Nooraniyah</h2>
+
+  <div id="darsTitle">Dars 1: Single Letters</div>
+  <div id="darsInfo">Alif to Khaa</div>
 
   <div class="controls">
-    <button id="letterPlayBtn" onclick="toggleLetterSequence()">▶ Play All</button>
+    <button onclick="prevDars()">⬅️ Previous</button>
+    <button id="letterPlayBtn" onclick="toggleLetterSequence()">▶ Play Dars</button>
     <button onclick="stopLetterLesson()">⏹ Stop</button>
+    <button onclick="nextDars()">Next ➡️</button>
     <select onchange="letterRepeatCount = parseInt(this.value)">
       <option value="1">Repeat 1x</option>
       <option value="3" selected>Repeat 3x</option>
@@ -13,4 +19,6 @@
 
   <div id="letterProgress">Tap any letter to start</div>
   <div id="lessonBox"></div>
+
+  <div id="darsCounter">Page 1 / 12</div>
 </div>
