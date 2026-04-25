@@ -1,5 +1,6 @@
 /* =========================
-   CHAIR ISLAMIC TV STYLES V3
+   CHAIR ISLAMIC TV STYLES V3.4
+   ALL COLORS WORKING
    ========================= */
 
 /* Global Reset */
@@ -9,15 +10,15 @@
   box-sizing: border-box;
 }
 
-/* Body */
+/* Body - FORCE DARK THEME */
 body{
-  background: #000;
-  color: #FFD700;
+  background: #000000!important;
+  color: #FFD700!important;
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.6;
   text-align: center;
   padding: 20px;
-  padding-bottom: 90px;
+  padding-bottom: 120px;
 }
 
 /* Container */
@@ -26,41 +27,42 @@ body{
   margin: auto;
 }
 
-/* Headings */
+/* Headings - GOLD */
 h1,h2,h3{
-  color: #FFD700;
+  color: #FFD700!important;
   margin-bottom: 10px;
+  text-shadow: 0 0 10px rgba(255,215,0,0.3);
 }
 
-/* Paragraphs */
+/* Paragraphs - LIGHT GREY */
 p{
-  color: #ddd;
+  color: #DDDDDD!important;
   margin-bottom: 10px;
 }
 
 /* =========================
-   BUTTONS - UNIFIED
+   BUTTONS - GOLD/BLACK
    ========================= */
 button{
-  width: 80%;
+  width: auto;
   max-width: 400px;
-  padding: 14px;
-  margin: 10px auto;
-  background: #FFD700;
-  color: #000;
+  padding: 12px 20px;
+  margin: 5px;
+  background: #FFD700!important;
+  color: #000000!important;
   font-weight: bold;
   font-size: 16px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  display: block;
+  display: inline-block;
   transition: 0.3s;
 }
 
 button:hover{
   opacity: 0.9;
   transform: scale(1.05);
-  box-shadow: 0 0 10px gold;
+  box-shadow: 0 0 15px rgba(255,215,0,0.6);
 }
 
 button:disabled{
@@ -69,172 +71,20 @@ button:disabled{
   transform: none;
 }
 
-/* Links styled as buttons */
-a button{
-  text-decoration: none;
-}
-
 /* =========================
-   DONATION SECTION
-   ========================= */
-.donate-card{
-  background: #1a1a1a;
-  padding: 20px;
-  border-radius: 10px;
-  margin-top: 15px;
-}
-
-.donate-card input{
-  width: 90%;
-  padding: 12px;
-  margin: 10px 0 15px;
-  border-radius: 6px;
-  border: none;
-  font-size: 16px;
-  text-align: center;
-  background: #000;
-  color: #FFD700;
-}
-
-.donate-card label{
-  font-size: 16px;
-  color: #FFD700;
-}
-
-/* =========================
-   HADITH / QURAN BOX
+   CONTENT BOXES
    ========================= */
 .content-box{
-  background: linear-gradient(145deg,#1a1a1a,#111);
+  background: linear-gradient(145deg, #1a1a1a, #111111)!important;
   padding: 20px;
   border-radius: 15px;
   margin-top: 20px;
-  box-shadow: 0 0 10px rgba(255,215,0,0.2);
-}
-
-#quranText{
-  padding: 10px 20px;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.ayah{
-  padding: 15px;
-  margin-bottom: 12px;
-  border-radius: 12px;
-  background: #111;
-  cursor: pointer;
-  transition: 0.2s;
-  text-align: left;
-}
-
-.ayah:hover{
-  background: #1a1a1a;
-}
-
-.ayah .arabic{
-  font-size: 28px;
-  text-align: right;
-  direction: rtl;
-  line-height: 1.8;
-  font-family: 'Amiri', 'Scheherazade', serif;
-  color: #FFD700;
-}
-
-.ayah .translation{
-  font-size: 16px;
-  margin-top: 8px;
-  color: #ccc;
-}
-
-.ayah.playing{
-  background: rgba(255, 215, 0, 0.15);
-  border-left: 4px solid #FFD700;
+  box-shadow: 0 0 20px rgba(255,215,0,0.1);
+  border: 1px solid #222;
 }
 
 /* =========================
-   YASARNAH SECTION - FIXED
-   ========================= */
-#yasarnahSection{
-  margin-top: 30px;
-}
-
-#lessonBox{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 12px;
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 10px;
-}
-
-.lesson{
-  background: #111;
-  padding: 20px 10px;
-  border-radius: 12px;
-  transition: 0.2s;
-  cursor: pointer;
-  border: 2px solid transparent;
-  text-align: center;
-}
-
-.lesson:hover{
-  background: #1a1a1a;
-  transform: scale(1.03);
-}
-
-.lesson.active{
-  border: 2px solid #FFD700;
-  background: rgba(255,215,0,0.1);
-  box-shadow: 0 0 15px rgba(255,215,0,0.3);
-}
-
-.lesson .arabic{
-  font-size: 42px;
-  margin-bottom: 8px;
-  font-family: 'Amiri', 'Scheherazade', serif;
-  direction: rtl;
-  color: #FFD700;
-}
-
-.lesson p{
-  font-size: 14px;
-  color: #ccc;
-  margin: 0;
-}
-
-#letterProgress{
-  text-align: center;
-  margin: 15px 0;
-  font-size: 16px;
-  color: #ccc;
-}
-
-.controls{
-  text-align: center;
-  margin: 20px 0;
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.controls button, .controls select{
-  width: auto;
-  max-width: none;
-  margin: 5px;
-  padding: 10px 16px;
-  display: inline-block;
-}
-
-.controls select{
-  background: #111;
-  color: #FFD700;
-  border: 1px solid #FFD700;
-}
-
-/* =========================
-   QURAN CONTROLS
+   QURAN READER
    ========================= */
 #quranControls{
   display: flex;
@@ -246,29 +96,211 @@ a button{
 }
 
 #quranControls input, #quranControls select{
-  padding: 10px;
+  padding: 12px;
   border-radius: 8px;
-  border: 1px solid #FFD700;
-  background: #111;
-  color: #FFD700;
+  border: 2px solid #FFD700;
+  background: #111111!important;
+  color: #FFD700!important;
   font-size: 16px;
   width: auto;
   max-width: 200px;
 }
 
-#downloadBtn{
-  position: fixed;
-  bottom: 90px;
-  right: 20px;
-  background: #FFD700;
-  color: #000;
-  padding: 14px 18px;
-  border-radius: 50px;
-  border: none;
+#quranText{
+  padding: 10px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ayah{
+  padding: 15px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  background: #111111!important;
+  cursor: pointer;
+  transition: 0.2s;
+  text-align: left;
+  border: 2px solid transparent;
+}
+
+.ayah:hover{
+  background: #1a1a1a!important;
+  border-color: #333;
+}
+
+.ayah .arabic{
+  font-size: 28px;
+  text-align: right;
+  direction: rtl;
+  line-height: 1.8;
+  font-family: 'Amiri', 'Scheherazade New', serif;
+  color: #FFD700!important;
+}
+
+.ayah .translation{
+  font-size: 16px;
+  margin-top: 8px;
+  color: #CCCCCC!important;
+}
+
+.ayah.playing{
+  background: rgba(255, 215, 0, 0.15)!important;
+  border-left: 4px solid #FFD700!important;
+  box-shadow: 0 0 15px rgba(255,215,0,0.2);
+}
+
+/* =========================
+   YASARNAH BOOK - COLORS FIXED
+   ========================= */
+#yasarnahSection{
+  margin-top: 30px;
+  padding: 20px 10px;
+  background: #0a0a0a!important;
+  border-radius: 15px;
+  border: 1px solid #222;
+}
+
+#darsTitle{
+  font-size: 24px;
+  margin: 10px 0 5px;
+  color: #FFD700!important;
   font-weight: bold;
-  box-shadow: 0 4px 12px rgba(255,215,0,0.3);
-  width: auto;
-  z-index: 999;
+}
+
+#darsInfo{
+  font-size: 16px;
+  color: #CCCCCC!important;
+  margin-bottom: 15px;
+}
+
+#lessonBox{
+  display: grid!important;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 12px;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 10px;
+  min-height: 200px;
+}
+
+.lesson{
+  background: #111111!important;
+  padding: 20px 10px;
+  border-radius: 12px;
+  transition: 0.2s;
+  cursor: pointer;
+  border: 2px solid #222!important;
+  text-align: center;
+}
+
+.lesson:hover{
+  background: #1a1a1a!important;
+  transform: scale(1.03);
+  border-color: #FFD700!important;
+}
+
+.lesson.active{
+  border: 2px solid #FFD700!important;
+  background: rgba(255,215,0,0.1)!important;
+  box-shadow: 0 0 20px rgba(255,215,0,0.4);
+}
+
+.lesson .arabic{
+  font-size: 42px;
+  margin-bottom: 8px;
+  font-family: 'Amiri', 'Scheherazade New', serif;
+  direction: rtl;
+  color: #FFD700!important;
+}
+
+.lesson p{
+  font-size: 14px;
+  color: #CCCCCC!important;
+  margin: 0;
+}
+
+#letterProgress{
+  text-align: center;
+  margin: 15px 0;
+  font-size: 16px;
+  color: #FFD700!important;
+}
+
+#darsCounter{
+  text-align: center;
+  margin: 20px 0;
+  font-size: 14px;
+  color: #999999!important;
+}
+
+.controls{
+  text-align: center;
+  margin: 20px 0;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.controls select{
+  background: #111111!important;
+  color: #FFD700!important;
+  border: 2px solid #FFD700!important;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* =========================
+   HADITH BOX
+   ========================= */
+#hadithBox{
+  padding: 20px;
+  min-height: 100px;
+}
+
+#hadithBox .arabic{
+  font-size: 24px;
+  font-family: 'Amiri', 'Scheherazade New', serif;
+  direction: rtl;
+  color: #FFD700!important;
+  margin-bottom: 15px;
+  line-height: 1.8;
+}
+
+#hadithBox .translation{
+  font-size: 16px;
+  color: #CCCCCC!important;
+  line-height: 1.6;
+}
+
+/* =========================
+   DONATION SECTION
+   ========================= */
+.donate-card{
+  background: #1a1a1a!important;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 15px;
+  border: 1px solid #333;
+}
+
+.donate-card input{
+  width: 90%;
+  padding: 12px;
+  margin: 10px 0 15px;
+  border-radius: 6px;
+  border: 2px solid #FFD700;
+  font-size: 16px;
+  text-align: center;
+  background: #000000!important;
+  color: #FFD700!important;
+}
+
+.donate-card label{
+  font-size: 16px;
+  color: #FFD700!important;
 }
 
 /* =========================
@@ -282,7 +314,7 @@ iframe{
   width: 100%;
   max-width: 560px;
   height: 315px;
-  border: none;
+  border: 2px solid #333;
   border-radius: 8px;
 }
 
@@ -294,38 +326,48 @@ iframe{
   bottom: 0;
   left: 0;
   width: 100%;
-  background: #000;
+  background: #000000!important;
   display: flex;
   justify-content: space-around;
   padding: 15px 0;
-  border-radius: 12px 12px 0 0;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
+  border-top: 2px solid #FFD700;
+  box-shadow: 0 -2px 20px rgba(0,0,0,0.8);
   z-index: 1000;
 }
 
 .bottom-nav a{
-  color: #FFD700;
+  color: #FFD700!important;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 12px;
   flex: 1;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
+  transition: 0.2s;
 }
 
 .bottom-nav a:hover{
-  color: #fff;
+  color: #FFFFFF!important;
+  transform: scale(1.1);
 }
 
 /* =========================
-   INSTALL BUTTON
+   INSTALL & UNLOCK
    ========================= */
 #installBtn{
-  background: #FFD700;
-  color: black;
+  background: #FFD700!important;
+  color: #000000!important;
   font-weight: bold;
+  width: auto;
+  padding: 10px 20px;
+}
+
+#unlockMsg{
+  color: #999999!important;
+  font-size: 14px;
+  margin-top: 10px;
 }
 
 /* =========================
@@ -334,21 +376,15 @@ iframe{
 @media (max-width: 600px){
   body{
     padding: 15px;
-    padding-bottom: 100px;
+    padding-bottom: 120px;
   }
 
-  button{
-    width: 100%;
+  h1{
+    font-size: 24px;
   }
 
-  .controls button, .controls select{
-    width: auto;
-    font-size: 14px;
-    padding: 8px 12px;
-  }
-
-  iframe{
-    height: 200px;
+  h2{
+    font-size: 20px;
   }
 
   #lessonBox{
@@ -360,12 +396,25 @@ iframe{
     font-size: 36px;
   }
 
+  .controls button,.controls select{
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
   #quranControls input, #quranControls select{
     width: 100%;
     max-width: none;
   }
 
-  .bottom-nav a{
-    font-size: 12px;
+  .ayah .arabic{
+    font-size: 24px;
   }
-   }
+
+  iframe{
+    height: 200px;
+  }
+
+  .bottom-nav a{
+    font-size: 11px;
+  }
+}
