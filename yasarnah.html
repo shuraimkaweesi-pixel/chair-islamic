@@ -1,5 +1,76 @@
-<div id="yasarnahSection">
+body {
+  background: #000;
+  color: #FFD700;
+}
+
+#lessonBox{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 12px;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 10px;
+}
+
+.lesson{
+  background: #111;
+  padding: 20px 10px;
+  border-radius: 12px;
+  transition: 0.2s;
+  cursor: pointer;
+  border: 2px solid transparent;
+  text-align: center;
+}
+
+.lesson:hover{
+  background: #1a1a1a;
+  transform: scale(1.03);
+}
+
+.lesson.active{
+  border: 2px solid #FFD700;
+  background: rgba(255,215,0,0.1);
+  box-shadow: 0 0 15px rgba(255,215,0,0.3);
+}
+
+.arabic{
+  font-size: 42px;
+  margin-bottom: 8px;
+  font-family: 'Amiri', 'Scheherazade', serif;
+  direction: rtl;
+}
+
+#letterProgress{
+  text-align: center;
+  margin: 15px 0;
+  font-size: 16px;
+  color: #ccc;
+}
+
+.controls{
+  text-align: center;
+  margin: 20px 0;
+}
+
+.controls button, .controls select{
+  background: #FFD700;
+  color: #000;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 5px;
+}
+
+.controls select{
+  background: #111;
+  color: #FFD700;
+  border: 1px solid #FFD700;
+}<div id="yasarnahSection">
   <h2>📖 Yasarnah - Alif to Yaa</h2>
+
   <div class="controls">
     <button id="letterPlayBtn" onclick="toggleLetterSequence()">▶ Play All</button>
     <button onclick="stopLetterLesson()">⏹ Stop</button>
@@ -9,6 +80,7 @@
       <option value="5">Repeat 5x</option>
     </select>
   </div>
+
   <div id="letterProgress">Tap any letter to start</div>
   <div id="lessonBox"></div>
 </div>
