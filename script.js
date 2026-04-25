@@ -174,11 +174,20 @@ function stopAllAudio() {
 }
 
 // ===============================
-// AYAH AUDIO
 // ===============================
+// AYAH AUDIO - FIXED FOR ALL RECITERS
+// ===============================
+let currentAudio = null;
 let currentSurah = null;
 let currentAyah = null;
 let ayahElements = [];
+let isPlayingSequence = false;
+
+function getAudioUrl(reciter, surah, ayah) {
+  const s = String(surah).padStart(3, "0");
+  const a = String(ayah).padStart(3, "0");
+  return `https://everyayah.com/data/${reciter}/${s}${a}.mp3`;
+}
 
 function playAyah(surah, ayah, el) {
   stopAllAudio();
@@ -190,24 +199,57 @@ function playAyah(surah, ayah, el) {
 
   document.querySelectorAll(".ayah").forEach(a => a.classList.remove("playing"));
   el.classList.add("playing");
+  el.scrollIntoView({behavior:"smooth", block:"center"});
 
   currentSurah = surah;
   currentAyah = ayah;
   ayahElements = document.querySelectorAll(".ayah");
+  isPlayingSequence = true;
 
-  const s = String(surah).padStart(3, "0");
-  const a = String(ayah).padStart(3, "0");
-  const url = `https://everyayah.com/data/Alafasy_128kbps/${s}${a}.mp3`;
+  // Get reciter from select - this was hardcoded before
+  const reciter = document.getElementById("reciterSelect").value || "Alafasy_128kbps";
+  const url = getAudioUrl(reciter, surah, ayah);
 
   currentAudio = new Audio(url);
-  currentAudio.play().catch(e => console.log("Ayah play error:", e));
+
+  currentAudio.onerror = () => {
+    console.log(`Audio failed for ${reciter}`);
+    el.classList.remove("playing");
+    // Auto-skip to next ayah if this one fails
+    if(isPlayingSequence) playNextAyah();
+  };
+
+  currentAudio.play().catch(e => {
+    console.log("Ayah play error:", e);
+    alert("Tap the screen once to enable audio, then try again.");
+  });
 
   currentAudio.onended = () => {
-    const next = ayah + 1;
-    if (ayahElements[next - 1]) {
-      playAyah(surah, next, ayahElements[next - 1]);
-    }
+    if(isPlayingSequence) playNextAyah();
   };
+}
+
+function playNextAyah(){
+  if(!isPlayingSequence) return;
+  const next = currentAyah + 1;
+  if (ayahElements[next - 1]) {
+    playAyah(currentSurah, next, ayahElements[next - 1]);
+  } else {
+    stopAudio();
+  }
+}
+
+function stopAudio(){
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio = null;
+  }
+  if (letterAudio) {
+    letterAudio.pause();
+    letterAudio = null;
+  }
+  isPlayingSequence = false;
+  document.querySelectorAll(".ayah").forEach(a => a.classList.remove("playing"));
 }
 
 // ===============================
