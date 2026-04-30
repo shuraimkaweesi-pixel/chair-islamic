@@ -16,17 +16,17 @@
   <p class="page-header">Authentic Collection - Verified</p>
 
   <div class="card">
-    <input type="text" id="hadithSearch" placeholder="Search hadith number, title, or Arabic..." onkeyup="searchHadith()">
+    <!-- Added more intuitive placeholder -->
+    <input type="text" id="hadithSearch" placeholder="Search by number, keyword, or Arabic..." onkeyup="searchHadith()">
   </div>
 
   <div id="hadithList">
-    <!-- Hadiths load here from JSON -->
     <div class="card"><p class="text-body">Loading hadiths...</p></div>
   </div>
 
   <div class="card">
     <div class="card-title">All 40 Hadith Complete</div>
-    <p class="arabic" style="font-size:20px; text-align:center;">تَمَّتِ الأَرْبَعُونَ النَّوَوِيَّةُ</p>
+    <p class="arabic" dir="rtl" style="font-size:24px; text-align:center;">تَمَّتِ الأَرْبَعُونَ النَّوَوِيَّةُ</p>
     <button class="btn-gold" onclick="location.href='index.html'">🏠 Back to Home</button>
   </div>
 
@@ -48,21 +48,33 @@ let allHadiths = [];
 
 async function loadHadiths() {
   try {
-    const response = await fetch('hadith.json');
+    // UPDATED: Now points to 'hadiths.json' as requested
+    const response = await fetch('hadiths.json');
+    if (!response.ok) throw new Error("File not found");
+    
     allHadiths = await response.json();
     renderHadiths(allHadiths);
   } catch (err) {
+    console.error(err);
     document.getElementById('hadithList').innerHTML = 
-      '<div class="card"><p class="text-body">Error loading hadiths. Check hadith.json file.</p></div>';
+      `<div class="card"><p class="text-body" style="color: #ff6b6b;">Error: Could not find 'hadiths.json'. Please ensure the file is named correctly in your folder.</p></div>`;
   }
 }
 
 function renderHadiths(hadiths) {
   const container = document.getElementById('hadithList');
+  
+  // Handle empty search results
+  if (hadiths.length === 0) {
+    container.innerHTML = '<div class="card"><p class="text-body">No matching Hadiths found.</p></div>';
+    return;
+  }
+
   container.innerHTML = hadiths.map(h => `
     <div class="card hadith-item" id="hadith${h.id}">
       <div class="card-title">Hadith ${h.id} of 40 - ${h.title}</div>
-      <p class="arabic">${h.arabic}</p>
+      <!-- Added dir="rtl" for proper Arabic alignment -->
+      <p class="arabic" dir="rtl">${h.arabic}</p>
       <div class="divider"></div>
       <p class="text-body">${h.english}</p>
       <div class="badge">${h.reference}</div>
@@ -78,13 +90,15 @@ function renderHadiths(hadiths) {
 // SEARCH HADITH
 // ===============================
 function searchHadith() {
-  const term = document.getElementById('hadithSearch').value.toLowerCase();
+  const term = document.getElementById('hadithSearch').value.toLowerCase().trim();
+  
   const filtered = allHadiths.filter(h => 
     h.title.toLowerCase().includes(term) || 
     h.arabic.includes(term) || 
     h.english.toLowerCase().includes(term) ||
     h.id.toString() === term
   );
+  
   renderHadiths(filtered);
 }
 
@@ -93,13 +107,15 @@ function searchHadith() {
 // ===============================
 function shareHadith(id) {
   const h = allHadiths.find(x => x.id === id);
-  const text = `${h.arabic}\n\n${h.english}\n\n${h.reference}\n\nFrom Chair Islamic TV:\n${window.location.origin}/hadith.html#hadith${id}`;
+  if (!h) return;
+
+  const text = `${h.arabic}\n\n${h.english}\n\nRef: ${h.reference}\n\nShared via Chair Islamic TV`;
   
   if (navigator.share) {
-    navigator.share({ title: `Hadith ${id} - ${h.title}`, text: text });
+    navigator.share({ title: `Hadith ${id}: ${h.title}`, text: text });
   } else {
     navigator.clipboard.writeText(text);
-    alert('Hadith copied! Share on WhatsApp ✅');
+    alert('Hadith copied to clipboard!');
   }
 }
 
@@ -111,13 +127,13 @@ function saveHadith(id) {
   if (!saved.includes(id)) {
     saved.push(id);
     localStorage.setItem('savedHadiths', JSON.stringify(saved));
-    alert(`🤍 Hadith ${id} saved!`);
+    alert(`🤍 Hadith ${id} saved to your favorites!`);
   } else {
-    alert('Already saved');
+    alert('This Hadith is already in your saved list.');
   }
 }
 
-// Load on page start
+// Initialize
 loadHadiths();
 </script>
 
