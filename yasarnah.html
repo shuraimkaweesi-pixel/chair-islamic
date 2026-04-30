@@ -16,17 +16,8 @@ padding-bottom:90px;
 text-align:center;
 }
 
-h1{
-margin-bottom:10px;
-color:#FFD700;
-}
-
-#status{
-margin-bottom:20px;
-color:#999;
-font-size:14px;
-min-height:20px;
-}
+h1{margin-bottom:10px;color:#FFD700;}
+#status{margin-bottom:20px;color:#999;font-size:14px;min-height:20px;}
 
 #lessonBox{
 display:grid;
@@ -45,30 +36,17 @@ cursor:pointer;
 border:2px solid transparent;
 }
 
-.lesson:active{
-transform:scale(0.95);
-}
-
+.lesson:active{transform:scale(0.95);}
 .lesson.active{
 border:2px solid gold;
 background:#252525;
 box-shadow:0 0 15px rgba(255,215,0,0.3);
 }
 
-.arabic{
-font-size:44px;
-margin-bottom:5px;
-line-height:1;
-}
+.arabic{font-size:44px;margin-bottom:5px;line-height:1;}
+.name{font-size:12px;color:#ddd;}
 
-.name{
-font-size:12px;
-color:#ddd;
-}
-
-.controls{
-margin-top:25px;
-}
+.controls{margin-top:25px;}
 
 button{
 background:#FFD700;
@@ -81,16 +59,7 @@ font-weight:bold;
 font-size:15px;
 margin:5px;
 }
-
-button:active{
-background:#e6c200;
-}
-
-.debug{
-margin-top:15px;
-font-size:12px;
-color:#666;
-}
+button:active{background:#e6c200;}
 </style>
 </head>
 
@@ -104,42 +73,54 @@ color:#666;
 <div class="controls">
 <button onclick="stopLesson()">⏸ Stop</button>
 <button onclick="playAll()">▶ Play All</button>
-<button onclick="testVoice()">🔊 Test Voice</button>
+<button onclick="setRepeat(1)">1x</button>
+<button onclick="setRepeat(3)">3x</button>
 </div>
-
-<div class="debug" id="debug"></div>
 
 <script>
 // =====================
-// LETTERS
+// LETTERS WITH YOUR MP3 PATHS
 // =====================
 const letters = [
-{a:"ا", name:"Alif", sound:"alif"}, {a:"ب", name:"Ba", sound:"baa"}, 
-{a:"ت", name:"Ta", sound:"taa"}, {a:"ث", name:"Tha", sound:"thaa"},
-{a:"ج", name:"Jeem", sound:"jeem"}, {a:"ح", name:"Ha", sound:"haa"}, 
-{a:"خ", name:"Kha", sound:"khaa"}, {a:"د", name:"Dal", sound:"daal"},
-{a:"ذ", name:"Dhal", sound:"dhaal"}, {a:"ر", name:"Ra", sound:"raa"}, 
-{a:"ز", name:"Zay", sound:"zaay"}, {a:"س", name:"Seen", sound:"seen"},
-{a:"ش", name:"Sheen", sound:"sheen"}, {a:"ص", name:"Sad", sound:"saad"}, 
-{a:"ض", name:"Dad", sound:"daad"}, {a:"ط", name:"Taa", sound:"taa"},
-{a:"ظ", name:"Zaa", sound:"zaa"}, {a:"ع", name:"Ain", sound:"ayn"}, 
-{a:"غ", name:"Ghain", sound:"ghayn"}, {a:"ف", name:"Fa", sound:"faa"},
-{a:"ق", name:"Qaf", sound:"qaaf"}, {a:"ك", name:"Kaf", sound:"kaaf"}, 
-{a:"ل", name:"Lam", sound:"laam"}, {a:"م", name:"Meem", sound:"meem"},
-{a:"ن", name:"Noon", sound:"noon"}, {a:"ه", name:"Ha", sound:"haa"}, 
-{a:"و", name:"Waw", sound:"waaw"}, {a:"ي", name:"Yaa", sound:"yaa"}
+{a:"ا", name:"Alif", file:"audio/alif.mp3"},
+{a:"ب", name:"Ba", file:"audio/baa.mp3"},
+{a:"ت", name:"Ta", file:"audio/taa.mp3"},
+{a:"ث", name:"Tha", file:"audio/thaa.mp3"},
+{a:"ج", name:"Jim", file:"audio/jeem.mp3"},
+{a:"ح", name:"Ha", file:"audio/haa.mp3"},
+{a:"خ", name:"Kha", file:"audio/khaa.mp3"},
+{a:"د", name:"Dal", file:"audio/daal.mp3"},
+{a:"ذ", name:"Dhal", file:"audio/dhaal.mp3"},
+{a:"ر", name:"Ra", file:"audio/raa.mp3"},
+{a:"ز", name:"Zay", file:"audio/zaay.mp3"},
+{a:"س", name:"Sin", file:"audio/seen.mp3"},
+{a:"ش", name:"Shin", file:"audio/sheen.mp3"},
+{a:"ص", name:"Sad", file:"audio/saad.mp3"},
+{a:"ض", name:"Dtwad", file:"audio/daad.mp3"},
+{a:"ط", name:"Twaa", file:"audio/twa.mp3"},
+{a:"ظ", name:"Zaa", file:"audio/zaa.mp3"},
+{a:"ع", name:"Ain", file:"audio/ayn.mp3"},
+{a:"غ", name:"Ghain", file:"audio/ghayn.mp3"},
+{a:"ف", name:"Fa", file:"audio/faa.mp3"},
+{a:"ق", name:"Qaf", file:"audio/qaaf.mp3"},
+{a:"ك", name:"Kaf", file:"audio/kaaf.mp3"},
+{a:"ل", name:"Lam", file:"audio/laam.mp3"},
+{a:"م", name:"Mim", file:"audio/meem.mp3"},
+{a:"ن", name:"Noon", file:"audio/noon.mp3"},
+{a:"ه", name:"HHa", file:"audio/hha.mp3"},
+{a:"و", name:"Waw", file:"audio/waaw.mp3"},
+{a:"ي", name:"Yaa", file:"audio/yaa.mp3"}
 ];
 
 // =====================
 // SETTINGS
 // =====================
 let repeatCount = 3;
+let currentAudio = null;
 let currentIndex = null;
 let repeat = 0;
 let isPlaying = false;
-let speech = window.speechSynthesis;
-let voices = [];
-let hasArabicVoice = false;
+let audioUnlocked = false;
 
 // =====================
 // BUILD UI
@@ -155,61 +136,30 @@ letters.forEach((l,i)=>{
 });
 
 // =====================
-// LOAD VOICES + DEBUG
+// AUDIO UNLOCK - FOR CHROME
 // =====================
-function loadVoices() {
-  voices = speech.getVoices();
-  const arabicVoices = voices.filter(v => v.lang.startsWith('ar'));
-  hasArabicVoice = arabicVoices.length > 0;
-  
-  document.getElementById("debug").innerText = 
-    `Voices: ${voices.length} | Arabic: ${arabicVoices.length} | Using: ${hasArabicVoice ? 'Arabic' : 'English fallback'}`;
-  
-  console.log("Available voices:", voices.map(v => v.lang + " " + v.name));
-}
+function unlockAudio() {
+  if (audioUnlocked) return Promise.resolve(true);
 
-speech.onvoiceschanged = loadVoices;
-setTimeout(loadVoices, 100); // Force load
+  const testAudio = new Audio();
+  testAudio.volume = 0;
+  testAudio.src = letters[0].file;
 
-// =====================
-// TEST VOICE BUTTON
-// =====================
-function testVoice() {
-  speak("Alif", () => {
-    document.getElementById("status").innerText = "Voice test done. Tap a letter now.";
+  return testAudio.play().then(() => {
+    testAudio.pause();
+    audioUnlocked = true;
+    document.getElementById("status").innerText = "Audio ready. Tap any letter.";
+    return true;
+  }).catch(e => {
+    console.log("Unlock failed:", e);
+    document.getElementById("status").innerText = "Tap again to enable audio";
+    return false;
   });
-  document.getElementById("status").innerText = "Testing voice...";
 }
 
-// =====================
-// SPEECH WITH FALLBACK
-// =====================
-function speak(letterObj, callback) {
-  if (speech.speaking) speech.cancel();
-
-  const utter = new SpeechSynthesisUtterance();
-  
-  // Try Arabic first, fallback to English pronunciation
-  if (hasArabicVoice) {
-    utter.text = letterObj.a; // Speak the actual Arabic letter
-    utter.lang = 'ar-SA';
-  } else {
-    utter.text = letterObj.sound; // Speak "baa", "taa" etc in English
-    utter.lang = 'en-US';
-  }
-  
-  utter.rate = 0.7; // Slower for learning
-  utter.volume = 1;
-  
-  utter.onend = callback;
-  utter.onerror = (e) => {
-    console.log("Speech error:", e);
-    document.getElementById("status").innerText = "Voice failed. Try Test Voice button first.";
-    isPlaying = false;
-  };
-
-  speech.speak(utter);
-}
+// Unlock on any tap
+document.body.addEventListener("click", unlockAudio, {once: true});
+document.body.addEventListener("touchstart", unlockAudio, {once: true});
 
 // =====================
 // CONTROLS
@@ -220,7 +170,10 @@ function setRepeat(num) {
 }
 
 function stopLesson(){
-  speech.cancel();
+  if(currentAudio){
+    currentAudio.pause();
+    currentAudio = null;
+  }
   isPlaying = false;
   currentIndex = null;
   repeat = 0;
@@ -241,9 +194,14 @@ function playAll() {
 // =====================
 // START / TOGGLE
 // =====================
-function startLetter(index){
-  if(currentIndex === index && isPlaying){
-    speech.cancel();
+async function startLetter(index){
+  if (!audioUnlocked) {
+    const unlocked = await unlockAudio();
+    if (!unlocked) return;
+  }
+
+  if(currentIndex === index && isPlaying && currentAudio){
+    currentAudio.pause();
     isPlaying = false;
     document.getElementById("status").innerText = "Paused";
     document.querySelectorAll(".lesson")[index].classList.remove("active");
@@ -271,18 +229,31 @@ function playLetter(){
   document.getElementById("status").innerText = `Playing: ${letter.name} (${repeat + 1}/${repeatCount})`;
   highlight(currentIndex);
 
-  speak(letter, () => {
+  currentAudio = new Audio(letter.file);
+
+  currentAudio.onended = () => {
     if (!isPlaying) return;
-    
+
     repeat++;
     if(repeat < repeatCount){
-      setTimeout(() => playLetter(), 400);
+      setTimeout(() => playLetter(), 300);
       return;
     }
 
     currentIndex++;
     repeat = 0;
     setTimeout(() => playLetter(), 600);
+  };
+
+  currentAudio.onerror = () => {
+    document.getElementById("status").innerText = `Error: ${letter.file} not found`;
+    isPlaying = false;
+  };
+
+  currentAudio.play().catch(e => {
+    console.log("Play error:", e);
+    document.getElementById("status").innerText = "Tap again to enable audio";
+    isPlaying = false;
   });
 }
 
