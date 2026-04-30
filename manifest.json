@@ -1,4 +1,5 @@
 {
+  "id": "/chair-islamic/",
   "name": "Chair Islamic TV - 40 Hadith Nawawi",
   "short_name": "Chair Islamic",
   "description": "Complete collection of Imam Nawawi's 42 Hadith with Arabic, English translation, and references. Quran reader, prayer times, and Islamic videos.",
@@ -21,6 +22,22 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/chair-islamic/screenshot1.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Home Screen"
+    },
+    {
+      "src": "/chair-islamic/screenshot2.png",
+      "sizes": "1080x1920", 
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Hadith Reader"
     }
   ]
 }
