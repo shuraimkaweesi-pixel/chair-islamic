@@ -1,21 +1,23 @@
 {
-  "name": "Chair Islamic TV",
-  "short_name": "ChairIslamic", 
-  "description": "Learn Qur'an, Hadith & Prayer the Right Way",
-  "start_url": "/index.html",
+  "name": "Chair Islamic TV - 40 Hadith Nawawi",
+  "short_name": "Chair Islamic",
+  "description": "Complete collection of Imam Nawawi's 42 Hadith with Arabic, English translation, and references. Quran reader, prayer times, and Islamic videos.",
+  "start_url": "/chair-islamic/index.html",
+  "scope": "/chair-islamic/",
   "display": "standalone",
   "background_color": "#0A0A0A",
-  "theme_color": "#FFD700",
-  "orientation": "portrait-primary",
+  "theme_color": "#0A0A0A",
+  "orientation": "portrait",
+  "categories": ["education", "books", "lifestyle"],
   "icons": [
     {
-      "src": "logo.png",
+      "src": "/chair-islamic/logo.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "logo.png", 
+      "src": "/chair-islamic/logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
