@@ -4,158 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prayer Times | Chair Islamic TV</title>
-
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#FFD700">
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #0f0f0f;
-            color: #FFD700;
-            margin: 0;
-            padding: 20px;
-            padding-bottom: 100px;
-            text-align: center;
-        }
-
-        h1 {
-            color: #FFD700;
-            text-shadow: 1px 1px 3px #000;
-            margin-bottom: 5px;
-        }
-
-        #location { text-align: center; color: #ddd; font-size: 14px; }
-
-        .prayer-box {
-            background: #1a1a1a;
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 20px;
-            color: white;
-            font-size: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            text-align: left;
-        }
-
-        .prayer {
-            display: flex;
-            justify-content: space-between;
-            padding: 14px;
-            border-bottom: 1px solid #333;
-        }
-
-        .prayer:last-child { border-bottom: none; }
-
-        .next {
-            background: #FFD700;
-            color: black;
-            font-weight: bold;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
-        }
-
-        .date {
-            margin-top: 10px;
-            font-size: 18px;
-            color: #FFD700;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        #countdown {
-            text-align: center;
-            font-size: 22px;
-            margin-top: 20px;
-            color: #FFD700;
-            font-weight: bold;
-        }
-
-        #unlockMsg {
-            font-size: 14px;
-            color: #ff4d4d;
-            margin-top: 15px;
-            background: rgba(255, 77, 77, 0.1);
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .test-btn {
-            background: #333;
-            color: #FFD700;
-            border: 1px solid #FFD700;
-            width: 90%;
-            max-width: 400px;
-            padding: 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .test-btn:active {
-            background: #FFD700;
-            color: black;
-        }
-
-        #stopAdhanBtn {
-            background: #8b0000;
-            color: white;
-            border: 1px solid #ff4d4d;
-            display: none; /* Hidden by default */
-        }
-
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #000;
-            display: flex;
-            justify-content: space-around;
-            padding: 15px 0;
-            border-top: 1px solid #333;
-            z-index: 100;
-        }
-
-        .bottom-nav a {
-            color: #FFD700;
-            text-decoration: none;
-            font-size: 16px;
-            flex: 1;
-            text-align: center;
-        }
-    </style>
+    <meta name="theme-color" content="#0A0A0A">
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
+    <div class="container">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+            <img src="logo.png" class="logo-header" alt="Logo">
+            <h1 style="margin:0">Prayer Times</h1>
+        </div>
+        
+        <p id="location" class="page-header">Loading Kampala times...</p>
+        <div class="date" id="date">-- | --</div>
 
-    <h1>Prayer Times</h1>
-    <p id="location">Loading Kampala times...</p>
-    <div class="date" id="date">-- | --</div>
+        <div id="prayerBox" class="prayer-box">
+            Loading schedule...
+        </div>
 
-    <div id="prayerBox" class="prayer-box">
-        Loading schedule...
-    </div>
+        <div id="countdown">
+            Next prayer in: --:--:--
+        </div>
 
-    <div id="countdown">
-        Next prayer in: --:--:--
-    </div>
+        <p id="unlockMsg" class="text-red mt-2" style="text-align:center;font-size:13px;background:rgba(255,77,77,0.1);padding:10px;border-radius:8px;">
+            ⚠️ Tap anywhere to enable Adhan audio
+        </p>
 
-    <p id="unlockMsg">⚠️ Audio Blocked: Tap anywhere to enable Adhan</p>
-
-    <div class="btn-group">
-        <button class="test-btn" onclick="testAdhan()">🔊 Test Adhan Sound</button>
-        <button class="test-btn" id="stopAdhanBtn" onclick="stopAdhan()">⏹ Stop Adhan</button>
+        <div class="btn-group">
+            <button class="btn-outline" onclick="testAdhan()">🔊 Test Adhan Sound</button>
+            <button class="btn-outline" id="stopAdhanBtn" onclick="stopAdhan()" style="display:none;background:#8b0000;border-color:#ff4d4d;color:white;">⏹ Stop Adhan</button>
+        </div>
     </div>
 
     <!-- Adhan Audio -->
@@ -163,20 +41,20 @@
         <source src="https://cdn.islamic.network/audio/adhan/1.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Navigation -->
+    <!-- Bottom Navigation -->
     <div class="bottom-nav">
-        <a href="index.html">🏠 Home</a>
-        <a href="quran.html">📖 Quran</a>
-        <a href="hadith.html">📜 Hadith</a>
-        <a href="prayer.html">🕌 Prayer</a>
-        <a href="videos.html">🎥 Videos</a>
+        <a href="index.html"><span>🏠</span>Home</a>
+        <a href="quran.html"><span>📖</span>Quran</a>
+        <a href="hadith.html"><span>📜</span>Hadith</a>
+        <a href="prayer.html" class="active"><span>🕌</span>Prayer</a>
+        <a href="videos.html"><span>🎥</span>Videos</a>
     </div>
 
 <script>
 // =====================
 // GLOBAL VARIABLES
 // =====================
-let prayerTimings = null;
+let prayerTimings = {};
 let nextPrayerName = "";
 let countdownInterval = null;
 let adhanCheckInterval = null;
@@ -218,7 +96,6 @@ function loadFromCache() {
 function unlockAudio() {
     if (audioUnlocked) return;
     
-    // Play a silent pop to satisfy browser security
     adhanAudio.play().then(() => {
         adhanAudio.pause();
         adhanAudio.currentTime = 0;
@@ -232,29 +109,45 @@ document.body.addEventListener("click", unlockAudio, { once: true });
 document.body.addEventListener("touchstart", unlockAudio, { once: true });
 
 // =====================
-// CORE ADHAN FUNCTIONS
+// UNIFIED ADHAN FUNCTIONS
 // =====================
 function triggerAdhan(prayer) {
-    if (audioUnlocked) {
+    stopAllAudio();
+
+    if (adhanAudio && audioUnlocked) {
         adhanAudio.currentTime = 0;
+        adhanAudio.volume = 1.0; 
         adhanAudio.play().then(() => {
-            stopBtn.style.display = "block";
-        }).catch(e => console.log("Adhan failed:", e));
+            console.log(`Playing Adhan for ${prayer}`);
+            if(stopBtn) stopBtn.style.display = "block";
+        }).catch(e => {
+            console.log("Adhan blocked:", e);
+            alert("Time for " + prayer + "! (Tap to enable audio)");
+        });
     } else {
-        alert("Time for " + prayer + "! Please tap the screen to allow audio.");
+        alert("🕌 It is time for " + prayer);
     }
 
     if ("Notification" in window && Notification.permission === "granted") {
-        new Notification("🕌 Prayer Time", { body: "It is time for " + prayer, icon: "logo.png" });
+        new Notification("🕌 Prayer Time", { 
+            body: `It's time for ${prayer}`, 
+            icon: "logo.png" 
+        });
     }
 
     if (navigator.vibrate) navigator.vibrate([500, 200, 500]);
 }
 
 function stopAdhan() {
-    adhanAudio.pause();
-    adhanAudio.currentTime = 0;
-    stopBtn.style.display = "none";
+    if (adhanAudio) {
+        adhanAudio.pause();
+        adhanAudio.currentTime = 0;
+    }
+    if(stopBtn) stopBtn.style.display = "none";
+}
+
+function stopAllAudio() {
+    stopAdhan();
 }
 
 function testAdhan() {
@@ -278,14 +171,21 @@ function getNextPrayer(timings) {
         pTime.setHours(hh, mm, 0, 0);
         if (pTime > now) return p;
     }
-    return "Fajr"; // Next day
+    return "Fajr";
 }
 
 function displayPrayerTimes(data) {
-    prayerTimings = data.timings;
+    const t = data.timings;
+    prayerTimings = {
+        Fajr: t.Fajr.slice(0, 5),
+        Dhuhr: t.Dhuhr.slice(0, 5),
+        Asr: t.Asr.slice(0, 5),
+        Maghrib: t.Maghrib.slice(0, 5),
+        Isha: t.Isha.slice(0, 5)
+    };
+    
     nextPrayerName = getNextPrayer(prayerTimings);
 
-    // Display Gregorian and Hijri
     document.getElementById("date").innerHTML = 
         `${data.date.gregorian.date} | ${data.date.hijri.date} ${data.date.hijri.month.en}`;
 
@@ -297,7 +197,7 @@ function displayPrayerTimes(data) {
         html += `
         <div class="prayer ${isNext ? 'next' : ''}">
             <span>${p}</span>
-            <span>${prayerTimings[p].slice(0, 5)}</span>
+            <span>${prayerTimings[p]}</span>
         </div>`;
     });
 
@@ -310,7 +210,7 @@ function startCountdown() {
     if (countdownInterval) clearInterval(countdownInterval);
 
     countdownInterval = setInterval(() => {
-        if (!prayerTimings) return;
+        if (!Object.keys(prayerTimings).length) return;
 
         const [hh, mm] = prayerTimings[nextPrayerName].split(":");
         let now = new Date();
@@ -323,7 +223,6 @@ function startCountdown() {
 
         let diff = pTime - now;
         if (diff <= 0) {
-            // Prayer time reached! Refresh UI
             loadPrayerTimes(KAMPALA_LAT, KAMPALA_LON, true);
             return;
         }
@@ -341,26 +240,25 @@ function startAdhanChecker() {
     if (adhanCheckInterval) clearInterval(adhanCheckInterval);
 
     adhanCheckInterval = setInterval(() => {
-        if (!prayerTimings) return;
+        if (!Object.keys(prayerTimings).length) return;
 
         const now = new Date();
+        const today = now.toDateString();
         const currentTime = now.getHours().toString().padStart(2, "0") + ":" + 
                             now.getMinutes().toString().padStart(2, "0");
 
-        if (lastAdhanDate !== now.toDateString()) {
+        if (lastAdhanDate !== today) {
             lastAdhanPlayed = "";
-            lastAdhanDate = now.toDateString();
+            lastAdhanDate = today;
         }
 
-        const prayers = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
-        prayers.forEach(p => {
-            const pTime = prayerTimings[p].trim().slice(0, 5);
-            if (currentTime === pTime && lastAdhanPlayed !== p) {
+        for (let p in prayerTimings) {
+            if (currentTime === prayerTimings[p] && lastAdhanPlayed !== p) {
                 triggerAdhan(p);
                 lastAdhanPlayed = p;
             }
-        });
-    }, 20000); // Check every 20 seconds
+        }
+    }, 30000);
 }
 
 async function loadPrayerTimes(lat, lon, isDefault = false) {
@@ -394,6 +292,14 @@ if (navigator.geolocation) {
 
 if ("Notification" in window && Notification.permission === "default") {
     Notification.requestPermission();
+}
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/chair-islamic/sw.js');
+  });
 }
 </script>
 
