@@ -250,92 +250,30 @@ function playNextAyah(){
     stopAllAudio();
   }
 }
-
 // ===============================
-// ADHAN SYSTEM
+// ADHAN SYSTEM - OPTIMIZED
 // ===============================
 let prayerTimings = {};
 let lastAdhanPlayed = "";
 let lastAdhanDate = "";
 let adhanCheckInterval = null;
 
-const KAMPALA_LAT = 0.3476;
-const KAMPALA_LON = 32.5825;
-
-function getTodayKey() {
-  const d = new Date();
-  return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
-}
-
-function saveAdhanCache(data) {
-  localStorage.setItem('adhanData', JSON.stringify({
-    date: getTodayKey(),
-    timings: data
-  }));
-}
-
-function loadAdhanCache() {
-  const cached = localStorage.getItem('adhanData');
-  if (!cached) return null;
-  const parsed = JSON.parse(cached);
-  if (parsed.date === getTodayKey()) return parsed.timings;
-  return null;
-}
-
-if ("Notification" in window && Notification.permission === "default") {
-  Notification.requestPermission();
-}
-
-function unlockAudio() {
-  if (audioUnlocked) return true;
-  if (!adhanAudio) {
-    adhanAudio = new Audio("https://cdn.islamic.network/audio/adhan/1.mp3");
-    adhanAudio.preload = "auto";
-  }
-
-  const originalVolume = adhanAudio.volume;
-  adhanAudio.volume = 0;
-
-  const playPromise = adhanAudio.play();
-  if (playPromise!== undefined) {
-    return playPromise.then(() => {
-      adhanAudio.pause();
-      adhanAudio.currentTime = 0;
-      adhanAudio.volume = originalVolume;
-      audioUnlocked = true;
-      const msg = document.getElementById("unlockMsg");
-      if (msg) msg.style.display = "none";
-      return true;
-    }).catch(e => {
-      adhanAudio.volume = originalVolume;
-      return false;
-    });
-  }
-  return Promise.resolve(false);
-}
-
-function initAudioUnlock() {
-  const tryUnlock = () => { unlockAudio(); };
-  document.body.addEventListener("click", tryUnlock);
-  document.body.addEventListener("touchstart", tryUnlock);
-}
-
-async function testAdhan() {
-  const unlocked = await unlockAudio();
-  if (!unlocked &&!audioUnlocked) {
-    alert("Browser blocked audio. Tap the screen anywhere first, then press Test Adhan again.");
-    return;
-  }
-  triggerAdhan("Test");
-}
+// Helper to ensure "HH:mm" format is clean
+const cleanTime = (timeStr) => timeStr ? timeStr.trim().slice(0, 5) : "";
 
 async function startAdhanSystem() {
+  // 1. Load from cache first for immediate protection
   const cached = loadAdhanCache();
   if (cached) {
     prayerTimings = cached;
-    if (!adhanCheckInterval) setInterval(checkAdhanTime, 15000);
   }
 
+  // 2. Start the timer ONLY ONCE
+  if (!adhanCheckInterval) {
+    adhanCheckInterval = setInterval(checkAdhanTime, 30000); // 30s is plenty
+  }
+
+  // 3. Fetch fresh times
   try {
     const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=Kampala&country=Uganda&method=2`);
     if (!res.ok) throw new Error("HTTP " + res.status);
@@ -343,18 +281,18 @@ async function startAdhanSystem() {
     const t = data.data.timings;
 
     prayerTimings = {
-      Fajr: t.Fajr.slice(0, 5),
-      Dhuhr: t.Dhuhr.slice(0, 5),
-      Asr: t.Asr.slice(0, 5),
-      Maghrib: t.Maghrib.slice(0, 5),
-      Isha: t.Isha.slice(0, 5)
+      Fajr: cleanTime(t.Fajr),
+      Dhuhr: cleanTime(t.Dhuhr),
+      Asr: cleanTime(t.Asr),
+      Maghrib: cleanTime(t.Maghrib),
+      Isha: cleanTime(t.Isha)
     };
 
     saveAdhanCache(prayerTimings);
-    if (!adhanCheckInterval) setInterval(checkAdhanTime, 15000);
+    console.log("Prayer times updated:", prayerTimings);
 
   } catch (err) {
-    console.log("Adhan error:", err);
+    console.log("Adhan fetch error:", err);
   }
 }
 
@@ -363,15 +301,17 @@ function checkAdhanTime() {
 
   const now = new Date();
   const today = now.toDateString();
-  const currentTime = now.getHours().toString().padStart(2, "0") + ":" + now.getMinutes().toString().padStart(2, "0");
+  const currentTime = now.getHours().toString().padStart(2, "0") + ":" + 
+                      now.getMinutes().toString().padStart(2, "0");
 
-  if (lastAdhanDate!== today) {
+  // Reset tracker for a new day
+  if (lastAdhanDate !== today) {
     lastAdhanPlayed = "";
     lastAdhanDate = today;
   }
 
   for (let p in prayerTimings) {
-    if (currentTime === prayerTimings[p] && lastAdhanPlayed!== p) {
+    if (currentTime === prayerTimings[p] && lastAdhanPlayed !== p) {
       triggerAdhan(p);
       lastAdhanPlayed = p;
     }
@@ -379,30 +319,48 @@ function checkAdhanTime() {
 }
 
 function triggerAdhan(prayer) {
+  // Use the unified stop to clear Quran or Yasarnah audio first
   stopAllAudio();
 
   if (adhanAudio && audioUnlocked) {
     adhanAudio.currentTime = 0;
-    adhanAudio.play().catch(e => {
+    // Set volume to max for Adhan specifically
+    adhanAudio.volume = 1.0; 
+    
+    adhanAudio.play().then(() => {
+      console.log(`Playing Adhan for ${prayer}`);
+      // Optional: Show a stop button in your UI here
+      const stopBtn = document.getElementById("stopAdhanBtn");
+      if(stopBtn) stopBtn.style.display = "block";
+    }).catch(e => {
       console.log("Adhan blocked:", e);
-      alert("Adhan time but browser blocked audio. Tap Test Adhan once to enable.");
+      alert("Time for " + prayer + "! (Tap to enable audio)");
     });
   } else {
-    alert("It's time for " + prayer + " but audio is blocked. Tap the page then use Test Adhan button.");
+    // Fallback if the user hasn't clicked anything since page load
+    alert("🕌 It is time for " + prayer);
   }
 
+  // Standard Notification Logic
   if (Notification.permission === "granted") {
     new Notification("🕌 Prayer Time", {
-      body: "It's time for " + prayer,
+      body: `It's time for ${prayer} in Kampala`,
       icon: "logo.png"
     });
   }
 
-  if (navigator.vibrate) {
-    navigator.vibrate([500, 300, 500]);
-  }
+  if (navigator.vibrate) navigator.vibrate([500, 300, 500]);
 }
 
+// Add this to your "Unified Audio Management" section to handle stopping Adhan
+function stopAdhan() {
+    if (adhanAudio) {
+        adhanAudio.pause();
+        adhanAudio.currentTime = 0;
+    }
+    const stopBtn = document.getElementById("stopAdhanBtn");
+    if(stopBtn) stopBtn.style.display = "none";
+}
 
 // ===============================
 // YASARNAH - PAGINATED QAIDA BOOK
