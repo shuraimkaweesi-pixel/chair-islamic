@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arba'un Nawawi | Chair Islamic TV</title>
+<title>Hadith of the Day | Chair Islamic TV</title>
 
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0f0f0f">
@@ -11,7 +11,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="apple-touch-icon" href="logo.png">
 
-<!-- Arabic Font - Amiri -->
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -37,14 +36,19 @@ h1 {
   font-size: 28px;
 }
 
-.subtitle {
+.date-badge {
   text-align:center;
-  color:#999;
-  font-size:14px;
-  margin-bottom:25px;
+  background: rgba(255,215,0,0.1);
+  color:#FFD700;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  margin: 0 auto 25px;
+  width: fit-content;
+  border: 1px solid rgba(255,215,0,0.3);
+  font-weight: 600;
 }
 
-/* Premium Hadith Card */
 .hadith-card {
   background: linear-gradient(145deg, #1e1e1e, #151515);
   padding: 25px;
@@ -113,7 +117,6 @@ h1 {
   border: 1px solid rgba(255,215,0,0.3);
 }
 
-/* Action Buttons */
 .hadith-actions {
   display: flex;
   gap: 10px;
@@ -141,7 +144,6 @@ h1 {
   transform: scale(0.95);
 }
 
-/* AI Box */
 .ai-box {
   background: linear-gradient(145deg, #1a1a1a, #111);
   padding: 20px;
@@ -162,31 +164,19 @@ h1 {
   font-size: 15px;
 }
 
-/* Refresh Button */
-.refresh-btn {
-  width: 100%;
-  background: linear-gradient(45deg, #FFD700, #FFA500);
-  color: #000;
-  border: none;
-  padding: 15px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 700;
-  margin: 20px 0;
-  box-shadow: 0 4px 15px rgba(255,215,0,0.3);
-}
-
-.refresh-btn:active { transform: scale(0.98); }
-
-/* Loading */
 .loading {
   text-align: center;
   padding: 40px;
   color: #FFD700;
 }
 
-/* Bottom Navigation */
+.countdown {
+  text-align: center;
+  color: #999;
+  font-size: 13px;
+  margin-top: 20px;
+}
+
 .bottom-nav {
   position: fixed;
   bottom: 0;
@@ -217,11 +207,11 @@ h1 {
 <body>
 <div class="container">
 
-  <h1>📜 Arba'un Nawawi</h1>
-  <p class="subtitle">40 Authentic Hadiths of Prophet Muhammad ﷺ</p>
+  <h1>📜 Hadith of the Day</h1>
+  <div class="date-badge" id="dateBadge">Loading...</div>
 
   <div id="hadithCard" class="hadith-card">
-    <div class="loading">Loading Hadith...</div>
+    <div class="loading">Loading Today's Hadith...</div>
   </div>
 
   <div class="hadith-actions">
@@ -235,11 +225,10 @@ h1 {
     <div id="explanationText"></div>
   </div>
 
-  <button class="refresh-btn" onclick="nextHadith()">📖 Next Hadith</button>
+  <div class="countdown" id="countdown"></div>
 
 </div>
 
-<!-- Bottom Navigation -->
 <div class="bottom-nav">
   <a href="index.html">🏠<br>Home</a>
   <a href="quran.html">📖<br>Quran</a>
@@ -249,7 +238,6 @@ h1 {
 </div>
 
 <script>
-// Load all 40 hadiths from JSON file
 let hadiths = [];
 let currentHadith = null;
 
@@ -259,6 +247,8 @@ async function initHadiths(){
     if(!res.ok) throw new Error('File not found');
     hadiths = await res.json();
     loadDailyHadith();
+    updateCountdown();
+    setInterval(updateCountdown, 60000); // Update every minute
   } catch(e){
     document.getElementById("hadithCard").innerHTML = `
       <div style="text-align:center; color:#ff6b6b;">
@@ -269,21 +259,20 @@ async function initHadiths(){
   }
 }
 
-// Daily hadith - same for everyone each day based on date
+// Strictly 1 hadith per day based on UTC date
 function loadDailyHadith(){
   if(hadiths.length === 0) return;
 
-  const day = Math.floor(Date.now() / 86400000);
-  const index = day % hadiths.length;
+  // Use UTC date so everyone gets same hadith regardless of timezone
+  const now = new Date();
+  const utcDay = Math.floor(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()) / 86400000);
+  const index = utcDay % hadiths.length;
   currentHadith = hadiths[index];
-  renderHadith();
-}
 
-// Random next hadith
-function nextHadith(){
-  if(hadiths.length === 0) return;
-  const randomIndex = Math.floor(Math.random() * hadiths.length);
-  currentHadith = hadiths[randomIndex];
+  // Show today's date
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  document.getElementById('dateBadge').innerText = now.toLocaleDateString('en-US', options);
+
   renderHadith();
 }
 
@@ -295,8 +284,20 @@ function renderHadith(){
     <div class="translation">${currentHadith.en}</div>
     <div class="source-badge">${currentHadith.book}</div>
   `;
-
   document.getElementById("hadithExplanation").classList.remove('show');
+}
+
+function updateCountdown(){
+  const now = new Date();
+  const tomorrow = new Date(now);
+  tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
+  tomorrow.setUTCHours(0, 0, 0, 0);
+
+  const diff = tomorrow - now;
+  const hours = Math.floor(diff / 3600000);
+  const minutes = Math.floor((diff % 3600000) / 60000);
+
+  document.getElementById('countdown').innerText = `New hadith in ${hours}h ${minutes}m`;
 }
 
 function explainHadith(){
@@ -307,7 +308,7 @@ function explainHadith(){
 
 function shareHadith(){
   if(!currentHadith) return;
-  const text = `Hadith ${currentHadith.id} - Arba'un Nawawi\n\n${currentHadith.arab}\n\n${currentHadith.en}\n\n— ${currentHadith.book}\n\nShared from Chair Islamic TV`;
+  const text = `Hadith of the Day - Arba'un Nawawi #${currentHadith.id}\n\n${currentHadith.arab}\n\n${currentHadith.en}\n\n— ${currentHadith.book}\n\nFrom Chair Islamic TV`;
 
   if(navigator.share){
     navigator.share({ title: 'Hadith of the Day', text: text });
@@ -323,7 +324,7 @@ function saveHadith(){
   if(!saved.find(h => h.id === currentHadith.id)){
     saved.push(currentHadith);
     localStorage.setItem('savedHadiths', JSON.stringify(saved));
-    alert('Hadith saved 🤍 Check your saved list');
+    alert('Hadith saved 🤍');
   } else {
     alert('Already saved');
   }
