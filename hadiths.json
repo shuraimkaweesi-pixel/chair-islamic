@@ -1,282 +1,282 @@
 [
   {
-    "id": 1,
-    "title": "Actions are by Intentions",
-    "arabic": "عَنْ أَمِيرِ الْمُؤْمِنِينَ أَبِي حَفْصٍ عُمَرَ بْنِ الْخَطَّابِ رَضِيَ اللَّهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى، فَمَنْ كَانَتْ هِجْرَتُهُ إِلَى اللَّهِ وَرَسُولِهِ فَهِجْرَتُهُ إِلَى اللَّهِ وَرَسُولِهِ، وَمَنْ كَانَتْ هِجْرَتُهُ لِدُنْيَا يُصِيبُهَا أَوِ امْرَأَةٍ يَنْكِحُهَا فَهِجْرَتُهُ إِلَى مَا هَاجَرَ إِلَيْهِ",
-    "english": "On the authority of the Commander of the Faithful, Abu Hafs Umar ibn al-Khattab (may Allah be pleased with him), who said: I heard the Messenger of Allah ﷺ say: 'Actions are according to intentions, and every person will get what was intended. Whoever migrates for Allah and His Messenger, then his migration is for Allah and His Messenger. Whoever migrates for worldly gain or to marry a woman, then his migration is for that for which he migrated.'",
-    "reference": "Sahih al-Bukhari 1, Sahih Muslim 1907"
-  },
-  {
-    "id": 2,
-    "title": "Islam, Iman, Ihsan (Hadith of Jibril)",
-    "arabic": "عَنْ عُمَرَ رَضِيَ اللَّهُ عَنْهُ أَيْضًا قَالَ: بَيْنَمَا نَحْنُ جُلُوسٌ عِنْدَ رَسُولِ اللَّهِ ﷺ ذَاتَ يَوْمٍ...",
-    "english": "On the authority of Umar (may Allah be pleased with him), who said: While we were sitting with the Messenger of Allah ﷺ one day...",
-    "reference": "Sahih Muslim 8"
-  },
-  {
-    "id": 3,
-    "title": "The Five Pillars of Islam",
-    "arabic": "عَنْ أَبِي عَبْدِ الرَّحْمَنِ عَبْدِ اللَّهِ بْنِ عُمَرَ بْنِ الْخَطَّابِ رَضِيَ اللَّهُ عَنْهُمَا قَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: بُنِيَ الإِسْلاَمُ عَلَى خَمْسٍ...",
-    "english": "On the authority of Abu 'Abd al-Rahman 'Abdullah ibn 'Umar ibn al-Khattab...",
-    "reference": "Sahih al-Bukhari 8, Sahih Muslim 16"
-  },
-  {
-    "id": 4,
-    "title": "Creation of the Human Being",
-    "arabic": "عَنْ أَبِي عَبْدِ الرَّحْمَنِ عَبْدِ اللَّهِ بْنِ مَسْعُودٍ رَضِيَ اللَّهُ عَنْهُ قَالَ: حَدَّثَنَا رَسُولُ اللَّهِ ﷺ وَهُوَ الصَّادِقُ الْمَصْدُوقُ...",
-    "english": "On the authority of Abu 'Abd al-Rahman 'Abdullah ibn Mas'ud...",
-    "reference": "Sahih al-Bukhari 3208, Sahih Muslim 2643"
-  },
-  {
-    "id": 5,
-    "title": "Rejecting Innovation (Bid'ah)",
-    "arabic": "عَنْ أُمِّ الْمُؤْمِنِينَ أُمِّ عَبْدِ اللَّهِ عَائِشَةَ رَضِيَ اللَّهُ عَنْهَا قَالَتْ: قَالَ رَسُولُ اللَّهِ ﷺ: مَنْ أَحْدَثَ فِي أَمْرِنَا هَذَا...",
-    "english": "On the authority of the Mother of the Believers...",
-    "reference": "Sahih al-Bukhari 2697, Sahih Muslim 1718"
-  },
-  {
-    "id": 6,
-    "title": "The Lawful is Clear and the Unlawful is Clear",
-    "arabic": "عَنْ أَبِي عَبْدِ اللَّهِ النُّعْمَانِ بْنِ بَشِيرٍ رَضِيَ اللَّهُ عَنْهُمَا قَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: إِنَّ الْحَلاَلَ بَيِّنٌ...",
-    "english": "On the authority of Abu 'Abdullah al-Nu'man ibn Bashir...",
-    "reference": "Sahih al-Bukhari 52, Sahih Muslim 1599"
-  },
-  {
-    "id": 7,
-    "title": "Religion is Sincerity (Naseehah)",
-    "arabic": "عَنْ أَبِي رُقَيَّةَ تَمِيمِ بْنِ أَوْسٍ الدَّارِيِّ رَضِيَ اللَّهُ عَنْهُ، أَنَّ النَّبِيَّ ﷺ قَالَ: الدِّينُ النَّصِيحَةُ...",
-    "english": "On the authority of Abu Ruqayyah Tamim ibn Aws al-Dari...",
-    "reference": "Sahih Muslim 55"
-  },
-  {
-    "id": 8,
-    "title": "Sanctity of Muslim Life",
-    "arabic": "عَنْ ابْنِ عُمَرَ رَضِيَ اللَّهُ عَنْهُمَا قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: أُمِرْتُ أَنْ أُقَاتِلَ النَّاسَ...",
-    "english": "On the authority of Ibn 'Umar...",
-    "reference": "Sahih al-Bukhari 25, Sahih Muslim 22"
-  },
-  {
-    "id": 9,
-    "title": "Avoid What I Forbid You",
-    "arabic": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: مَا نَهَيْتُكُمْ عَنْهُ فَاجْتَنِبُوهُ...",
-    "english": "On the authority of Abu Hurayrah...",
-    "reference": "Sahih al-Bukhari 7288, Sahih Muslim 1337"
-  },
-  {
-    "id": 10,
-    "title": "Allah is Pure and Accepts Only What is Pure",
-    "arabic": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: إِنَّ اللَّهَ طَيِّبٌ لاَ يَقْبَلُ إِلاَّ طَيِّبًا...",
-    "english": "On the authority of Abu Hurayrah...",
-    "reference": "Sahih Muslim 1015"
-  },
-  {
-    "id": 11,
-    "title": "Leave What Doubtful to You",
-    "arabic": "عَنْ أَبِي مُحَمَّدٍ الْحَسَنِ بْنِ عَلِيِّ بْنِ أَبِي طَالِبٍ سِبْطِ رَسُولِ اللَّهِ ﷺ وَرَيْحَانَتِهِ رَضِيَ اللَّهُ عَنْهُمَا قَالَ: حَفِظْتُ مِنْ رَسُولِ اللَّهِ ﷺ: دَعْ مَا يَرِيبُكَ إِلَى مَا لاَ يَرِيبُكَ.",
-    "english": "On the authority of Abu Muhammad al-Hasan ibn Ali ibn Abi Talib...",
-    "reference": "Sunan al-Tirmidhi 2518, Sunan al-Nasa'i 5711"
-  },
-  {
-    "id": 12,
-    "title": "Leaving What Does Not Concern You",
-    "arabic": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: مِنْ حُسْنِ إِسْلَامِ الْمَرْءِ تَرْكُهُ مَا لاَ يَعْنِيهِ.",
-    "english": "On the authority of Abu Hurayrah...",
-    "reference": "Sunan al-Tirmidhi 2317"
-  },
-  {
-    "id": 13,
-    "title": "Love for the Good for Others",
-    "arabic": "عَنْ أَنَسِ بْنِ مَالِكٍ رَضِيَ اللَّهُ عَنْهُ عَنِ النَّبِيِّ ﷺ قَالَ: لاَ يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ.",
-    "english": "On the authority of Anas ibn Malik...",
-    "reference": "Sahih al-Bukhari 13, Sahih Muslim 45"
-  },
-  {
+  "id": 1,
+  "title": "Actions are by Intentions",
+  "arabic": "عَنْ أَمِيرِ الْمُؤْمِنِينَ أَبِي حَفْصٍ عُمَرَ بْنِ الْخَطَّابِ رَضِيَ اللَّهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى، فَمَنْ كَانَتْ هِجْرَتُهُ إِلَى اللَّهِ وَرَسُولِهِ فَهِجْرَتُهُ إِلَى اللَّهِ وَرَسُولِهِ، وَمَنْ كَانَتْ هِجْرَتُهُ لِدُنْيَا يُصِيبُهَا أَوِ امْرَأَةٍ يَنْكِحُهَا فَهِجْرَتُهُ إِلَى مَا هَاجَرَ إِلَيْهِ",
+  "english": "On the authority of the Commander of the Faithful, Abu Hafs Umar ibn al-Khattab (may Allah be pleased with him), who said: I heard the Messenger of Allah ﷺ say: 'Actions are according to intentions, and every person will get what was intended. Whoever migrates for Allah and His Messenger, then his migration is for Allah and His Messenger. Whoever migrates for worldly gain or to marry a woman, then his migration is for that for which he migrated.'",
+  "reference": "Sahih al-Bukhari 1, Sahih Muslim 1907"
+},
+{
+  "id": 2,
+  "title": "Islam, Iman, Ihsan (Hadith of Jibril)",
+  "arabic": "عَنْ عُمَرَ رَضِيَ اللَّهُ عَنْهُ أَيْضًا قَالَ: بَيْنَمَا نَحْنُ جُلُوسٌ عِنْدَ رَسُولِ اللَّهِ ﷺ ذَاتَ يَوْمٍ، إِذْ طَلَعَ عَلَيْنَا رَجُلٌ شَدِيدُ بَيَاضِ الثِّيَابِ، شَدِيدُ سَوَادِ الشَّعْرِ، لاَ يُرَى عَلَيْهِ أَثَرُ السَّفَرِ، وَلاَ يَعْرِفُهُ مِنَّا أَحَدٌ، حَتَّى جَلَسَ إِلَى النَّبِيِّ ﷺ، فَأَسْنَدَ رُكْبَتَيْهِ إِلَى رُكْبَتَيْهِ، وَوَضَعَ كَفَّيْهِ عَلَى فَخِذَيْهِ، وَقَالَ: يَا مُحَمَّدُ، أَخْبِرْنِي عَنِ الإِسْلاَمِ. فَقَالَ رَسُولُ اللَّهِ ﷺ: الإِسْلاَمُ أَنْ تَشْهَدَ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ، وَأَنَّ مُحَمَّدًا رَسُولُ اللَّهِ، وَتُقِيمَ الصَّلاَةَ، وَتُؤْتِيَ الزَّكَاةَ، وَتَصُومَ رَمَضَانَ، وَتَحُجَّ الْبَيْتَ إِنِ اسْتَطَعْتَ إِلَيْهِ سَبِيلاً. قَالَ: صَدَقْتَ. فَعَجِبْنَا لَهُ يَسْأَلُهُ وَيُصَدِّقُهُ. قَالَ: فَأَخْبِرْنِي عَنِ الإِيمَانِ. قَالَ: أَنْ تُؤْمِنَ بِاللَّهِ، وَمَلاَئِكَتِهِ، وَكُتُبِهِ، وَرُسُلِهِ، وَالْيَوْمِ الآخِرِ، وَتُؤْمِنَ بِالْقَدَرِ خَيْرِهِ وَشَرِّهِ. قَالَ: صَدَقْتَ. قَالَ: فَأَخْبِرْنِي عَنِ الإِحْسَانِ. قَالَ: أَنْ تَعْبُدَ اللَّهَ كَأَنَّكَ تَرَاهُ، فَإِنْ لَمْ تَكُنْ تَرَاهُ فَإِنَّهُ يَرَاكَ. قَالَ: فَأَخْبِرْنِي عَنِ السَّاعَةِ. قَالَ: مَا الْمَسْؤُولُ عَنْهَا بِأَعْلَمَ مِنَ السَّائِلِ. قَالَ: فَأَخْبِرْنِي عَنْ أَمَارَاتِهَا. قَالَ: أَنْ تَلِدَ الأَمَةُ رَبَّتَهَا، وَأَنْ تَرَى الْحُفَاةَ الْعُرَاةَ الْعَالَةَ رِعَاءَ الشَّاءِ يَتَطَاوَلُونَ فِي الْبُنْيَانِ. ثُمَّ انْطَلَقَ، فَلَبِثْتُ مَلِيًّا، ثُمَّ قَالَ: يَا عُمَرُ، أَتَدْرِي مَنِ السَّائِلُ؟ قُلْتُ: اللَّهُ وَرَسُولُهُ أَعْلَمُ. قَالَ: فَإِنَّهُ جِبْرِيلُ، أَتَاكُمْ يُعَلِّمُكُمْ دِينَكُمْ.",
+  "english": "On the authority of Umar (may Allah be pleased with him), who said: While we were sitting with the Messenger of Allah ﷺ one day, there appeared before us a man dressed in extremely white clothes and with very black hair. No signs of travel were visible on him, and none of us recognized him. He sat down close to the Prophet ﷺ, rested his knees against his knees, and placed his hands on his thighs and said: 'O Muhammad, tell me about Islam.' The Messenger of Allah ﷺ said: 'Islam is to testify that there is no god but Allah and that Muhammad is the Messenger of Allah, to establish prayer, to give zakah, to fast Ramadan, and to perform pilgrimage to the House if you are able to do so.' He said: 'You have spoken the truth.' We were amazed that he asked him and then confirmed it. Then he said: 'Tell me about Iman.' He said: 'It is to believe in Allah, His angels, His books, His messengers, the Last Day, and to believe in divine decree, both the good and the evil thereof.' He said: 'You have spoken the truth.' Then he said: 'Tell me about Ihsan.' He said: 'It is to worship Allah as though you see Him, and if you do not see Him, then indeed He sees you.' Then he said: 'Tell me about the Hour.' He said: 'The one questioned about it knows no more than the one asking.' Then he said: 'Tell me about its signs.' He said: 'That the slave woman will give birth to her mistress, and that you will see barefoot, naked, destitute shepherds competing in constructing tall buildings.' Then he left. I stayed for a while, then he ﷺ said: 'O Umar, do you know who the questioner was?' I said: 'Allah and His Messenger know best.' He said: 'That was Jibril, who came to teach you your religion.'",
+  "reference": "Sahih Muslim 8"
+},
+{
+  "id": 3,
+  "title": "The Five Pillars of Islam",
+  "arabic": "عَنْ أَبِي عَبْدِ الرَّحْمَنِ عَبْدِ اللَّهِ بْنِ عُمَرَ بْنِ الْخَطَّابِ رَضِيَ اللَّهُ عَنْهُمَا قَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: بُنِيَ الإِسْلاَمُ عَلَى خَمْسٍ: شَهَادَةِ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللَّهِ، وَإِقَامِ الصَّلاَةِ، وَإِيتَاءِ الزَّكَاةِ، وَحَجِّ الْبَيْتِ، وَصَوْمِ رَمَضَانَ.",
+  "english": "On the authority of Abu 'Abd al-Rahman 'Abdullah ibn 'Umar ibn al-Khattab (may Allah be pleased with them both), who said: I heard the Messenger of Allah ﷺ say: 'Islam is built upon five: testifying that there is no deity worthy of worship except Allah and that Muhammad is the Messenger of Allah, establishing the prayer, giving zakah, performing Hajj to the House, and fasting Ramadan.'",
+  "reference": "Sahih al-Bukhari 8, Sahih Muslim 16"
+},
+{
+  "id": 4,
+  "title": "Creation of the Human Being",
+  "arabic": "عَنْ أَبِي عَبْدِ الرَّحْمَنِ عَبْدِ اللَّهِ بْنِ مَسْعُودٍ رَضِيَ اللَّهُ عَنْهُ قَالَ: حَدَّثَنَا رَسُولُ اللَّهِ ﷺ وَهُوَ الصَّادِقُ الْمَصْدُوقُ: إِنَّ أَحَدَكُمْ يُجْمَعُ خَلْقُهُ فِي بَطْنِ أُمِّهِ أَرْبَعِينَ يَوْمًا نُطْفَةً، ثُمَّ يَكُونُ عَلَقَةً مِثْلَ ذَلِكَ، ثُمَّ يَكُونُ مُضْغَةً مِثْلَ ذَلِكَ، ثُمَّ يُرْسَلُ إِلَيْهِ الْمَلَكُ فَيَنْفُخُ فِيهِ الرُّوحَ، وَيُؤْمَرُ بِأَرْبَعِ كَلِمَاتٍ: بِكَتْبِ رِزْقِهِ، وَأَجَلِهِ، وَعَمَلِهِ، وَشَقِيٌّ أَوْ سَعِيدٌ. فَوَاللَّهِ الَّذِي لاَ إِلَهَ غَيْرُهُ، إِنَّ أَحَدَكُمْ لَيَعْمَلُ بِعَمَلِ أَهْلِ الْجَنَّةِ حَتَّى مَا يَكُونُ بَيْنَهُ وَبَيْنَهَا إِلاَّ ذِرَاعٌ، فَيَسْبِقُ عَلَيْهِ الْكِتَابُ فَيَعْمَلُ بِعَمَلِ أَهْلِ النَّارِ فَيَدْخُلُهَا، وَإِنَّ أَحَدَكُمْ لَيَعْمَلُ بِعَمَلِ أَهْلِ النَّارِ حَتَّى مَا يَكُونُ بَيْنَهُ وَبَيْنَهَا إِلاَّ ذِرَاعٌ، فَيَسْبِقُ عَلَيْهِ الْكِتَابُ فَيَعْمَلُ بِعَمَلِ أَهْلِ الْجَنَّةِ فَيَدْخُلُهَا.",
+  "english": "On the authority of Abu 'Abd al-Rahman 'Abdullah ibn Mas'ud (may Allah be pleased with him), who said: The Messenger of Allah ﷺ, and he is the truthful and the believed, narrated to us: 'Indeed, the creation of one of you is gathered in his mother’s womb for forty days as a drop (nutfah), then he becomes a clot ('alaqah) for a similar period, then a lump (mudghah) for a similar period. Then the angel is sent to him and breathes the soul into him, and is commanded with four matters: to write down his provision, his lifespan, his deeds, and whether he will be wretched or blessed. By Allah, besides whom there is no deity, one of you may perform the deeds of the people of Paradise until there is only an arm’s length between him and it, then what has been written overtakes him and he performs the deeds of the people of Hell and enters it. And one of you may perform the deeds of the people of Hell until there is only an arm’s length between him and it, then what has been written overtakes him and he performs the deeds of the people of Paradise and enters it.'",
+  "reference": "Sahih al-Bukhari 3208, Sahih Muslim 2643"
+},
+{
+  "id": 5,
+  "title": "Rejecting Innovation (Bid'ah)",
+  "arabic": "عَنْ أُمِّ الْمُؤْمِنِينَ أُمِّ عَبْدِ اللَّهِ عَائِشَةَ رَضِيَ اللَّهُ عَنْهَا قَالَتْ: قَالَ رَسُولُ اللَّهِ ﷺ: مَنْ أَحْدَثَ فِي أَمْرِنَا هَذَا مَا لَيْسَ مِنْهُ فَهُوَ رَدٌّ. رَوَاهُ الْبُخَارِيُّ وَمُسْلِمٌ، وَفِي رِوَايَةٍ لِمُسْلِمٍ: مَنْ عَمِلَ عَمَلاً لَيْسَ عَلَيْهِ أَمْرُنَا فَهُوَ رَدٌّ.",
+  "english": "On the authority of the Mother of the Believers, Umm 'Abdullah A'ishah (may Allah be pleased with her), who said: The Messenger of Allah ﷺ said: 'Whoever introduces into this matter of ours that which is not part of it will have it rejected.' (Narrated by al-Bukhari and Muslim). In another narration by Muslim: 'Whoever does an action that is not in accordance with our matter will have it rejected.'",
+  "reference": "Sahih al-Bukhari 2697, Sahih Muslim 1718"
+},
+{
+  "id": 6,
+  "title": "The Lawful is Clear and the Unlawful is Clear",
+  "arabic": "عَنْ أَبِي عَبْدِ اللَّهِ النُّعْمَانِ بْنِ بَشِيرٍ رَضِيَ اللَّهُ عَنْهُمَا قَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: إِنَّ الْحَلاَلَ بَيِّنٌ، وَإِنَّ الْحَرَامَ بَيِّنٌ، وَبَيْنَهُمَا أُمُورٌ مُشْتَبِهَاتٌ لاَ يَعْلَمُهُنَّ كَثِيرٌ مِنَ النَّاسِ، فَمَنِ اتَّقَى الشُّبُهَاتِ اسْتَبْرَأَ لِدِينِهِ وَعِرْضِهِ، وَمَنْ وَقَعَ فِي الشُّبُهَاتِ وَقَعَ فِي الْحَرَامِ، كَالرَّاعِي يَرْعَى حَوْلَ الْحِمَى يُوشِكُ أَنْ يَرْتَعَ فِيهِ، أَلاَ وَإِنَّ لِكُلِّ مَلِكٍ حِمًى، أَلاَ وَإِنَّ حِمَى اللَّهِ مَحَارِمُهُ، أَلاَ وَإِنَّ فِي الْجَسَدِ مُضْغَةً إِذَا صَلَحَتْ صَلَحَ الْجَسَدُ كُلُّهُ، وَإِذَا فَسَدَتْ فَسَدَ الْجَسَدُ كُلُّهُ، أَلاَ وَهِيَ الْقَلْبُ.",
+  "english": "On the authority of Abu 'Abdullah al-Nu'man ibn Bashir (may Allah be pleased with them both), who said: I heard the Messenger of Allah ﷺ say: 'Indeed, the lawful is clear and the unlawful is clear, and between them are matters that are doubtful which many people do not know. Whoever avoids the doubtful matters clears himself in regard to his religion and his honor. Whoever falls into the doubtful matters falls into the unlawful, like a shepherd who grazes around a sanctuary, soon he will pasture in it. Truly, every king has a sanctuary, and truly Allah’s sanctuary is His prohibitions. Truly, in the body there is a morsel of flesh which, if it is sound, the whole body is sound, and if it is corrupted, the whole body is corrupted. Truly, it is the heart.'",
+  "reference": "Sahih al-Bukhari 52, Sahih Muslim 1599"
+},
+{
+  "id": 7,
+  "title": "Religion is Sincerity (Naseehah)",
+  "arabic": "عَنْ أَبِي رُقَيَّةَ تَمِيمِ بْنِ أَوْسٍ الدَّارِيِّ رَضِيَ اللَّهُ عَنْهُ، أَنَّ النَّبِيَّ ﷺ قَالَ: الدِّينُ النَّصِيحَةُ. قُلْنَا: لِمَنْ؟ قَالَ: لِلَّهِ، وَلِكِتَابِهِ، وَلِرَسُولِهِ، وَلأَئِمَّةِ الْمُسْلِمِينَ، وَعَامَّتِهِمْ.",
+  "english": "On the authority of Abu Ruqayyah Tamim ibn Aws al-Dari (may Allah be pleased with him), that the Prophet ﷺ said: 'Religion is sincerity (naseehah).' We said: 'To whom?' He said: 'To Allah, His Book, His Messenger, the leaders of the Muslims, and their common people.'",
+  "reference": "Sahih Muslim 55"
+},
+{
+  "id": 8,
+  "title": "Sanctity of Muslim Life",
+  "arabic": "عَنْ ابْنِ عُمَرَ رَضِيَ اللَّهُ عَنْهُمَا قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: أُمِرْتُ أَنْ أُقَاتِلَ النَّاسَ حَتَّى يَشْهَدُوا أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللَّهِ، وَيُقِيمُوا الصَّلاَةَ، وَيُؤْتُوا الزَّكَاةَ، فَإِذَا فَعَلُوا ذَلِكَ عَصَمُوا مِنِّي دِمَاءَهُمْ وَأَمْوَالَهُمْ إِلاَّ بِحَقِّ الإِسْلاَمِ، وَحِسَابُهُمْ عَلَى اللَّهِ.",
+  "english": "On the authority of Ibn 'Umar (may Allah be pleased with them both), who said: The Messenger of Allah ﷺ said: 'I have been commanded to fight the people until they testify that there is no deity worthy of worship except Allah and that Muhammad is the Messenger of Allah, and they establish the prayer and give zakah. If they do that, then they protect their blood and wealth from me except by the rights of Islam, and their reckoning is with Allah.'",
+  "reference": "Sahih al-Bukhari 25, Sahih Muslim 22"
+},
+{
+  "id": 9,
+  "title": "Avoid What I Forbid You",
+  "arabic": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: مَا نَهَيْتُكُمْ عَنْهُ فَاجْتَنِبُوهُ، وَمَا أَمَرْتُكُمْ بِهِ فَأْتُوا مِنْهُ مَا اسْتَطَعْتُمْ، فَإِنَّمَا أَهْلَكَ الَّذِينَ مِنْ قَبْلِكُمْ كَثْرَةُ مَسَائِلِهِمْ وَاخْتِلاَفُهُمْ عَلَى أَنْبِيَائِهِمْ.",
+  "english": "On the authority of Abu Hurayrah (may Allah be pleased with him), who said: The Messenger of Allah ﷺ said: 'Whatever I have forbidden you, avoid it. Whatever I have commanded you, do as much of it as you are able. Verily, those before you were destroyed only because of their excessive questioning and their differing with their prophets.'",
+  "reference": "Sahih al-Bukhari 7288, Sahih Muslim 1337"
+},
+{
+  "id": 10,
+  "title": "Allah is Pure and Accepts Only What is Pure",
+  "arabic": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: إِنَّ اللَّهَ طَيِّبٌ لاَ يَقْبَلُ إِلاَّ طَيِّبًا، وَإِنَّ اللَّهَ أَمَرَ الْمُؤْمِنِينَ بِمَا أَمَرَ بِهِ الْمُرْسَلِينَ فَقَالَ: يَا أَيُّهَا الرُّسُلُ كُلُوا مِنَ الطَّيِّبَاتِ وَاعْمَلُوا صَالِحًا، وَقَالَ: يَا أَيُّهَا الَّذِينَ آمَنُوا كُلُوا مِنْ طَيِّبَاتِ مَا رَزَقْنَاكُمْ. ثُمَّ ذَكَرَ الرَّجُلَ يُطِيلُ السَّفَرَ أَشْعَثَ أَغْبَرَ يَمُدُّ يَدَيْهِ إِلَى السَّمَاءِ: يَا رَبِّ يَا رَبِّ، وَمَطْعَمُهُ حَرَامٌ وَمَشْرَبُهُ حَرَامٌ وَمَلْبَسُهُ حَرَامٌ وَغُذِيَ بِالْحَرَامِ فَأَنَّى يُسْتَجَابُ لِذَلِكَ.",
+  "english": "On the authority of Abu Hurayrah (may Allah be pleased with him), who said: The Messenger of Allah ﷺ said: 'Indeed, Allah is pure and accepts only that which is pure. And Allah has commanded the believers with what He commanded the messengers, saying: "O messengers, eat from the good things and act righteously." And He said: "O you who believe, eat from the good things We have provided you." Then he mentioned a man who travels a long distance, disheveled and dusty, raising his hands to the sky saying: "O Lord, O Lord," while his food is unlawful, his drink is unlawful, his clothing is unlawful, and he is nourished unlawfully—so how can his supplication be answered?'",
+  "reference": "Sahih Muslim 1015"
+},
+{
+  "id": 11,
+  "title": "Leave What Doubtful to You",
+  "arabic": "عَنْ أَبِي مُحَمَّدٍ الْحَسَنِ بْنِ عَلِيِّ بْنِ أَبِي طَالِبٍ سِبْطِ رَسُولِ اللَّهِ ﷺ وَرَيْحَانَتِهِ رَضِيَ اللَّهُ عَنْهُمَا قَالَ: حَفِظْتُ مِنْ رَسُولِ اللَّهِ ﷺ: دَعْ مَا يَرِيبُكَ إِلَى مَا لاَ يَرِيبُكَ.",
+  "english": "On the authority of Abu Muhammad al-Hasan ibn Ali ibn Abi Talib, the grandson of the Messenger of Allah ﷺ and his beloved, may Allah be pleased with them both, who said: I memorized from the Messenger of Allah ﷺ: 'Leave that which makes you doubt for that which does not make you doubt.'",
+  "reference": "Sunan al-Tirmidhi 2518, Sunan al-Nasa'i 5711 (hasan sahih)"
+},
+{
+  "id": 12,
+  "title": "Leaving What Does Not Concern You",
+  "arabic": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: مِنْ حُسْنِ إِسْلَامِ الْمَرْءِ تَرْكُهُ مَا لاَ يَعْنِيهِ.",
+  "english": "On the authority of Abu Hurayrah (may Allah be pleased with him), who said: The Messenger of Allah ﷺ said: 'Part of the perfection of a person’s Islam is his leaving that which does not concern him.'",
+  "reference": "Sunan al-Tirmidhi 2317 (hasan)"
+},
+{
+  "id": 13,
+  "title": "Love for the Good for Others",
+  "arabic": "عَنْ أَنَسِ بْنِ مَالِكٍ رَضِيَ اللَّهُ عَنْهُ عَنِ النَّبِيِّ ﷺ قَالَ: لاَ يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ.",
+  "english": "On the authority of Anas ibn Malik (may Allah be pleased with him), from the Prophet ﷺ, who said: 'None of you truly believes until he loves for his brother what he loves for himself.'",
+  "reference": "Sahih al-Bukhari 13, Sahih Muslim 45"
+},
+{
     "id": 14,
     "title": "Protection of Life in Islam",
-    "arabic": "عَنْ ابْنِ مَسْعُودٍ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: لاَ يَحِلُّ دَمُ امْرِئٍ مُسْلِمٍ...",
-    "english": "On the authority of Ibn Mas'ud...",
+    "arabic": "عَنْ ابْنِ مَسْعُودٍ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: لاَ يَحِلُّ دَمُ امْرِئٍ مُسْلِمٍ يَشْهَدُ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَأَنِّي رَسُولُ اللَّهِ إِلاَّ بِإِحْدَى ثَلاَثٍ: الثَّيِّبُ الزَّانِي، وَالنَّفْسُ بِالنَّفْسِ، وَالتَّارِكُ لِدِينِهِ الْمُفَارِقُ لِلْجَمَاعَةِ.",
+    "english": "On the authority of Ibn Mas'ud (may Allah be pleased with him), who said: The Messenger of Allah ﷺ said: 'The blood of a Muslim who bears witness that there is no god but Allah and that I am the Messenger of Allah is not lawful except in one of three cases: the married adulterer, a life for a life, and the one who abandons his religion and separates from the الجماعة (community).'",
     "reference": "Sahih al-Bukhari 6878, Sahih Muslim 1676"
   },
   {
     "id": 15,
     "title": "Speak Good or Remain Silent",
     "arabic": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ أَنَّ رَسُولَ اللَّهِ ﷺ قَالَ: مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ.",
-    "english": "On the authority of Abu Hurayrah...",
+    "english": "On the authority of Abu Hurayrah (may Allah be pleased with him), who said: The Messenger of Allah ﷺ said: 'Whoever believes in Allah and the Last Day should speak good or remain silent.'",
     "reference": "Sahih al-Bukhari 6018, Sahih Muslim 47"
   },
   {
     "id": 16,
     "title": "Do Not Become Angry",
-    "arabic": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ أَنَّ رَجُلًا قَالَ لِلنَّبِيِّ ﷺ: أَوْصِنِي، قَالَ: لاَ تَغْضَبْ...",
-    "english": "On the authority of Abu Hurayrah...",
+    "arabic": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ أَنَّ رَجُلًا قَالَ لِلنَّبِيِّ ﷺ: أَوْصِنِي، قَالَ: لاَ تَغْضَبْ، فَرَدَّدَ مِرَارًا قَالَ: لاَ تَغْضَبْ.",
+    "english": "On the authority of Abu Hurayrah (may Allah be pleased with him), that a man said to the Prophet ﷺ: 'Advise me.' He said: 'Do not become angry.' The man repeated his request several times, and he said: 'Do not become angry.'",
     "reference": "Sahih al-Bukhari 6116"
   },
-  {
+{
     "id": 17,
     "title": "Allah Has Prescribed Excellence in Everything",
-    "arabic": "عَنْ أَبِي يَعْلَى شَدَّادِ بْنِ أَوْسٍ رَضِيَ اللَّهُ عَنْهُ عَنْ رَسُولِ اللَّهِ ﷺ قَالَ: إِنَّ اللَّهَ كَتَبَ الإِحْسَانَ عَلَى كُلِّ شَيْءٍ...",
-    "english": "On the authority of Shaddad ibn Aws...",
+    "arabic": "عَنْ أَبِي يَعْلَى شَدَّادِ بْنِ أَوْسٍ رَضِيَ اللَّهُ عَنْهُ عَنْ رَسُولِ اللَّهِ ﷺ قَالَ: إِنَّ اللَّهَ كَتَبَ الإِحْسَانَ عَلَى كُلِّ شَيْءٍ، فَإِذَا قَتَلْتُمْ فَأَحْسِنُوا الْقِتْلَةَ، وَإِذَا ذَبَحْتُمْ فَأَحْسِنُوا الذِّبْحَةَ، وَلْيُحِدَّ أَحَدُكُمْ شَفْرَتَهُ، وَلْيُرِحْ ذَبِيحَتَهُ.",
+    "english": "On the authority of Shaddad ibn Aws (may Allah be pleased with him), that the Messenger of Allah ﷺ said: 'Verily Allah has prescribed excellence (ihsan) in all things. So if you kill, then kill in a good manner; and if you slaughter, then slaughter in a good manner. Let one of you sharpen his blade and spare suffering to the animal he slaughters.'",
     "reference": "Sahih Muslim 1955"
   },
   {
     "id": 18,
     "title": "Fear Allah Wherever You Are",
-    "arabic": "عَنْ أَبِي ذَرٍّ جُنْدُبِ بْنِ جُنَادَةَ وَأَبِي عَبْدِ الرَّحْمَنِ مُعَاذِ بْنِ جَبَلٍ رَضِيَ اللَّهُ عَنْهُمَا عَنْ رَسُولِ اللَّهِ ﷺ قَالَ: اتَّقِ اللَّهَ حَيْثُمَا كُنْتَ...",
-    "english": "On the authority of Abu Dharr and Muadh ibn Jabal...",
-    "reference": "Sunan al-Tirmidhi 1987"
+    "arabic": "عَنْ أَبِي ذَرٍّ جُنْدُبِ بْنِ جُنَادَةَ وَأَبِي عَبْدِ الرَّحْمَنِ مُعَاذِ بْنِ جَبَلٍ رَضِيَ اللَّهُ عَنْهُمَا عَنْ رَسُولِ اللَّهِ ﷺ قَالَ: اتَّقِ اللَّهَ حَيْثُمَا كُنْتَ، وَأَتْبِعِ السَّيِّئَةَ الْحَسَنَةَ تَمْحُهَا، وَخَالِقِ النَّاسَ بِخُلُقٍ حَسَنٍ.",
+    "english": "On the authority of Abu Dharr and Muadh ibn Jabal (may Allah be pleased with them both), that the Messenger of Allah ﷺ said: 'Fear Allah wherever you are, follow up a bad deed with a good deed which will erase it, and treat people with good character.'",
+    "reference": "Sunan al-Tirmidhi 1987 (hasan)"
   },
   {
     "id": 19,
     "title": "Know Allah in Ease, He Will Know You in Hardship",
-    "arabic": "عَنْ ابْنِ عَبَّاسٍ رَضِيَ اللَّهُ عَنْهُمَا قَالَ: كُنْتُ خَلْفَ النَّبِيِّ ﷺ يَوْمًا فَقَالَ: يَا غُلَامُ، إِنِّي أُعَلِّمُكَ كَلِمَاتٍ...",
-    "english": "On the authority of Ibn Abbas...",
-    "reference": "Sunan al-Tirmidhi 2516"
+    "arabic": "عَنْ ابْنِ عَبَّاسٍ رَضِيَ اللَّهُ عَنْهُمَا قَالَ: كُنْتُ خَلْفَ النَّبِيِّ ﷺ يَوْمًا فَقَالَ: يَا غُلَامُ، إِنِّي أُعَلِّمُكَ كَلِمَاتٍ: احْفَظِ اللَّهَ يَحْفَظْكَ، احْفَظِ اللَّهَ تَجِدْهُ تُجَاهَكَ...",
+    "english": "On the authority of Ibn Abbas (may Allah be pleased with them both), who said: I was behind the Prophet ﷺ one day and he said: 'Young man, I will teach you some words: Be mindful of Allah and He will protect you. Be mindful of Allah and you will find Him in front of you...'",
+    "reference": "Sunan al-Tirmidhi 2516 (hasan sahih)"
   },
-  {
+{
     "id": 20,
     "title": "If You Do Not Feel Shy, Do What You Wish",
-    "arabic": "عَنْ أَبِي مَسْعُودٍ عُقْبَةَ بْنِ عَمْرٍو الْأَنْصَارِيِّ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: إِنَّ مِمَّا أَدْرَكَ النَّاسُ مِنْ كَلاَمِ النُّبُوَّةِ الأُولَى...",
-    "english": "On the authority of Abu Mas'ud Uqbah ibn Amr al-Ansari...",
+    "arabic": "عَنْ أَبِي مَسْعُودٍ عُقْبَةَ بْنِ عَمْرٍو الْأَنْصَارِيِّ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: إِنَّ مِمَّا أَدْرَكَ النَّاسُ مِنْ كَلاَمِ النُّبُوَّةِ الأُولَى: إِذَا لَمْ تَسْتَحْيِ فَاصْنَعْ مَا شِئْتَ.",
+    "english": "On the authority of Abu Mas'ud Uqbah ibn Amr al-Ansari (may Allah be pleased with him), who said: The Messenger of Allah ﷺ said: 'Among the words that people have learned from the early Prophets is: If you do not feel ashamed, then do whatever you wish.'",
     "reference": "Sahih al-Bukhari 3483"
   },
   {
     "id": 21,
     "title": "Say I Believe in Allah and Then Be Steadfast",
-    "arabic": "عَنْ سُفْيَانَ بْنِ عَبْدِ اللَّهِ الثَّقَفِيِّ رَضِيَ اللَّهُ عَنْهُ قَالَ: قُلْتُ يَا رَسُولَ اللَّهِ، قُلْ لِي فِي الإِسْلاَمِ قَوْلًا...",
-    "english": "On the authority of Sufyan ibn Abdullah al-Thaqafi...",
+    "arabic": "عَنْ سُفْيَانَ بْنِ عَبْدِ اللَّهِ الثَّقَفِيِّ رَضِيَ اللَّهُ عَنْهُ قَالَ: قُلْتُ يَا رَسُولَ اللَّهِ، قُلْ لِي فِي الإِسْلاَمِ قَوْلًا لاَ أَسْأَلُ عَنْهُ أَحَدًا غَيْرَكَ، قَالَ: قُلْ آمَنْتُ بِاللَّهِ ثُمَّ اسْتَقِمْ.",
+    "english": "On the authority of Sufyan ibn Abdullah al-Thaqafi (may Allah be pleased with him), who said: I said, 'O Messenger of Allah, tell me something about Islam which I will not ask anyone else about after you.' He said: 'Say: I believe in Allah, then be steadfast.'",
     "reference": "Sahih Muslim 38"
   },
   {
     "id": 22,
     "title": "Paradise is Near and Hell is Near",
-    "arabic": "عَنْ ابْنِ مَسْعُودٍ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: الْجَنَّةُ أَقْرَبُ إِلَى أَحَدِكُمْ مِنْ شِرَاكِ نَعْلِهِ...",
-    "english": "On the authority of Ibn Mas'ud...",
+    "arabic": "عَنْ ابْنِ مَسْعُودٍ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: الْجَنَّةُ أَقْرَبُ إِلَى أَحَدِكُمْ مِنْ شِرَاكِ نَعْلِهِ، وَالنَّارُ مِثْلُ ذَلِكَ.",
+    "english": "On the authority of Ibn Mas'ud (may Allah be pleased with him), who said: The Messenger of Allah ﷺ said: 'Paradise is nearer to one of you than his shoelace, and so is Hell.'",
     "reference": "Sahih al-Bukhari 6488"
   },
-  {
+{
     "id": 23,
     "title": "Purity is Half of Faith",
-    "arabic": "عَنْ أَبِي مَالِكٍ الْحَارِثِ بْنِ عَاصِمٍ الأَشْعَرِيِّ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: الطُّهُورُ شَطْرُ الإِيمَانِ...",
-    "english": "On the authority of Abu Malik al-Harith ibn Asim al-Ash'ari...",
+    "arabic": "عَنْ أَبِي مَالِكٍ الْحَارِثِ بْنِ عَاصِمٍ الأَشْعَرِيِّ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: الطُّهُورُ شَطْرُ الإِيمَانِ، وَالْحَمْدُ لِلَّهِ تَمْلَأُ الْمِيزَانَ، وَسُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ تَمْلَآنِ - أَوْ تَمْلَأُ - مَا بَيْنَ السَّمَاوَاتِ وَالأَرْضِ...",
+    "english": "On the authority of Abu Malik al-Harith ibn Asim al-Ash'ari (may Allah be pleased with him), who said: The Messenger of Allah ﷺ said: 'Purity is half of faith. Saying “Alhamdulillah” fills the scale, and saying “Subhanallah and Alhamdulillah” fill—or each fills—what is between the heavens and the earth...'",
     "reference": "Sahih Muslim 223"
   },
   {
     "id": 24,
     "title": "Forbidden Deeds Must Be Avoided",
-    "arabic": "عَنْ أَبِي ذَرٍّ رَضِيَ اللَّهُ عَنْهُ عَنِ النَّبِيِّ ﷺ فِيمَا يَرْوِيهِ عَنْ رَبِّهِ عَزَّ وَجَلَّ أَنَّهُ قَالَ: يَا عِبَادِي إِنِّي حَرَّمْتُ الظُّلْمَ عَلَى نَفْسِي...",
-    "english": "On the authority of Abu Dharr...",
+    "arabic": "عَنْ أَبِي ذَرٍّ رَضِيَ اللَّهُ عَنْهُ عَنِ النَّبِيِّ ﷺ فِيمَا يَرْوِيهِ عَنْ رَبِّهِ عَزَّ وَجَلَّ أَنَّهُ قَالَ: يَا عِبَادِي إِنِّي حَرَّمْتُ الظُّلْمَ عَلَى نَفْسِي وَجَعَلْتُهُ بَيْنَكُمْ مُحَرَّمًا فَلاَ تَظَالَمُوا...",
+    "english": "On the authority of Abu Dharr (may Allah be pleased with him), from the Prophet ﷺ, in what he narrates from his Lord, the Mighty and Majestic, that He said: 'O My servants, I have forbidden ظلم (oppression) for Myself and made it forbidden among you, so do not oppress one another...'",
     "reference": "Sahih Muslim 2577"
   },
   {
     "id": 25,
     "title": "Allah Accepts Repentance Until the Last Moment",
-    "arabic": "عَنْ أَبِي مُوسَى رَضِيَ اللَّهُ عَنْهُ عَنِ النَّبِيِّ ﷺ قَالَ: إِنَّ اللَّهَ عَزَّ وَجَلَّ يَبْسُطُ يَدَهُ بِاللَّيْلِ...",
-    "english": "On the authority of Abu Musa...",
+    "arabic": "عَنْ أَبِي مُوسَى رَضِيَ اللَّهُ عَنْهُ عَنِ النَّبِيِّ ﷺ قَالَ: إِنَّ اللَّهَ عَزَّ وَجَلَّ يَبْسُطُ يَدَهُ بِاللَّيْلِ لِيَتُوبَ مُسِيءُ النَّهَارِ، وَيَبْسُطُ يَدَهُ بِالنَّهَارِ لِيَتُوبَ مُسِيءُ اللَّيْلِ...",
+    "english": "On the authority of Abu Musa (may Allah be pleased with him), that the Prophet ﷺ said: 'Indeed Allah, the Mighty and Majestic, extends His Hand at night to accept the repentance of those who sinned during the day, and He extends His Hand during the day to accept the repentance of those who sinned at night...'",
     "reference": "Sahih Muslim 2759"
   },
-  {
+{
     "id": 26,
     "title": "Every Joint Requires Charity",
-    "arabic": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ أَنَّ رَسُولَ اللَّهِ ﷺ قَالَ: عَلَى كُلِّ سُلَامَى مِنَ النَّاسِ صَدَقَةٌ...",
-    "english": "On the authority of Abu Hurayrah...",
+    "arabic": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ أَنَّ رَسُولَ اللَّهِ ﷺ قَالَ: عَلَى كُلِّ سُلَامَى مِنَ النَّاسِ صَدَقَةٌ، كُلُّ يَوْمٍ تَطْلُعُ فِيهِ الشَّمْسُ...",
+    "english": "On the authority of Abu Hurayrah (may Allah be pleased with him), that the Messenger of Allah ﷺ said: 'On every joint of a person there is charity every day the sun rises...'",
     "reference": "Sahih al-Bukhari 2707, Sahih Muslim 1009"
   },
   {
     "id": 27,
     "title": "Righteousness is Good Character",
-    "arabic": "عَنْ النَّوَّاسِ بْنِ سَمْعَانَ رَضِيَ اللَّهُ عَنْهُ عَنِ النَّبِيِّ ﷺ قَالَ: الْبِرُّ حُسْنُ الْخُلُقِ...",
-    "english": "On the authority of an-Nawwas ibn Sam'an...",
+    "arabic": "عَنْ النَّوَّاسِ بْنِ سَمْعَانَ رَضِيَ اللَّهُ عَنْهُ عَنِ النَّبِيِّ ﷺ قَالَ: الْبِرُّ حُسْنُ الْخُلُقِ، وَالإِثْمُ مَا حَاكَ فِي نَفْسِكَ وَكَرِهْتَ أَنْ يَطَّلِعَ عَلَيْهِ النَّاسُ.",
+    "english": "On the authority of an-Nawwas ibn Sam'an (may Allah be pleased with him), that the Prophet ﷺ said: 'Righteousness is good character, and sin is what wavers in your soul and you dislike that people become aware of it.'",
     "reference": "Sahih Muslim 2553"
   },
   {
     "id": 28,
     "title": "Hold Fast to the Sunnah",
-    "arabic": "عَنْ أَبِي نَجِيحٍ الْعِرْبَاضِ بْنِ سَارِيَةَ رَضِيَ اللَّهُ عَنْهُ قَالَ: وَعَظَنَا رَسُولُ اللَّهِ ﷺ مَوْعِظَةً...",
-    "english": "On the authority of Al-Irbad ibn Sariyah...",
+    "arabic": "عَنْ أَبِي نَجِيحٍ الْعِرْبَاضِ بْنِ سَارِيَةَ رَضِيَ اللَّهُ عَنْهُ قَالَ: وَعَظَنَا رَسُولُ اللَّهِ ﷺ مَوْعِظَةً وَجِلَتْ مِنْهَا الْقُلُوبُ...",
+    "english": "On the authority of Al-Irbad ibn Sariyah (may Allah be pleased with him), who said: The Messenger of Allah ﷺ gave us an admonition which caused hearts to tremble... 'So hold fast to my Sunnah and the Sunnah of the rightly guided Caliphs after me...'",
     "reference": "Sunan Abu Dawood 4607, Sunan al-Tirmidhi 2676"
   },
-  {
+{
     "id": 29,
     "title": "Doors of Goodness",
-    "arabic": "عَنْ مُعَاذِ بْنِ جَبَلٍ رَضِيَ اللَّهُ عَنْهُ قَالَ: قُلْتُ يَا رَسُولَ اللَّهِ أَخْبِرْنِي بِعَمَلٍ يُدْخِلُنِي الْجَنَّةَ...",
-    "english": "On the authority of Muadh ibn Jabal...",
+    "arabic": "عَنْ مُعَاذِ بْنِ جَبَلٍ رَضِيَ اللَّهُ عَنْهُ قَالَ: قُلْتُ يَا رَسُولَ اللَّهِ أَخْبِرْنِي بِعَمَلٍ يُدْخِلُنِي الْجَنَّةَ وَيُبَاعِدُنِي عَنِ النَّارِ، قَالَ: لَقَدْ سَأَلْتَ عَنْ عَظِيمٍ، وَإِنَّهُ لَيَسِيرٌ عَلَى مَنْ يَسَّرَهُ اللَّهُ عَلَيْهِ...",
+    "english": "On the authority of Muadh ibn Jabal (may Allah be pleased with him), who said: I said: 'O Messenger of Allah, tell me of a deed which will admit me to Paradise and keep me away from the Fire.' He said: 'You have asked about something عظِيم (great), yet it is easy for whom Allah makes it easy...'",
     "reference": "Sunan al-Tirmidhi 2616"
   },
   {
     "id": 30,
     "title": "Limits of Allah",
-    "arabic": "عَنْ أَبِي ثَعْلَبَةَ الْخُشَنِيِّ رَضِيَ اللَّهُ عَنْهُ عَنْ رَسُولِ اللَّهِ ﷺ قَالَ: إِنَّ اللَّهَ فَرَضَ فَرَائِضَ...",
-    "english": "On the authority of Abu Tha'labah al-Khushani...",
-    "reference": "Al-Daraqutni"
+    "arabic": "عَنْ أَبِي ثَعْلَبَةَ الْخُشَنِيِّ رَضِيَ اللَّهُ عَنْهُ عَنْ رَسُولِ اللَّهِ ﷺ قَالَ: إِنَّ اللَّهَ فَرَضَ فَرَائِضَ فَلَا تُضَيِّعُوهَا، وَحَدَّ حُدُودًا فَلَا تَعْتَدُوهَا...",
+    "english": "On the authority of Abu Tha'labah al-Khushani (may Allah be pleased with him), that the Messenger of Allah ﷺ said: 'Indeed Allah has prescribed obligations, so do not neglect them. And He has set limits, so do not تجاوز (transgress) them...'",
+    "reference": "Al-Daraqutni (hasan), also reported in others"
   },
   {
     "id": 31,
     "title": "Renouncing Worldliness",
-    "arabic": "عَنْ أَبِي الْعَبَّاسِ سَهْلِ بْنِ سَعْدٍ السَّاعِدِيِّ رَضِيَ اللَّهُ عَنْهُ قَالَ: جَاءَ رَجُلٌ إِلَى النَّبِيِّ ﷺ فَقَالَ: يَا رَسُولَ اللَّهِ دُلَّنِي عَلَى عَمَلٍ...",
-    "english": "On the authority of Sahl ibn Sa'd...",
+    "arabic": "عَنْ أَبِي الْعَبَّاسِ سَهْلِ بْنِ سَعْدٍ السَّاعِدِيِّ رَضِيَ اللَّهُ عَنْهُ قَالَ: جَاءَ رَجُلٌ إِلَى النَّبِيِّ ﷺ فَقَالَ: يَا رَسُولَ اللَّهِ دُلَّنِي عَلَى عَمَلٍ إِذَا عَمِلْتُهُ أَحَبَّنِي اللَّهُ وَأَحَبَّنِي النَّاسُ...",
+    "english": "On the authority of Sahl ibn Sa'd (may Allah be pleased with him), that a man came to the Prophet ﷺ and said: 'O Messenger of Allah, guide me to a deed which, if I do it, Allah will love me and people will love me...'",
     "reference": "Sunan Ibn Majah 4102"
   },
-  {
+{
     "id": 32,
     "title": "No Harm and No Reciprocating Harm",
     "arabic": "عَنْ أَبِي سَعِيدٍ سَعْدِ بْنِ مَالِكِ بْنِ سِنَانٍ الْخُدْرِيِّ رَضِيَ اللَّهُ عَنْهُ أَنَّ رَسُولَ اللَّهِ ﷺ قَالَ: لَا ضَرَرَ وَلَا ضِرَارَ.",
-    "english": "On the authority of Abu Sa'id Sa'd ibn Malik ibn Sinan al-Khudri...",
-    "reference": "Sunan Ibn Majah 2340"
+    "english": "On the authority of Abu Sa'id Sa'd ibn Malik ibn Sinan al-Khudri (may Allah be pleased with him), that the Messenger of Allah ﷺ said: 'There should be neither harming nor reciprocating harm.'",
+    "reference": "Sunan Ibn Majah 2340, Malik in Muwatta (hasan)"
   },
   {
     "id": 33,
     "title": "The Burden of Proof",
-    "arabic": "عَنْ ابْنِ عَبَّاسٍ رَضِيَ اللَّهُ عَنْهُمَا أَنَّ رَسُولَ اللَّهِ ﷺ قَالَ: لَوْ يُعْطَى النَّاسُ بِدَعْوَاهُمْ...",
-    "english": "On the authority of Ibn Abbas...",
-    "reference": "Bayhaqi"
+    "arabic": "عَنْ ابْنِ عَبَّاسٍ رَضِيَ اللَّهُ عَنْهُمَا أَنَّ رَسُولَ اللَّهِ ﷺ قَالَ: لَوْ يُعْطَى النَّاسُ بِدَعْوَاهُمْ لَادَّعَى رِجَالٌ أَمْوَالَ قَوْمٍ وَدِمَاءَهُمْ، وَلَكِنِ الْبَيِّنَةُ عَلَى الْمُدَّعِي وَالْيَمِينُ عَلَى مَنْ أَنْكَرَ.",
+    "english": "On the authority of Ibn Abbas (may Allah be pleased with them both), that the Messenger of Allah ﷺ said: 'If people were given according to their claims, men would claim the wealth and lives of others, but the proof is upon the claimant and the oath is upon the one who denies.'",
+    "reference": "Bayhaqi, Hasan narration"
   },
   {
     "id": 34,
     "title": "Enjoining Good and Forbidding Evil",
-    "arabic": "عَنْ أَبِي سَعِيدٍ الْخُدْرِيِّ رَضِيَ اللَّهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: مَنْ رَأَى مِنْكُمْ مُنْكَرًا...",
-    "english": "On the authority of Abu Sa'id al-Khudri...",
+    "arabic": "عَنْ أَبِي سَعِيدٍ الْخُدْرِيِّ رَضِيَ اللَّهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللَّهِ ﷺ يَقُولُ: مَنْ رَأَى مِنْكُمْ مُنْكَرًا فَلْيُغَيِّرْهُ بِيَدِهِ، فَإِنْ لَمْ يَسْتَطِعْ فَبِلِسَانِهِ، فَإِنْ لَمْ يَسْتَطِعْ فَبِقَلْبِهِ، وَذَلِكَ أَضْعَفُ الإِيمَانِ.",
+    "english": "On the authority of Abu Sa'id al-Khudri (may Allah be pleased with him), who said: I heard the Messenger of Allah ﷺ say: 'Whoever among you sees an evil, let him change it with his hand; if he is not able, then with his tongue; and if he is not able, then with his heart—and that is the weakest of faith.'",
     "reference": "Sahih Muslim 49"
   },
-  {
+{
     "id": 35,
     "title": "Brotherhood and Helping Others",
-    "arabic": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: لَا تَحَاسَدُوا...",
-    "english": "On the authority of Abu Hurayrah...",
+    "arabic": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: لَا تَحَاسَدُوا، وَلَا تَنَاجَشُوا، وَلَا تَبَاغَضُوا، وَلَا تَدَابَرُوا، وَلَا يَبِعْ بَعْضُكُمْ عَلَى بَيْعِ بَعْضٍ، وَكُونُوا عِبَادَ اللَّهِ إِخْوَانًا...",
+    "english": "On the authority of Abu Hurayrah (may Allah be pleased with him), that the Messenger of Allah ﷺ said: 'Do not envy one another, do not inflate prices against one another, do not hate one another, do not turn away from one another, and do not undercut one another in trade. Be, O servants of Allah, brothers...'",
     "reference": "Sahih Muslim 2563"
   },
   {
     "id": 36,
     "title": "Meeting Allah with Good Deeds",
-    "arabic": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ أَنَّ رَسُولَ اللَّهِ ﷺ قَالَ: مَنْ نَفَّسَ عَنْ مُؤْمِنٍ كُرْبَةً...",
-    "english": "On the authority of Abu Hurayrah...",
+    "arabic": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ أَنَّ رَسُولَ اللَّهِ ﷺ قَالَ: مَنْ نَفَّسَ عَنْ مُؤْمِنٍ كُرْبَةً مِنْ كُرَبِ الدُّنْيَا نَفَّسَ اللَّهُ عَنْهُ كُرْبَةً مِنْ كُرَبِ يَوْمِ الْقِيَامَةِ...",
+    "english": "On the authority of Abu Hurayrah (may Allah be pleased with him), that the Messenger of Allah ﷺ said: 'Whoever relieves a believer from a hardship of this world, Allah will relieve him from a hardship of the Day of Resurrection...'",
     "reference": "Sahih Muslim 2699"
   },
   {
     "id": 37,
     "title": "Allah Writes Good Deeds and Bad Deeds",
-    "arabic": "عَنْ ابْنِ عَبَّاسٍ رَضِيَ اللَّهُ عَنْهُمَا عَنْ رَسُولِ اللَّهِ ﷺ فِيمَا يَرْوِيهِ عَنْ رَبِّهِ قَالَ: إِنَّ اللَّهَ كَتَبَ الْحَسَنَاتِ وَالسَّيِّئَاتِ...",
-    "english": "On the authority of Ibn Abbas...",
+    "arabic": "عَنْ ابْنِ عَبَّاسٍ رَضِيَ اللَّهُ عَنْهُمَا عَنْ رَسُولِ اللَّهِ ﷺ فِيمَا يَرْوِيهِ عَنْ رَبِّهِ قَالَ: إِنَّ اللَّهَ كَتَبَ الْحَسَنَاتِ وَالسَّيِّئَاتِ، ثُمَّ بَيَّنَ ذَلِكَ...",
+    "english": "On the authority of Ibn Abbas (may Allah be pleased with them both), that the Messenger of Allah ﷺ said, narrating from his Lord: 'Indeed Allah has written down good deeds and bad deeds, then He explained that...'",
     "reference": "Sahih al-Bukhari 6491, Sahih Muslim 131"
   },
-  {
+{
     "id": 38,
     "title": "Allah Forgives All Sins for the One Who Repents",
-    "arabic": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: قَالَ اللَّهُ تَعَالَى: يَا ابْنَ آدَمَ...",
-    "english": "On the authority of Abu Hurayrah...",
-    "reference": "Sunan al-Tirmidhi 3540"
+    "arabic": "عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: قَالَ اللَّهُ تَعَالَى: يَا ابْنَ آدَمَ إِنَّكَ مَا دَعَوْتَنِي وَرَجَوْتَنِي غَفَرْتُ لَكَ عَلَى مَا كَانَ فِيكَ وَلَا أُبَالِي...",
+    "english": "On the authority of Abu Hurayrah (may Allah be pleased with him), that the Messenger of Allah ﷺ said that Allah the Most High said: 'O son of Adam, so long as you call upon Me and place your hope in Me, I will forgive you for whatever you have done and I will not mind...'",
+    "reference": "Sunan al-Tirmidhi 3540 (hasan)"
   },
   {
     "id": 39,
     "title": "Allah Does Not Tire of Rewarding",
     "arabic": "عَنْ عَائِشَةَ رَضِيَ اللَّهُ عَنْهَا قَالَتْ: قَالَ رَسُولُ اللَّهِ ﷺ: أَحَبُّ الأَعْمَالِ إِلَى اللَّهِ أَدْوَمُهَا وَإِنْ قَلَّ.",
-    "english": "On the authority of Aishah...",
+    "english": "On the authority of Aishah (may Allah be pleased with her), who said: The Messenger of Allah ﷺ said: 'The most beloved deeds to Allah are those that are most consistent, even if small.'",
     "reference": "Sahih al-Bukhari 6464, Sahih Muslim 783"
   },
   {
     "id": 40,
     "title": "Be in This World as a Stranger",
     "arabic": "عَنْ ابْنِ عُمَرَ رَضِيَ اللَّهُ عَنْهُمَا قَالَ: أَخَذَ رَسُولُ اللَّهِ ﷺ بِمَنْكِبِي فَقَالَ: كُنْ فِي الدُّنْيَا كَأَنَّكَ غَرِيبٌ أَوْ عَابِرُ سَبِيلٍ.",
-    "english": "On the authority of Ibn Umar...",
+    "english": "On the authority of Ibn Umar (may Allah be pleased with them both), who said: The Messenger of Allah ﷺ took me by the shoulder and said: 'Be in this world as though you are a stranger or a traveler.'",
     "reference": "Sahih al-Bukhari 6416"
   }
 ]
