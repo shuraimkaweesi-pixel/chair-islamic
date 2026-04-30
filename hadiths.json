@@ -137,7 +137,16 @@
     "title": "Modesty from Faith",
     "arabic": "عَنْ أَبِي مَسْعُودٍ عُقْبَةَ بْنِ عَمْرٍو الأَنْصَارِيِّ الْبَدْرِيِّ رَضِيَ اللَّهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللَّهِ ﷺ: إِنَّ مِمَّا أَدْرَكَ النَّاسُ مِنْ كَلاَمِ النُّبُوَّةِ الأُولَى: إِذَا لَمْ تَسْتَحِ فَاصْنَعْ مَا شِئْتَ.",
     "english": "On the authority of Abu Mas'ud Uqbah ibn Amr al-Ansari al-Badri (may Allah be pleased with him), who said: The Messenger of Allah ﷺ said: 'Among the words people obtained from the first prophecy are: If you have no shame, then do as you wish.'",
-    "reference": "Sahih al-Bukhari 3483"  {
+        "reference": "Sahih al-Bukhari 3483"
+  },
+  {
+    "id": 21,
+    "title": "Say I Believe in Allah, Then Be Steadfast",
+    "arabic": "عَنْ سُفْيَانَ بْنِ عَبْدِ اللَّهِ الثَّقَفِيِّ رَضِيَ اللَّهُ عَنْهُ قَالَ: قُلْتُ: يَا رَسُولَ اللَّهِ، قُلْ لِي فِي الإِسْلاَمِ قَوْلاً لاَ أَسْأَلُ عَنْهُ أَحَدًا غَيْرَكَ. قَالَ: قُلْ آمَنْتُ بِاللَّهِ ثُمَّ اسْتَقِمْ.",
+    "english": "On the authority of Sufyan ibn Abdullah al-Thaqafi (may Allah be pleased with him), who said: I said: 'O Messenger of Allah, tell me something about Islam which I can ask of no one but you.' He said: 'Say, I believe in Allah, and then be steadfast.'",
+    "reference": "Sahih Muslim 38"
+  },
+  {
     "id": 22,
     "title": "Entering Paradise",
     "arabic": "عَنْ أَبِي عَبْدِ اللَّهِ جَابِرِ بْنِ عَبْدِ اللَّهِ الأَنْصَارِيِّ رَضِيَ اللَّهُ عَنْهُمَا أَنَّ رَجُلاً سَأَلَ رَسُولَ اللَّهِ ﷺ فَقَالَ: أَرَأَيْتَ إِذَا صَلَّيْتُ الْمَكْتُوبَاتِ، وَصُمْتُ رَمَضَانَ، وَأَحْلَلْتُ الْحَلاَلَ، وَحَرَّمْتُ الْحَرَامَ، وَلَمْ أَزِدْ عَلَى ذَلِكَ شَيْئًا، أَأَدْخُلُ الْجَنَّةَ؟ قَالَ: نَعَمْ.",
@@ -270,3 +279,4 @@
   "english": "On the authority of Ibn Umar (may Allah be pleased with them both), who said: The Messenger of Allah ﷺ took me by the shoulder and said: 'Be in this world as though you are a stranger or a traveler.' And Ibn Umar (may Allah be pleased with them both) used to say: 'When you reach the evening, do not expect to live till morning, and when you reach the morning, do not expect to live till evening. Take from your health for your sickness, and from your life for your death.'",
   "reference": "Sahih al-Bukhari 6416"
   }
+]
