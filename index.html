@@ -166,6 +166,28 @@ function donate() {
   a.click();
 }
 </script>
+<div class="card">
+  <div class="card-title">Share the Khayr</div>
+  <p class="text-body" style="margin-bottom:15px;">
+    "Whoever guides to good has like the reward of the doer" - Muslim
+  </p>
+  <button class="btn-gold" onclick="shareApp()">📤 Share Chair Islamic TV</button>
+</div>
 
+<script>
+function shareApp(){
+  if (navigator.share) {
+    navigator.share({
+      title: 'Chair Islamic TV',
+      text: 'Learn Qur\'an, Hadith & Prayer the easy way',
+      url: 'https://chairislamictv.netlify.app'
+    });
+  } else {
+    navigator.clipboard.writeText('https://chairislamictv.netlify.app');
+    alert('Link copied! Paste in WhatsApp groups ✅');
+  }
+}
+</script>
+  
 </body>
 </html>
