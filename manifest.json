@@ -1,25 +1,16 @@
 {
   "name": "Chair Islamic TV",
-  "short_name": "Chair TV",
-  "description": "Chair Islamic TV is a modern Islamic app for reading the Quran, daily Hadith, prayer times, and watching Islamic videos. Built to spread authentic Islamic knowledge worldwide.",
-
-  "start_url": "./index.html",
+  "short_name": "ChairIslamic",
+  "start_url": "/",
   "display": "standalone",
-  "orientation": "portrait",
-
-  "background_color": "#000000",
+  "background_color": "#0A0A0A",
   "theme_color": "#FFD700",
-
   "icons": [
     {
       "src": "logo.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "logo.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
