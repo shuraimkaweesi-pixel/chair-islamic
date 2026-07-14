@@ -15,118 +15,191 @@
 
 <div class="container">
 
-<h1>Chair Islamic TV</h1>
-<p class="page-header">Read Quran, view Hadith, check Prayer Times, and watch Islamic Videos.</p>
-
-<!-- INSTALL BUTTON -->
-<button class="btn-gold" id="installBtn" style="display:none;">
-Install Chair Islamic TV 📲
-</button>
-
-<!-- FOUNDER BIO -->
-<div class="card">
-  <div class="card-title">Founder Biography</div>
-  <p class="text-body">Welcome to Chair Islamic TV, where faith meets innovation! I'm <b>KAWEESI SHURAIM</b>, the founder of this platform.</p>
-  <div class="divider"></div>
-  <p class="text-body">Born and raised in <b>Masajja, Kampala</b>, I was inspired by Islamic values of compassion, knowledge, and unity.</p>
-  <div class="divider"></div>
-  <p class="text-body">With a deep passion for Islamic media and technology, I created Chair Islamic TV to provide authentic Qur'an, Hadith, and educational content to Muslims everywhere.</p>
-  <div class="divider"></div>
-  <p class="text-body">This platform is dedicated to spreading knowledge, strengthening Iman, and uniting the Ummah through modern digital solutions.</p>
-  <div class="divider"></div>
-  <p class="text-body" style="text-align:center; color:var(--gold); font-weight:600;">
-    May Allah accept this effort and benefit many. Ameen. 🌙
-  </p>
-</div>
-
-<!-- SHARE BUTTON - MOVED TO CORRECT PLACE -->
-<div class="card">
-  <div class="card-title">Share the Khayr</div>
-  <p class="arabic" style="font-size:20px; margin:15px 0; text-align:center;">الدَّالُّ عَلَى الْخَيْرِ كَفَاعِلِهِ</p>
-  <div class="divider"></div>
-  <p class="text-body">
-    "Whoever guides to good has a reward similar to the doer of good" — Muslim
-  </p>
-  <p class="text-body" style="margin-top:15px; font-size:14px; color:#999;">
-    Share with family & friends. Every person who learns gets you reward.
-  </p>
-  <button class="btn-gold" onclick="shareApp()">📤 Share Chair Islamic TV</button>
-</div>
-
-<!-- DONATION -->
-<div class="card">
-  <div class="card-title">Support Chair Islamic TV</div>
-  
-  <p class="text-body" style="margin-bottom:15px;">Step 1: Copy our merchant number</p>
-  <button class="btn-outline" onclick="copyMerchant()">Copy 7037856</button>
-
-  <div class="divider"></div>
-
-  <p class="text-body" style="margin-bottom:15px;">Step 2: Enter amount and donate</p>
-  <input type="number" id="amount" placeholder="Enter amount (min 1000)" min="1000">
-  <button class="btn-gold" id="donateBtn" onclick="donate()" style="display:none;">Donate via Airtel Money</button>
-  
-  <div class="alert alert-warning" style="margin-top:20px;">
-    📱 Your phone dialer will open with USSD code.<br>
-    Enter your MM PIN there to complete donation.
+  <!-- LANGUAGE TOGGLE SWITCH AT THE TOP -->
+  <div style="text-align: right; margin-bottom: 15px;">
+    <button id="langToggleBtn" class="btn-outline" onclick="toggleGlobalLanguage()" style="padding: 6px 12px; border: 1px solid var(--gold); background: transparent; color: var(--gold); cursor: pointer; border-radius: 4px;">🇺🇬 Kyusa mu Luganda</button>
   </div>
-</div>
 
-<!-- FEATURES -->
-<div class="card">
-  <div class="card-title">Explore</div>
-  
-  <button class="btn-gold" onclick="location.href='quran.html'">📖 Quran Reader</button>
-  <button class="btn-gold" onclick="location.href='hadith.html'">📜 Daily Hadith</button>
-  <button class="btn-gold" onclick="location.href='prayer.html'">🕌 Prayer Times</button>
-  <button class="btn-gold" onclick="location.href='videos.html'">🎥 Videos</button>
-  <button class="btn-gold" onclick="location.href='yasarnah.html'">📘 Yasarnah Teach</button>
-</div>
+  <h1>Chair Islamic TV</h1>
+  <p class="page-header lang-element" 
+     data-en="Read Quran, view Hadith, check Prayer Times, and watch Islamic Videos." 
+     data-lug="Soma Kurani, laba Hadithi, kebera ebiseera eby'okusala, era laba Vidiyo ez'Obusiraamu.">
+     Read Quran, view Hadith, check Prayer Times, and watch Islamic Videos.
+  </p>
+
+  <!-- INSTALL BUTTON -->
+  <button class="btn-gold lang-element" id="installBtn" style="display:none;"
+          data-en="Install Chair Islamic TV 📲"
+          data-lug="Teeka Chair Islamic TV ku Ssimu 📲">
+    Install Chair Islamic TV 📲
+  </button>
+
+  <!-- FOUNDER BIO -->
+  <div class="card">
+    <div class="card-title lang-element" data-en="Founder Biography" data-lug="Ebikwata ku Mutandisi">Founder Biography</div>
+    
+    <p class="text-body lang-element" 
+       data-en="Welcome to Chair Islamic TV, where faith meets innovation! I'm <b>KAWEESI SHURAIM</b>, the founder of this platform."
+       data-lug="Kalyango nnyo ku Chair Islamic TV, eky'okusaba we kisanga obuyiiya! Nze <b>KAWEESI SHURAIM</b>, omutandisi w'ekifo kino.">
+       Welcome to Chair Islamic TV, where faith meets innovation! I'm <b>KAWEESI SHURAIM</b>, the founder of this platform.
+    </p>
+    <div class="divider"></div>
+    
+    <p class="text-body lang-element" 
+       data-en="Born and raised in <b>Masajja, Kampala</b>, I was inspired by Islamic values of compassion, knowledge, and unity."
+       data-lug="Nazaalibwa era ne nkulira mu <b>Masajja, Kampala</b>, n'okusasirwa, okumanya, n'obumu eby'Obusiraamu ne binkubiriza.">
+       Born and raised in <b>Masajja, Kampala</b>, I was inspired by Islamic values of compassion, knowledge, and unity.
+    </p>
+    <div class="divider"></div>
+    
+    <p class="text-body lang-element" 
+       data-en="With a deep passion for Islamic media and technology, I created Chair Islamic TV to provide authentic Qur'an, Hadith, and educational content to Muslims everywhere."
+       data-lug="N'okwagala okw'amaanyi okw'emikutu gy'amawulire n'eby'uma eby'Obusiraamu, natandika Chair Islamic TV okuwa Kurani entuufu, Hadithi, n'ebisomesebwa eri Abasiraamu wonna.">
+       With a deep passion for Islamic media and technology, I created Chair Islamic TV to provide authentic Qur'an, Hadith, and educational content to Muslims everywhere.
+    </p>
+    <div class="divider"></div>
+    
+    <p class="text-body lang-element" 
+       data-en="This platform is dedicated to spreading knowledge, strengthening Iman, and uniting the Ummah through modern digital solutions."
+       data-lug="Omukutu guno gwewaayo okuwulira okumanya, okunyweza Okukkiriza (Iman), n'okugatta Ummah okuyita mu mikutu egy'omulembe.">
+       This platform is dedicated to spreading knowledge, strengthening Iman, and uniting the Ummah through modern digital solutions.
+    </p>
+    <div class="divider"></div>
+    
+    <p class="text-body lang-element" style="text-align:center; color:var(--gold); font-weight:600;"
+       data-en="May Allah accept this effort and benefit many. Ameen. 🌙"
+       data-lug="Allah asiime okufuba kuno era aganyule bangi. Ameen. 🌙">
+      May Allah accept this effort and benefit many. Ameen. 🌙
+    </p>
+  </div>
+
+  <!-- SHARE BUTTON -->
+  <div class="card">
+    <div class="card-title lang-element" data-en="Share the Khayr" data-lug="Gabana Empeera">Share the Khayr</div>
+    <p class="arabic" style="font-size:20px; margin:15px 0; text-align:center;">الدَّالُّ عَلَى الْخَيْرِ كَفَاعِلِهِ</p>
+    <div class="divider"></div>
+    
+    <p class="text-body lang-element" 
+       data-en='"Whoever guides to good has a reward similar to the doer of good" — Muslim'
+       data-lug='"Oyo yenna alungamya ku birungi afuna empeera efaanana n\'eyo ey\'omukoli w\'ebirungi" — Muslim'>
+      "Whoever guides to good has a reward similar to the doer of good" — Muslim
+    </p>
+    
+    <p class="text-body lang-element" style="margin-top:15px; font-size:14px; color:#999;"
+       data-en="Share with family & friends. Every person who learns gets you reward."
+       data-lug="Gabana n'ab'omu mulyango n'emikwano. Buli muntu ayiga akufunira empeera.">
+      Share with family & friends. Every person who learns gets you reward.
+    </p>
+    <button class="btn-gold lang-element" onclick="shareApp()" data-en="📤 Share Chair Islamic TV" data-lug="📤 Gabana Chair Islamic TV">📤 Share Chair Islamic TV</button>
+  </div>
+
+  <!-- DONATION -->
+  <div class="card">
+    <div class="card-title lang-element" data-en="Support Chair Islamic TV" data-lug="Yamba Chair Islamic TV">Support Chair Islamic TV</div>
+    
+    <p class="text-body lang-element" style="margin-bottom:15px;" data-en="Step 1: Copy our merchant number" data-lug="Ettenda 1: Koppa namba yaffe ey'omusubuzi">Step 1: Copy our merchant number</p>
+    <button class="btn-outline lang-element" onclick="copyMerchant()" data-en="Copy 7037856" data-lug="Koppa 7037856">Copy 7037856</button>
+
+    <div class="divider"></div>
+
+    <p class="text-body lang-element" style="margin-bottom:15px;" data-en="Step 2: Enter amount and donate" data-lug="Ettenda 2: Yingiza omuwendo era uwaayo">Step 2: Enter amount and donate</p>
+    <input type="number" id="amount" placeholder="Enter amount (min 1000)" min="1000">
+    <button class="btn-gold lang-element" id="donateBtn" onclick="donate()" style="display:none;" data-en="Donate via Airtel Money" data-lug="Waayo okuyita mu Airtel Money">Donate via Airtel Money</button>
+    
+    <div class="alert alert-warning lang-element" style="margin-top:20px;"
+         data-en="📱 Your phone dialer will open with USSD code.<br>Enter your MM PIN there to complete donation."
+         data-lug="📱 Essimu yo ejja kugguka n'ennamba ya USSD.<br>Yingiza PIN yo eya Mobile Money okumaliriza okuwayo.">
+      📱 Your phone dialer will open with USSD code.<br>
+      Enter your MM PIN there to complete donation.
+    </div>
+  </div>
+
+  <!-- FEATURES (CLEANED UP TO PREVENT DUPLICATION) -->
   <div class="explore-section">
-    <h3 style="color: #FFD700; margin-left: 15px;">Explore</h3>
+    <h3 class="lang-element" style="color: #FFD700; margin-left: 15px;" data-en="Explore" data-lug="Noonya">Explore</h3>
     
     <div class="explore-container">
         <a href="quran.html" class="explore-tab">
-            <span>📖</span> Quran Reader
+            <span>📖</span> <span class="lang-element" data-en="Quran Reader" data-lug="Soma Kurani">Quran Reader</span>
         </a>
         
         <a href="hadith.html" class="explore-tab">
-            <span>📜</span> Daily Hadith
+            <span>📜</span> <span class="lang-element" data-en="Daily Hadith" data-lug="Hadithi eya Bulijjo">Daily Hadith</span>
         </a>
         
         <a href="prayer.html" class="explore-tab">
-            <span>🕌</span> Prayer Times
+            <span>🕌</span> <span class="lang-element" data-en="Prayer Times" data-lug="Ebiseera eby'Okusaala">Prayer Times</span>
         </a>
         
         <a href="videos.html" class="explore-tab">
-            <span>🎥</span> Videos
+            <span>🎥</span> <span class="lang-element" data-en="Videos" data-lug="Vidiyo">Videos</span>
         </a>
         
         <a href="yasarnah.html" class="explore-tab">
-            <span>📘</span> Yasarnah Teach
+            <span>📘</span> <span class="lang-element" data-en="Yasarnah Teach" data-lug="Yasarnah Omusomesa">Yasarnah Teach</span>
         </a>
     </div>
 </div>
 
+  <!-- YOUTUBE -->
+  <div class="card">
+    <div class="card-title lang-element" data-en="Latest Videos" data-lug="Vidiyo Empya">Latest Videos</div>
+    <div id="youtubeVideos"></div>
+  </div>
 
-<!-- YOUTUBE -->
-<div class="card">
-  <div class="card-title">Latest Videos</div>
-  <div id="youtubeVideos"></div>
 </div>
 
-</div>
-
-<!-- NAVIGATION -->
+<!-- BOTTOM NAVIGATION -->
 <div class="bottom-nav">
-  <a href="index.html" class="active">🏠<br>Home</a>
-  <a href="quran.html">📖<br>Quran</a>
-  <a href="hadith.html">📜<br>Hadith</a>
-  <a href="prayer.html">🕌<br>Prayer</a>
-  <a href="videos.html">🎥<br>Videos</a>
+  <a href="index.html" class="active">🏠<br><span class="lang-element" data-en="Home" data-lug="Ewaka">Home</span></a>
+  <a href="quran.html">📖<br><span class="lang-element" data-en="Quran" data-lug="Kurani">Quran</span></a>
+  <a href="hadith.html">📜<br><span class="lang-element" data-en="Hadith" data-lug="Hadithi">Hadith</span></a>
+  <a href="prayer.html">🕌<br><span class="lang-element" data-en="Prayer" data-lug="Okusaala">Prayer</span></a>
+  <a href="videos.html">🎥<br><span class="lang-element" data-en="Videos" data-lug="Vidiyo">Videos</span></a>
 </div>
 
 <script>
+// ==========================================
+// GLOBAL TRANSLATION ENGINE
+// ==========================================
+let currentLang = localStorage.getItem('appLanguage') || 'en';
+
+const inputPlaceholders = {
+  en: "Enter amount (min 1000)",
+  lug: "Yingiza omuwendo (wansi 1000)"
+};
+
+function updateGlobalUI() {
+  // Translate standard text fields
+  document.querySelectorAll('.lang-element').forEach(el => {
+    const translation = el.getAttribute(`data-${currentLang}`);
+    if (translation) el.innerHTML = translation;
+  });
+
+  // Translate specific Input Fields
+  const amountInput = document.getElementById('amount');
+  if (amountInput) {
+    amountInput.placeholder = inputPlaceholders[currentLang];
+  }
+
+  // Update Toggle Button Visual Text
+  const toggleBtn = document.getElementById('langToggleBtn');
+  if (toggleBtn) {
+    toggleBtn.innerText = currentLang === 'en' ? "🇺🇬 Kyusa mu Luganda" : "🇬🇧 Switch to English";
+  }
+}
+
+function toggleGlobalLanguage() {
+  currentLang = (currentLang === 'en') ? 'lug' : 'en';
+  localStorage.setItem('appLanguage', currentLang); // Remembers logic on future pages
+  updateGlobalUI();
+}
+
+// Ensure the page drops into the right translation state when opened
+document.addEventListener("DOMContentLoaded", () => {
+  updateGlobalUI();
+});
+
 // ===============================
 // SERVICE WORKER
 // ===============================
@@ -143,30 +216,33 @@ if ("serviceWorker" in navigator) {
 // ===============================
 let deferredPrompt;
 const installBtn = document.getElementById("installBtn");
-installBtn.style.display = "block";
+if (installBtn) installBtn.style.display = "block";
 
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
 });
 
-installBtn.addEventListener("click", async () => {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
-    deferredPrompt = null;
-  } else {
-    alert("To install: Tap browser menu (⋮) → Add to Home Screen");
-  }
-});
+if (installBtn) {
+  installBtn.addEventListener("click", async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+    } else {
+      const msg = currentLang === 'en' ? "To install: Tap browser menu (⋮) → Add to Home Screen" : "Okuteeka ku ssimu: Nya ku menu ya browser (⋮) → Add to Home Screen";
+      alert(msg);
+    }
+  });
+}
 
 // ===============================
-// SHARE APP - UPGRADED
+// SHARE APP
 // ===============================
 function shareApp(){
   const shareData = {
     title: 'Chair Islamic TV',
-    text: 'Assalamu Alaikum! I found this app to learn Qur\'an, Hadith & Prayer. Try it:',
+    text: currentLang === 'en' ? "Assalamu Alaikum! I found this app to learn Qur'an, Hadith & Prayer. Try it:" : "Asalamu Alayikum! Nfunye app eno ey'okuyiga Kurani, Hadithi n'Okusaala. Gezaako:",
     url: window.location.origin
   };
 
@@ -176,7 +252,8 @@ function shareApp(){
   else {
     const text = `${shareData.text}\n${shareData.url}`;
     navigator.clipboard.writeText(text).then(() => {
-      alert('✅ Link copied!\n\nPaste in WhatsApp, Facebook, or SMS to share the reward.');
+      const successMsg = currentLang === 'en' ? '✅ Link copied!\n\nPaste in WhatsApp, Facebook, or SMS to share the reward.' : '✅ Ennyunnyuzi ekopoledwa!\n\nSimba mu WhatsApp, Facebook, oba SMS okugabana empeera.';
+      alert(successMsg);
     }).catch(() => {
       prompt('Copy this link to share:', shareData.url);
     });
@@ -189,21 +266,24 @@ function shareApp(){
 const videos = ["ZGwG7UBlFCc","zGIBIOMA0PQ"];
 const container = document.getElementById("youtubeVideos");
 
-let html = "";
-videos.forEach(v=>{
-  html += `<iframe src="https://www.youtube.com/embed/${v}" allowfullscreen style="width:100%;height:220px;border:none;border-radius:12px;margin-top:10px;"></iframe>`;
-});
-container.innerHTML = html;
+if (container) {
+  let html = "";
+  videos.forEach(v=>{
+    html += `<iframe src="https://www.youtube.com/embed/${v}" allowfullscreen style="width:100%;height:220px;border:none;border-radius:12px;margin-top:10px;"></iframe>`;
+  });
+  container.innerHTML = html;
+}
 
 // ===============================
-// DONATION
+// DONATION SYSTEM
 // ===============================
 let hasCopied = false;
 
 function copyMerchant() {
   navigator.clipboard.writeText("7037856").then(() => {
     hasCopied = true;
-    alert("✅ Merchant number copied. You can now donate.");
+    const copiedMsg = currentLang === 'en' ? "✅ Merchant number copied. You can now donate." : "✅ Namba y'omusubuzi ekopoledwa. Kati oyinz'okuwaayo.";
+    alert(copiedMsg);
     document.getElementById("donateBtn").style.display = "block";
   }).catch(() => {
     alert("Copy failed. Please copy manually: 7037856");
@@ -212,18 +292,19 @@ function copyMerchant() {
 
 function donate() {
   if (!hasCopied) {
-    alert("⚠️ Please copy the merchant number first");
+    const copyWarn = currentLang === 'en' ? "⚠️ Please copy the merchant number first" : "⚠️ Sooka okope namba y'omusubuzi";
+    alert(copyWarn);
     return;
   }
 
   const amount = document.getElementById("amount").value;
   if (!amount || amount < 1000) {
-    alert("Enter valid amount (minimum 1000 UGX)");
+    const amtWarn = currentLang === 'en' ? "Enter valid amount (minimum 1000 UGX)" : "Yingiza omuwendo omutuufu (wansi wa 1000 UGX)";
+    alert(amtWarn);
     return;
   }
 
   const ussd = `*185*9*7037856*${amount}#`;
-  
   const a = document.createElement('a');
   a.href = "tel:" + encodeURIComponent(ussd);
   a.click();
