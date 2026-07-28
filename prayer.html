@@ -36,9 +36,9 @@
         </div>
     </div>
 
-    <!-- Adhan Audio -->
+    <!-- Adhan Audio (Local File from blog/adthan.mp3) -->
     <audio id="adhanAudio" preload="auto">
-        <source src="https://cdn.islamic.network/audio/adhan/1.mp3" type="audio/mpeg">
+        <source src="blog/adthan.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Bottom Navigation -->
@@ -68,7 +68,7 @@ const stopBtn = document.getElementById("stopAdhanBtn");
 const KAMPALA_LAT = 0.3476;
 const KAMPALA_LON = 32.5825;
 
-// Helper to format API times cleanly into "HH:MM"
+// Clean time string from API (ensures strictly HH:MM format)
 function cleanTime(timeStr) {
     if (!timeStr) return "00:00";
     return timeStr.trim().slice(0, 5);
@@ -102,15 +102,16 @@ function loadFromCache() {
 function unlockAudio() {
     if (audioUnlocked) return;
     
-    // Silent play attempt to bypass browser restrictions
-    adhanAudio.play().then(() => {
-        adhanAudio.pause();
-        adhanAudio.currentTime = 0;
-        audioUnlocked = true;
-        const msg = document.getElementById("unlockMsg");
-        if (msg) msg.style.display = "none";
-        console.log("Audio System: Active");
-    }).catch(e => console.log("Unlock pending user interaction"));
+    if (adhanAudio) {
+        adhanAudio.play().then(() => {
+            adhanAudio.pause();
+            adhanAudio.currentTime = 0;
+            audioUnlocked = true;
+            const unlockMsg = document.getElementById("unlockMsg");
+            if (unlockMsg) unlockMsg.style.display = "none";
+            console.log("Audio System: Active and Unlocked");
+        }).catch(e => console.log("Unlock pending user interaction"));
+    }
 }
 
 document.body.addEventListener("click", unlockAudio, { once: true });
@@ -247,7 +248,6 @@ function startCountdown() {
 function startAdhanChecker() {
     if (adhanCheckInterval) clearInterval(adhanCheckInterval);
 
-    // Check every 20 seconds
     adhanCheckInterval = setInterval(() => {
         if (!Object.keys(prayerTimings).length) return;
 
