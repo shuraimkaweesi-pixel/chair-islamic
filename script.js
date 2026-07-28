@@ -1,8 +1,17 @@
 // ===============================
-// CHAIR ISLAMIC TV MAIN SCRIPT - V3.2
+// CHAIR ISLAMIC TV MAIN SCRIPT - V3.3
 // ===============================
 
+// Global Audio References
+let currentAudio = null;
+let letterAudio = null;
+let adhanAudio = null; // Will be assigned on DOMContentLoaded
+let audioUnlocked = false;
+
 document.addEventListener("DOMContentLoaded", () => {
+  // Grab the audio element from HTML
+  adhanAudio = document.getElementById("adhanAudio");
+  
   initPWA();
   loadYoutubeVideos();
   loadHadith();
@@ -11,6 +20,37 @@ document.addEventListener("DOMContentLoaded", () => {
   initLetters();
   initAudioUnlock();
 });
+
+// ===============================
+// AUDIO UNLOCK SYSTEM
+// ===============================
+function initAudioUnlock() {
+  const unlock = () => {
+    if (audioUnlocked) return;
+
+    if (!adhanAudio) {
+      adhanAudio = document.getElementById("adhanAudio");
+    }
+
+    if (adhanAudio) {
+      adhanAudio.play().then(() => {
+        adhanAudio.pause();
+        adhanAudio.currentTime = 0;
+        audioUnlocked = true;
+        
+        const unlockMsg = document.getElementById("unlockMsg");
+        if (unlockMsg) unlockMsg.style.display = "none";
+        
+        console.log("Audio System: Active and Unlocked");
+      }).catch(e => {
+        console.log("Audio unlock pending user interaction:", e);
+      });
+    }
+  };
+
+  document.body.addEventListener("click", unlock, { once: true });
+  document.body.addEventListener("touchstart", unlock, { once: true });
+}
 
 // ===============================
 // PWA
@@ -97,19 +137,16 @@ async function loadHadith() {
   if (!box) return;
 
   try {
-    const res = await fetch("hadiths.json"); // Ensure this matches your filename
+    const res = await fetch("hadiths.json");
     if (!res.ok) throw new Error("HTTP " + res.status);
     
     const data = await res.json();
-    
-    // This line handles BOTH formats (if it's a list OR if it's wrapped in a 'hadiths' key)
     const list = Array.isArray(data) ? data : data.hadiths;
     
     if (!list || list.length === 0) throw new Error("No data found");
 
     const h = list[Math.floor(Math.random() * list.length)];
     
-    // Use optional chaining or defaults to prevent "undefined" appearing on screen
     box.innerHTML = `
       <div class="arabic" dir="rtl">${h.arabic || h.arab || ''}</div>
       <div class="translation">${h.english || h.en || ''}</div>
@@ -122,7 +159,7 @@ async function loadHadith() {
 }
 
 // ===============================
-// SURAH LIST
+// SURAH LIST & QURAN
 // ===============================
 function initSurahList() {
   const select = document.getElementById("surahSelect");
@@ -138,11 +175,10 @@ function initSurahList() {
   });
 }
 
-// ===============================
-// LOAD SURAH
-// ===============================
 async function loadSurah() {
-  const num = parseInt(document.getElementById("surahSelect").value);
+  const select = document.getElementById("surahSelect");
+  if (!select) return;
+  const num = parseInt(select.value);
   if (!num) { alert("Select a Surah"); return; }
 
   const quranText = document.getElementById("quranText");
@@ -175,28 +211,20 @@ async function loadSurah() {
 // ===============================
 // UNIFIED AUDIO MANAGEMENT
 // ===============================
-let currentAudio = null;
-let letterAudio = null;
-let adhanAudio = null;
-let audioUnlocked = false;
 let currentSurah = null;
 let currentAyah = null;
 let ayahElements = [];
 let isPlayingSequence = false;
-let isLetterPaused = false;
 
 function stopAllAudio() {
   if (currentAudio) { currentAudio.pause(); currentAudio = null; }
   if (letterAudio) { letterAudio.pause(); letterAudio = null; }
-  speechSynthesis.cancel();
+  stopAdhan();
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
   isPlayingSequence = false;
-  isLetterPaused = false;
   document.querySelectorAll(".ayah,.lesson").forEach(a => a.classList.remove("playing", "active"));
 }
 
-// ===============================
-// AYAH AUDIO - WORKING RECITERS
-// ===============================
 function getAudioUrl(reciter, surah, ayah) {
   const s = String(surah).padStart(3, "0");
   const a = String(ayah).padStart(3, "0");
@@ -205,11 +233,6 @@ function getAudioUrl(reciter, surah, ayah) {
 
 function playAyah(surah, ayah, el) {
   stopAllAudio();
-
-  if (currentAudio && currentSurah === surah && currentAyah === ayah) {
-    currentAudio.paused? currentAudio.play() : currentAudio.pause();
-    return;
-  }
 
   document.querySelectorAll(".ayah").forEach(a => a.classList.remove("playing"));
   el.classList.add("playing");
@@ -220,7 +243,8 @@ function playAyah(surah, ayah, el) {
   ayahElements = document.querySelectorAll(".ayah");
   isPlayingSequence = true;
 
-  const reciter = document.getElementById("reciterSelect").value || "Alafasy_128kbps";
+  const reciterSelect = document.getElementById("reciterSelect");
+  const reciter = reciterSelect ? reciterSelect.value : "Alafasy_128kbps";
   const url = getAudioUrl(reciter, surah, ayah);
 
   currentAudio = new Audio(url);
@@ -250,30 +274,36 @@ function playNextAyah(){
     stopAllAudio();
   }
 }
+
 // ===============================
-// ADHAN SYSTEM - OPTIMIZED
+// ADHAN SYSTEM
 // ===============================
 let prayerTimings = {};
 let lastAdhanPlayed = "";
 let lastAdhanDate = "";
 let adhanCheckInterval = null;
 
-// Helper to ensure "HH:mm" format is clean
 const cleanTime = (timeStr) => timeStr ? timeStr.trim().slice(0, 5) : "";
 
+function saveAdhanCache(data) {
+  localStorage.setItem('adhanCache', JSON.stringify(data));
+}
+
+function loadAdhanCache() {
+  const cached = localStorage.getItem('adhanCache');
+  return cached ? JSON.parse(cached) : null;
+}
+
 async function startAdhanSystem() {
-  // 1. Load from cache first for immediate protection
   const cached = loadAdhanCache();
   if (cached) {
     prayerTimings = cached;
   }
 
-  // 2. Start the timer ONLY ONCE
   if (!adhanCheckInterval) {
-    adhanCheckInterval = setInterval(checkAdhanTime, 30000); // 30s is plenty
+    adhanCheckInterval = setInterval(checkAdhanTime, 20000); // 20-second check
   }
 
-  // 3. Fetch fresh times
   try {
     const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=Kampala&country=Uganda&method=2`);
     if (!res.ok) throw new Error("HTTP " + res.status);
@@ -304,7 +334,6 @@ function checkAdhanTime() {
   const currentTime = now.getHours().toString().padStart(2, "0") + ":" + 
                       now.getMinutes().toString().padStart(2, "0");
 
-  // Reset tracker for a new day
   if (lastAdhanDate !== today) {
     lastAdhanPlayed = "";
     lastAdhanDate = today;
@@ -319,30 +348,29 @@ function checkAdhanTime() {
 }
 
 function triggerAdhan(prayer) {
-  // Use the unified stop to clear Quran or Yasarnah audio first
   stopAllAudio();
+
+  if (!adhanAudio) {
+    adhanAudio = document.getElementById("adhanAudio");
+  }
 
   if (adhanAudio && audioUnlocked) {
     adhanAudio.currentTime = 0;
-    // Set volume to max for Adhan specifically
     adhanAudio.volume = 1.0; 
     
     adhanAudio.play().then(() => {
       console.log(`Playing Adhan for ${prayer}`);
-      // Optional: Show a stop button in your UI here
       const stopBtn = document.getElementById("stopAdhanBtn");
       if(stopBtn) stopBtn.style.display = "block";
     }).catch(e => {
       console.log("Adhan blocked:", e);
-      alert("Time for " + prayer + "! (Tap to enable audio)");
+      alert("Time for " + prayer + "! (Tap anywhere to enable audio)");
     });
   } else {
-    // Fallback if the user hasn't clicked anything since page load
     alert("🕌 It is time for " + prayer);
   }
 
-  // Standard Notification Logic
-  if (Notification.permission === "granted") {
+  if (typeof Notification !== "undefined" && Notification.permission === "granted") {
     new Notification("🕌 Prayer Time", {
       body: `It's time for ${prayer} in Kampala`,
       icon: "logo.png"
@@ -352,18 +380,26 @@ function triggerAdhan(prayer) {
   if (navigator.vibrate) navigator.vibrate([500, 300, 500]);
 }
 
-// Add this to your "Unified Audio Management" section to handle stopping Adhan
 function stopAdhan() {
-    if (adhanAudio) {
-        adhanAudio.pause();
-        adhanAudio.currentTime = 0;
-    }
-    const stopBtn = document.getElementById("stopAdhanBtn");
-    if(stopBtn) stopBtn.style.display = "none";
+  if (adhanAudio) {
+    adhanAudio.pause();
+    adhanAudio.currentTime = 0;
+  }
+  const stopBtn = document.getElementById("stopAdhanBtn");
+  if(stopBtn) stopBtn.style.display = "none";
+}
+
+// Called by <button onclick="testAdhan()">
+function testAdhan() {
+  if (!audioUnlocked) {
+    alert("Tap anywhere on the screen first to enable audio.");
+    return;
+  }
+  triggerAdhan("Test");
 }
 
 // =====================
-// DATA: ALL YASARNAH PAGES
+// DATA: YASARNAH / LETTERS
 // =====================
 const yasarnahPages = [
   {
@@ -378,162 +414,60 @@ const yasarnahPages = [
       {a:"ح", name:"Ha", file:"blog/haa.mp3"},
       {a:"خ", name:"Kha", file:"blog/khaa.mp3"},
       {a:"د", name:"Dal", file:"blog/daal.mp3"}
-      // ... Add all letters for Page 1
-    ]
-  },
-  {
-    title: "Dars 2: Fatha",
-    info: "Short Vowels (Zabar)",
-    letters: [
-      {a:"اَ", name:"Alif Fatha", file:"blog/a_fatha.mp3"},
-      {a:"بَ", name:"Ba Fatha", file:"blog/ba_fatha.mp3"},
-      {a:"تَ", name:"Ta Fatha", file:"blog/ta_fatha.mp3"}
     ]
   }
 ];
 
 let currentDarsIndex = 0;
 let currentLetterIndex = null;
-let letterRepeat = 0;
-let letterRepeatCount = 3;
-let isPlayingSequence = false;
-let isLetterPaused = false;
 
-// =====================
-// CORE FUNCTIONS
-// =====================
-
-function loadDars(index) {
-  stopLetterLesson();
-  currentDarsIndex = index;
-  const dars = yasarnahPages[index];
-  
-  // Update Header
-  document.getElementById("darsTitle").innerText = dars.title;
-  document.getElementById("darsInfo").innerText = dars.info;
-  document.getElementById("darsCounter").innerText = `Page ${index + 1} / ${yasarnahPages.length}`;
-  
-  // Build Grid
-  const box = document.getElementById("lessonBox");
-  box.innerHTML = ""; 
-  dars.letters.forEach((l, i) => {
-    box.innerHTML += `
-      <div class="lesson" id="letter-${i}" onclick="startLetter(${i})">
-        <div class="arabic">${l.a}</div>
-        <div class="name">${l.name}</div>
-      </div>
-    `;
-  });
+function initLetters() {
+  const darsTitle = document.getElementById("darsTitle");
+  if (darsTitle) loadDars(0);
 }
 
-function changeDars(step) {
-  let newIndex = currentDarsIndex + step;
-  if (newIndex >= 0 && newIndex < yasarnahPages.length) {
-    loadDars(newIndex);
+function loadDars(index) {
+  stopAllAudio();
+  currentDarsIndex = index;
+  const dars = yasarnahPages[index];
+  if (!dars) return;
+  
+  const titleEl = document.getElementById("darsTitle");
+  const infoEl = document.getElementById("darsInfo");
+  const counterEl = document.getElementById("darsCounter");
+  const box = document.getElementById("lessonBox");
+
+  if (titleEl) titleEl.innerText = dars.title;
+  if (infoEl) infoEl.innerText = dars.info;
+  if (counterEl) counterEl.innerText = `Page ${index + 1} / ${yasarnahPages.length}`;
+  
+  if (box) {
+    box.innerHTML = ""; 
+    dars.letters.forEach((l, i) => {
+      box.innerHTML += `
+        <div class="lesson" id="letter-${i}" onclick="startLetter(${i})">
+          <div class="arabic">${l.a}</div>
+          <div class="name">${l.name}</div>
+        </div>
+      `;
+    });
   }
 }
 
 function startLetter(i) {
-  stopLetterLesson();
+  stopAllAudio();
   currentLetterIndex = i;
-  letterRepeat = 0;
-  isPlayingSequence = false; // Playing only one letter
-  playCurrentLetter();
-}
-
-function playCurrentLetter() {
   const dars = yasarnahPages[currentDarsIndex];
-  if (currentLetterIndex === null || currentLetterIndex >= dars.letters.length) {
-    stopLetterLesson();
-    return;
-  }
+  if (!dars || !dars.letters[i]) return;
 
-  const letter = dars.letters[currentLetterIndex];
-  highlightLetter(currentLetterIndex);
-  updateLetterProgress();
-
-  // AUDIO LOGIC: Playing MP3 file
-  const audio = new Audio(letter.file);
+  const letter = dars.letters[i];
   
-  audio.onended = () => {
-    if (!isPlayingSequence && letterRepeat === 0) {
-        // Just one tap play
-        setTimeout(() => {
-             document.querySelectorAll(".lesson").forEach(l => l.classList.remove("active"));
-        }, 500);
-        return;
-    }
-
-    letterRepeat++;
-    if (letterRepeat < letterRepeatCount) {
-      setTimeout(playCurrentLetter, 500);
-    } else {
-      if (isPlayingSequence) {
-        currentLetterIndex++;
-        letterRepeat = 0;
-        setTimeout(playCurrentLetter, 800);
-      } else {
-        stopLetterLesson();
-      }
-    }
-  };
-
-  audio.play().catch(e => {
-      console.error("Audio error:", e);
-      // Fallback to Speech Synthesis if MP3 fails
-      useSpeechFallback(letter.a);
-  });
-}
-
-function useSpeechFallback(text) {
-    speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'ar-SA';
-    utterance.onend = () => { /* repeat logic here if needed */ };
-    speechSynthesis.speak(utterance);
-}
-
-// =====================
-// UI HELPERS
-// =====================
-
-function highlightLetter(i) {
   document.querySelectorAll(".lesson").forEach((el, index) => {
     el.classList.toggle("active", index === i);
   });
-}
 
-function setRepeat(num) {
-  letterRepeatCount = num;
-  document.getElementById("letterProgress").textContent = `Repeat set to ${num}x`;
+  letterAudio = new Audio(letter.file);
+  letterAudio.play().catch(e => {
+    console.error("Letter audio failed:", e);
+  });
 }
-
-function toggleLetterSequence() {
-  if (isPlayingSequence) {
-    stopLetterLesson();
-  } else {
-    currentLetterIndex = 0;
-    letterRepeat = 0;
-    isPlayingSequence = true;
-    document.getElementById("letterPlayBtn").textContent = "⏸ Stop All";
-    playCurrentLetter();
-  }
-}
-
-function stopLetterLesson() {
-  isPlayingSequence = false;
-  currentLetterIndex = null;
-  document.getElementById("letterPlayBtn").textContent = "▶ Play All";
-  document.querySelectorAll(".lesson").forEach(l => l.classList.remove("active"));
-}
-
-function updateLetterProgress() {
-  const progress = document.getElementById("letterProgress");
-  const dars = yasarnahPages[currentDarsIndex];
-  if (progress && currentLetterIndex !== null) {
-    progress.textContent = `Playing: ${dars.letters[currentLetterIndex].name}`;
-  }
-}
-
-// Initial Load
-loadDars(0);
