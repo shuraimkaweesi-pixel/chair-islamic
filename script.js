@@ -1,5 +1,5 @@
 // ===============================
-// CHAIR ISLAMIC TV MAIN SCRIPT - V3.4
+// CHAIR ISLAMIC TV MAIN SCRIPT
 // ===============================
 
 // Global Audio References
@@ -9,7 +9,6 @@ let adhanAudio = null;
 let audioUnlocked = false;
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Bind Adhan Audio Element from HTML
   adhanAudio = document.getElementById("adhanAudio");
   
   initPWA();
@@ -22,34 +21,91 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ===============================
-// AUDIO UNLOCK SYSTEM
+// AUDIO UNLOCK & TEST SYSTEM
 // ===============================
 function initAudioUnlock() {
   const unlock = () => {
     if (audioUnlocked) return;
-
-    if (!adhanAudio) {
-      adhanAudio = document.getElementById("adhanAudio");
-    }
+    if (!adhanAudio) adhanAudio = document.getElementById("adhanAudio");
 
     if (adhanAudio) {
       adhanAudio.play().then(() => {
         adhanAudio.pause();
         adhanAudio.currentTime = 0;
         audioUnlocked = true;
-        
-        const unlockMsg = document.getElementById("unlockMsg");
-        if (unlockMsg) unlockMsg.style.display = "none";
-        
-        console.log("Audio System: Active and Unlocked");
-      }).catch(e => {
-        console.log("Audio unlock pending user interaction:", e);
+        console.log("Audio System Unlocked");
+      }).catch(() => {
+        // Safe silence if browser blocks initial silent play
       });
     }
   };
 
   document.body.addEventListener("click", unlock, { once: true });
   document.body.addEventListener("touchstart", unlock, { once: true });
+}
+
+function testAdhan() {
+  if (!adhanAudio) {
+    adhanAudio = document.getElementById("adhanAudio");
+  }
+
+  if (!adhanAudio) {
+    alert("Audio element not found on page.");
+    return;
+  }
+
+  // Play directly from user gesture
+  adhanAudio.currentTime = 0;
+  adhanAudio.volume = 1.0;
+
+  adhanAudio.play().then(() => {
+    audioUnlocked = true;
+    console.log("Adhan playing successfully!");
+    const stopBtn = document.getElementById("stopAdhanBtn");
+    if (stopBtn) stopBtn.style.display = "inline-block";
+  }).catch(err => {
+    console.error("Adhan play error:", err);
+    alert("Audio playback failed. Please verify that 'blog/adthan.mp3' exists in your repo.");
+  });
+}
+
+function triggerAdhan(prayer) {
+  stopAllAudio();
+
+  if (!adhanAudio) adhanAudio = document.getElementById("adhanAudio");
+
+  if (adhanAudio) {
+    adhanAudio.currentTime = 0;
+    adhanAudio.volume = 1.0; 
+    
+    adhanAudio.play().then(() => {
+      console.log(`Playing Adhan for ${prayer}`);
+      const stopBtn = document.getElementById("stopAdhanBtn");
+      if (stopBtn) stopBtn.style.display = "inline-block";
+    }).catch(e => {
+      console.log("Adhan blocked:", e);
+      alert("🕌 It is time for " + prayer + "!");
+    });
+  }
+
+  if (typeof Notification !== "undefined" && Notification.permission === "granted") {
+    new Notification("🕌 Prayer Time", {
+      body: `It's time for ${prayer} in Kampala`,
+      icon: "logo.png"
+    });
+  }
+
+  if (navigator.vibrate) navigator.vibrate([500, 300, 500]);
+}
+
+function stopAdhan() {
+  if (!adhanAudio) adhanAudio = document.getElementById("adhanAudio");
+  if (adhanAudio) {
+    adhanAudio.pause();
+    adhanAudio.currentTime = 0;
+  }
+  const stopBtn = document.getElementById("stopAdhanBtn");
+  if (stopBtn) stopBtn.style.display = "none";
 }
 
 // ===============================
@@ -209,7 +265,7 @@ async function loadSurah() {
 }
 
 // ===============================
-// UNIFIED AUDIO MANAGEMENT
+// AUDIO HELPERS
 // ===============================
 let currentSurah = null;
 let currentAyah = null;
@@ -276,29 +332,20 @@ function playNextAyah(){
 }
 
 // ===============================
-// ADHAN SYSTEM
+// ADHAN SYSTEM & PRAYER TIMES
 // ===============================
 let prayerTimings = {};
+let nextPrayerName = "";
 let lastAdhanPlayed = "";
 let lastAdhanDate = "";
 let adhanCheckInterval = null;
+let countdownInterval = null;
 
 const cleanTime = (timeStr) => timeStr ? timeStr.trim().slice(0, 5) : "";
 
-function saveAdhanCache(data) {
-  localStorage.setItem('adhanCache', JSON.stringify(data));
-}
-
-function loadAdhanCache() {
-  const cached = localStorage.getItem('adhanCache');
-  return cached ? JSON.parse(cached) : null;
-}
-
 async function startAdhanSystem() {
-  const cached = loadAdhanCache();
-  if (cached) {
-    prayerTimings = cached;
-  }
+  const prayerBox = document.getElementById("prayerBox");
+  if (!prayerBox) return; // Only run full timing UI if on prayer page
 
   if (!adhanCheckInterval) {
     adhanCheckInterval = setInterval(checkAdhanTime, 20000);
@@ -307,23 +354,92 @@ async function startAdhanSystem() {
   try {
     const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=Kampala&country=Uganda&method=2`);
     if (!res.ok) throw new Error("HTTP " + res.status);
-    const data = await res.json();
-    const t = data.data.timings;
+    const result = await res.json();
+    const data = result.data;
 
     prayerTimings = {
-      Fajr: cleanTime(t.Fajr),
-      Dhuhr: cleanTime(t.Dhuhr),
-      Asr: cleanTime(t.Asr),
-      Maghrib: cleanTime(t.Maghrib),
-      Isha: cleanTime(t.Isha)
+      Fajr: cleanTime(data.timings.Fajr),
+      Dhuhr: cleanTime(data.timings.Dhuhr),
+      Asr: cleanTime(data.timings.Asr),
+      Maghrib: cleanTime(data.timings.Maghrib),
+      Isha: cleanTime(data.timings.Isha)
     };
 
-    saveAdhanCache(prayerTimings);
-    console.log("Prayer times updated:", prayerTimings);
-
+    displayPrayerTimes(data);
   } catch (err) {
     console.log("Adhan fetch error:", err);
   }
+}
+
+function getNextPrayer(timings) {
+  const prayers = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
+  const now = new Date();
+  
+  for (let p of prayers) {
+    const [hh, mm] = timings[p].split(":");
+    const pTime = new Date();
+    pTime.setHours(parseInt(hh), parseInt(mm), 0, 0);
+    if (pTime > now) return p;
+  }
+  return "Fajr";
+}
+
+function displayPrayerTimes(data) {
+  nextPrayerName = getNextPrayer(prayerTimings);
+
+  const dateEl = document.getElementById("date");
+  if (dateEl) {
+    dateEl.innerHTML = `${data.date.gregorian.date} | ${data.date.hijri.date} ${data.date.hijri.month.en}`;
+  }
+
+  const prayers = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
+  let html = "";
+
+  prayers.forEach(p => {
+    const isNext = (p === nextPrayerName);
+    html += `
+    <div class="prayer ${isNext ? 'next' : ''}">
+        <span>${p}</span>
+        <span>${prayerTimings[p]}</span>
+    </div>`;
+  });
+
+  const prayerBox = document.getElementById("prayerBox");
+  if (prayerBox) prayerBox.innerHTML = html;
+
+  startCountdown();
+}
+
+function startCountdown() {
+  if (countdownInterval) clearInterval(countdownInterval);
+
+  countdownInterval = setInterval(() => {
+    if (!Object.keys(prayerTimings).length || !nextPrayerName) return;
+
+    const [hh, mm] = prayerTimings[nextPrayerName].split(":");
+    let now = new Date();
+    let pTime = new Date();
+    pTime.setHours(parseInt(hh), parseInt(mm), 0, 0);
+
+    if (nextPrayerName === "Fajr" && pTime < now) {
+      pTime.setDate(pTime.getDate() + 1);
+    }
+
+    let diff = pTime - now;
+    if (diff <= 0) {
+      startAdhanSystem();
+      return;
+    }
+
+    let h = Math.floor(diff / 3600000);
+    let m = Math.floor((diff % 3600000) / 60000);
+    let s = Math.floor((diff % 60000) / 1000);
+
+    const countdownEl = document.getElementById("countdown");
+    if (countdownEl) {
+      countdownEl.innerHTML = `Next prayer (${nextPrayerName}) in: ${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+  }, 1000);
 }
 
 function checkAdhanTime() {
@@ -347,56 +463,6 @@ function checkAdhanTime() {
   }
 }
 
-function triggerAdhan(prayer) {
-  stopAllAudio();
-
-  if (!adhanAudio) {
-    adhanAudio = document.getElementById("adhanAudio");
-  }
-
-  if (adhanAudio && audioUnlocked) {
-    adhanAudio.currentTime = 0;
-    adhanAudio.volume = 1.0; 
-    
-    adhanAudio.play().then(() => {
-      console.log(`Playing Adhan for ${prayer}`);
-      const stopBtn = document.getElementById("stopAdhanBtn");
-      if(stopBtn) stopBtn.style.display = "block";
-    }).catch(e => {
-      console.log("Adhan blocked:", e);
-      alert("Time for " + prayer + "! (Tap anywhere to enable audio)");
-    });
-  } else {
-    alert("🕌 It is time for " + prayer);
-  }
-
-  if (typeof Notification !== "undefined" && Notification.permission === "granted") {
-    new Notification("🕌 Prayer Time", {
-      body: `It's time for ${prayer} in Kampala`,
-      icon: "logo.png"
-    });
-  }
-
-  if (navigator.vibrate) navigator.vibrate([500, 300, 500]);
-}
-
-function stopAdhan() {
-  if (adhanAudio) {
-    adhanAudio.pause();
-    adhanAudio.currentTime = 0;
-  }
-  const stopBtn = document.getElementById("stopAdhanBtn");
-  if(stopBtn) stopBtn.style.display = "none";
-}
-
-function testAdhan() {
-  if (!audioUnlocked) {
-    alert("Tap anywhere on the screen first to enable audio.");
-    return;
-  }
-  triggerAdhan("Test");
-}
-
 // =====================
 // DATA: YASARNAH / LETTERS
 // =====================
@@ -418,7 +484,6 @@ const yasarnahPages = [
 ];
 
 let currentDarsIndex = 0;
-let currentLetterIndex = null;
 
 function initLetters() {
   const darsTitle = document.getElementById("darsTitle");
@@ -455,7 +520,6 @@ function loadDars(index) {
 
 function startLetter(i) {
   stopAllAudio();
-  currentLetterIndex = i;
   const dars = yasarnahPages[currentDarsIndex];
   if (!dars || !dars.letters[i]) return;
 
