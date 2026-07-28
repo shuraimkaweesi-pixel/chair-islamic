@@ -10,34 +10,40 @@
 </head>
 <body>
     <div class="container">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-            <img src="logo.png" class="logo-header" alt="Logo">
-            <h1 style="margin:0">Prayer Times</h1>
+        <!-- Header Section -->
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+            <img src="logo.png" class="logo-header" alt="Chair Islamic TV Logo">
+            <h1 style="margin:0;">Prayer Times</h1>
         </div>
         
-        <p id="location" class="page-header">Loading Kampala times...</p>
-        <div class="date" id="date">-- | --</div>
+        <!-- Location & Hijri / Gregorian Date -->
+        <p id="location" class="page-header">Kampala, Uganda</p>
+        <div class="date" id="date">Loading date...</div>
 
+        <!-- Prayer Times List Container -->
         <div id="prayerBox" class="prayer-box">
             Loading schedule...
         </div>
 
+        <!-- Countdown Timer -->
         <div id="countdown">
             Next prayer in: --:--:--
         </div>
 
+        <!-- Test & Stop Audio Buttons -->
         <div class="btn-group" style="margin-top: 20px; text-align: center;">
             <button class="btn-outline" onclick="testAdhan()">🔊 Test Adhan Sound</button>
             <button class="btn-outline" id="stopAdhanBtn" onclick="stopAdhan()" style="display:none; background:#8b0000; border-color:#ff4d4d; color:white; margin-top:10px;">⏹ Stop Adhan</button>
         </div>
     </div>
 
-    <!-- Adhan Audio Source -->
+    <!-- Adhan Audio Source (Path-resilient fallback sources) -->
     <audio id="adhanAudio" preload="auto">
+        <source src="/blog/adthan.mp3" type="audio/mpeg">
         <source src="blog/adthan.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Bottom Navigation -->
+    <!-- Bottom Navigation Bar -->
     <div class="bottom-nav">
         <a href="index.html"><span>🏠</span>Home</a>
         <a href="quran.html"><span>📖</span>Quran</a>
@@ -46,7 +52,7 @@
         <a href="videos.html"><span>🎥</span>Videos</a>
     </div>
 
-    <!-- Script File Link -->
+    <!-- Main JavaScript Logic -->
     <script src="script.js"></script>
 </body>
 </html>
