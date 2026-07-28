@@ -68,6 +68,12 @@ const stopBtn = document.getElementById("stopAdhanBtn");
 const KAMPALA_LAT = 0.3476;
 const KAMPALA_LON = 32.5825;
 
+// Helper to format API times cleanly into "HH:MM"
+function cleanTime(timeStr) {
+    if (!timeStr) return "00:00";
+    return timeStr.trim().slice(0, 5);
+}
+
 // =====================
 // CACHE HELPERS
 // =====================
@@ -96,11 +102,13 @@ function loadFromCache() {
 function unlockAudio() {
     if (audioUnlocked) return;
     
+    // Silent play attempt to bypass browser restrictions
     adhanAudio.play().then(() => {
         adhanAudio.pause();
         adhanAudio.currentTime = 0;
         audioUnlocked = true;
-        document.getElementById("unlockMsg").style.display = "none";
+        const msg = document.getElementById("unlockMsg");
+        if (msg) msg.style.display = "none";
         console.log("Audio System: Active");
     }).catch(e => console.log("Unlock pending user interaction"));
 }
@@ -119,10 +127,10 @@ function triggerAdhan(prayer) {
         adhanAudio.volume = 1.0; 
         adhanAudio.play().then(() => {
             console.log(`Playing Adhan for ${prayer}`);
-            if(stopBtn) stopBtn.style.display = "block";
+            if (stopBtn) stopBtn.style.display = "block";
         }).catch(e => {
             console.log("Adhan blocked:", e);
-            alert("Time for " + prayer + "! (Tap to enable audio)");
+            alert("Time for " + prayer + "! (Tap anywhere to enable audio)");
         });
     } else {
         alert("🕌 It is time for " + prayer);
@@ -143,7 +151,7 @@ function stopAdhan() {
         adhanAudio.pause();
         adhanAudio.currentTime = 0;
     }
-    if(stopBtn) stopBtn.style.display = "none";
+    if (stopBtn) stopBtn.style.display = "none";
 }
 
 function stopAllAudio() {
@@ -152,7 +160,7 @@ function stopAllAudio() {
 
 function testAdhan() {
     if (!audioUnlocked) {
-        alert("Tap the screen first to enable audio.");
+        alert("Tap anywhere on the screen first to enable audio.");
         return;
     }
     triggerAdhan("Test");
@@ -168,7 +176,7 @@ function getNextPrayer(timings) {
     for (let p of prayers) {
         const [hh, mm] = timings[p].split(":");
         const pTime = new Date();
-        pTime.setHours(hh, mm, 0, 0);
+        pTime.setHours(parseInt(hh), parseInt(mm), 0, 0);
         if (pTime > now) return p;
     }
     return "Fajr";
@@ -177,11 +185,11 @@ function getNextPrayer(timings) {
 function displayPrayerTimes(data) {
     const t = data.timings;
     prayerTimings = {
-        Fajr: t.Fajr.slice(0, 5),
-        Dhuhr: t.Dhuhr.slice(0, 5),
-        Asr: t.Asr.slice(0, 5),
-        Maghrib: t.Maghrib.slice(0, 5),
-        Isha: t.Isha.slice(0, 5)
+        Fajr: cleanTime(t.Fajr),
+        Dhuhr: cleanTime(t.Dhuhr),
+        Asr: cleanTime(t.Asr),
+        Maghrib: cleanTime(t.Maghrib),
+        Isha: cleanTime(t.Isha)
     };
     
     nextPrayerName = getNextPrayer(prayerTimings);
@@ -215,7 +223,7 @@ function startCountdown() {
         const [hh, mm] = prayerTimings[nextPrayerName].split(":");
         let now = new Date();
         let pTime = new Date();
-        pTime.setHours(hh, mm, 0, 0);
+        pTime.setHours(parseInt(hh), parseInt(mm), 0, 0);
 
         if (nextPrayerName === "Fajr" && pTime < now) {
             pTime.setDate(pTime.getDate() + 1);
@@ -239,6 +247,7 @@ function startCountdown() {
 function startAdhanChecker() {
     if (adhanCheckInterval) clearInterval(adhanCheckInterval);
 
+    // Check every 20 seconds
     adhanCheckInterval = setInterval(() => {
         if (!Object.keys(prayerTimings).length) return;
 
@@ -258,7 +267,7 @@ function startAdhanChecker() {
                 lastAdhanPlayed = p;
             }
         }
-    }, 30000);
+    }, 20000);
 }
 
 async function loadPrayerTimes(lat, lon, isDefault = false) {
