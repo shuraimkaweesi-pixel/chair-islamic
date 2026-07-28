@@ -35,7 +35,7 @@ function initAudioUnlock() {
         audioUnlocked = true;
         console.log("Audio System Unlocked");
       }).catch(() => {
-        // Safe silence if browser blocks initial silent play
+        // Silent catch for background policy checks
       });
     }
   };
@@ -58,7 +58,7 @@ function testAdhan() {
   adhanAudio.volume = 1.0;
   adhanAudio.currentTime = 0;
 
-  // Direct play call on button tap
+  // Direct play call on button tap (no pre-tap alerts)
   const playPromise = adhanAudio.play();
 
   if (playPromise !== undefined) {
@@ -71,11 +71,10 @@ function testAdhan() {
       })
       .catch((err) => {
         console.error("Playback failed:", err);
-        alert("Unable to play audio (" + err.message + "). Please check if blog/adthan.mp3 is uploaded to GitHub.");
+        alert("Unable to play audio (" + err.message + "). Please verify that 'blog/adthan.mp3' exists on GitHub.");
       });
   }
 }
-
 
 function triggerAdhan(prayer) {
   stopAllAudio();
@@ -321,7 +320,6 @@ function playAyah(surah, ayah, el) {
 
   currentAudio.play().catch(e => {
     console.log("Ayah play error:", e);
-    alert("Tap the screen once to enable audio, then try again.");
   });
 
   currentAudio.onended = () => {
