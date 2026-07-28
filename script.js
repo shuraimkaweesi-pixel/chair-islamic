@@ -1,15 +1,15 @@
 // ===============================
-// CHAIR ISLAMIC TV MAIN SCRIPT - V3.3
+// CHAIR ISLAMIC TV MAIN SCRIPT - V3.4
 // ===============================
 
 // Global Audio References
 let currentAudio = null;
 let letterAudio = null;
-let adhanAudio = null; // Will be assigned on DOMContentLoaded
+let adhanAudio = null;
 let audioUnlocked = false;
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Grab the audio element from HTML
+  // Bind Adhan Audio Element from HTML
   adhanAudio = document.getElementById("adhanAudio");
   
   initPWA();
@@ -301,7 +301,7 @@ async function startAdhanSystem() {
   }
 
   if (!adhanCheckInterval) {
-    adhanCheckInterval = setInterval(checkAdhanTime, 20000); // 20-second check
+    adhanCheckInterval = setInterval(checkAdhanTime, 20000);
   }
 
   try {
@@ -389,7 +389,6 @@ function stopAdhan() {
   if(stopBtn) stopBtn.style.display = "none";
 }
 
-// Called by <button onclick="testAdhan()">
 function testAdhan() {
   if (!audioUnlocked) {
     alert("Tap anywhere on the screen first to enable audio.");
