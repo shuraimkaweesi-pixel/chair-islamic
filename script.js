@@ -50,24 +50,32 @@ function testAdhan() {
   }
 
   if (!adhanAudio) {
-    alert("Audio element not found on page.");
+    alert("Audio element missing from page.");
     return;
   }
 
-  // Play directly from user gesture
-  adhanAudio.currentTime = 0;
+  // Set volume and reset track position
   adhanAudio.volume = 1.0;
+  adhanAudio.currentTime = 0;
 
-  adhanAudio.play().then(() => {
-    audioUnlocked = true;
-    console.log("Adhan playing successfully!");
-    const stopBtn = document.getElementById("stopAdhanBtn");
-    if (stopBtn) stopBtn.style.display = "inline-block";
-  }).catch(err => {
-    console.error("Adhan play error:", err);
-    alert("Audio playback failed. Please verify that 'blog/adthan.mp3' exists in your repo.");
-  });
+  // Direct play call on button tap
+  const playPromise = adhanAudio.play();
+
+  if (playPromise !== undefined) {
+    playPromise
+      .then(() => {
+        audioUnlocked = true;
+        console.log("Adhan playing successfully!");
+        const stopBtn = document.getElementById("stopAdhanBtn");
+        if (stopBtn) stopBtn.style.display = "inline-block";
+      })
+      .catch((err) => {
+        console.error("Playback failed:", err);
+        alert("Unable to play audio (" + err.message + "). Please check if blog/adthan.mp3 is uploaded to GitHub.");
+      });
+  }
 }
+
 
 function triggerAdhan(prayer) {
   stopAllAudio();
